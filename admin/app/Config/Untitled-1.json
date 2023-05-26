@@ -1,0 +1,302 @@
+"Undefined property: App\Controllers\Ajaxupload::$load"
+
+"C:\xampp\htdocs\autobilbayt_v2\app\Controllers\Ajaxupload.php"
+
+
+"Undefined property: App\Controllers\Ajaxupload::$load"
+
+
+
+"{
+    "title": "ErrorException",
+    "type": "ErrorException",
+    "code": 500,
+    "message": "Undefined property: App\\Controllers\\Ajaxupload::$load",
+    "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\app\\Controllers\\Ajaxupload.php",
+    "line": 46,
+    "trace": [
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\app\\Controllers\\Ajaxupload.php",
+            "line": 46,
+            "function": "errorHandler",
+            "class": "CodeIgniter\\Debug\\Exceptions",
+            "type": "->",
+            "args": [
+                2,
+                "Undefined property: App\\Controllers\\Ajaxupload::$load",
+                "C:\\xampp\\htdocs\\autobilbayt_v2\\app\\Controllers\\Ajaxupload.php",
+                46
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\system\\CodeIgniter.php",
+            "line": 896,
+            "function": "upload",
+            "class": "App\\Controllers\\Ajaxupload",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\system\\CodeIgniter.php",
+            "line": 466,
+            "function": "runController",
+            "class": "CodeIgniter\\CodeIgniter",
+            "type": "->",
+            "args": [
+                {
+                    "session": {},
+                    "item_model": {
+                        "pager": null
+                    },
+                    "data": {
+                        "session": {},
+                        "request": {
+                            "uri": {},
+                            "config": {
+                                "baseURL": "http://localhost/autobilbayt_v2",
+                                "indexPage": "",
+                                "uriProtocol": "PATH_INFO",
+                                "defaultLocale": "en",
+                                "negotiateLocale": false,
+                                "supportedLocales": [
+                                    "en"
+                                ],
+                                "appTimezone": "Asia/Manila",
+                                "charset": "UTF-8",
+                                "forceGlobalSecureRequests": false,
+                                "sessionDriver": "CodeIgniter\\Session\\Handlers\\FileHandler",
+                                "sessionCookieName": "ci_session",
+                                "sessionExpiration": 7200,
+                                "sessionSavePath": "C:\\xampp\\htdocs\\autobilbayt_v2\\writable\\session",
+                                "sessionMatchIP": false,
+                                "sessionTimeToUpdate": 300,
+                                "sessionRegenerateDestroy": false,
+                                "cookiePrefix": "",
+                                "cookieDomain": "",
+                                "cookiePath": "/",
+                                "cookieSecure": false,
+                                "cookieHTTPOnly": true,
+                                "cookieSameSite": "Lax",
+                                "proxyIPs": "",
+                                "CSRFTokenName": "csrf_test_name",
+                                "CSRFHeaderName": "X-CSRF-TOKEN",
+                                "CSRFCookieName": "csrf_cookie_name",
+                                "CSRFExpire": 7200,
+                                "CSRFRegenerate": true,
+                                "CSRFRedirect": true,
+                                "CSRFSameSite": "Lax",
+                                "CSPEnabled": false
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\system\\CodeIgniter.php",
+            "line": 349,
+            "function": "handleRequest",
+            "class": "CodeIgniter\\CodeIgniter",
+            "type": "->",
+            "args": [
+                null,
+                {
+                    "handler": "file",
+                    "backupHandler": "dummy",
+                    "storePath": "C:\\xampp\\htdocs\\autobilbayt_v2\\writable\\cache/",
+                    "cacheQueryString": false,
+                    "prefix": "",
+                    "ttl": 60,
+                    "reservedCharacters": "{}()/\\@:",
+                    "file": {
+                        "storePath": "C:\\xampp\\htdocs\\autobilbayt_v2\\writable\\cache/",
+                        "mode": 416
+                    },
+                    "memcached": {
+                        "host": "127.0.0.1",
+                        "port": 11211,
+                        "weight": 1,
+                        "raw": false
+                    },
+                    "redis": {
+                        "host": "127.0.0.1",
+                        "password": null,
+                        "port": 6379,
+                        "timeout": 0,
+                        "database": 0
+                    },
+                    "validHandlers": {
+                        "dummy": "CodeIgniter\\Cache\\Handlers\\DummyHandler",
+                        "file": "CodeIgniter\\Cache\\Handlers\\FileHandler",
+                        "memcached": "CodeIgniter\\Cache\\Handlers\\MemcachedHandler",
+                        "predis": "CodeIgniter\\Cache\\Handlers\\PredisHandler",
+                        "redis": "CodeIgniter\\Cache\\Handlers\\RedisHandler",
+                        "wincache": "CodeIgniter\\Cache\\Handlers\\WincacheHandler"
+                    }
+                },
+                false
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\index.php",
+            "line": 55,
+            "function": "run",
+            "class": "CodeIgniter\\CodeIgniter",
+            "type": "->",
+            "args": []
+        }
+    ]
+}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+"{
+    "title": "ErrorException",
+    "type": "ErrorException",
+    "code": 500,
+    "message": "Undefined property: App\\Controllers\\Ajaxupload::$load",
+    "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\app\\Controllers\\Ajaxupload.php",
+    "line": 45,
+    "trace": [
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\app\\Controllers\\Ajaxupload.php",
+            "line": 45,
+            "function": "errorHandler",
+            "class": "CodeIgniter\\Debug\\Exceptions",
+            "type": "->",
+            "args": [
+                2,
+                "Undefined property: App\\Controllers\\Ajaxupload::$load",
+                "C:\\xampp\\htdocs\\autobilbayt_v2\\app\\Controllers\\Ajaxupload.php",
+                45
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\system\\CodeIgniter.php",
+            "line": 896,
+            "function": "upload",
+            "class": "App\\Controllers\\Ajaxupload",
+            "type": "->",
+            "args": []
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\system\\CodeIgniter.php",
+            "line": 466,
+            "function": "runController",
+            "class": "CodeIgniter\\CodeIgniter",
+            "type": "->",
+            "args": [
+                {
+                    "session": {},
+                    "item_model": {
+                        "pager": null
+                    },
+                    "data": {
+                        "session": {},
+                        "request": {
+                            "uri": {},
+                            "config": {
+                                "baseURL": "http://localhost/autobilbayt_v2",
+                                "indexPage": "",
+                                "uriProtocol": "PATH_INFO",
+                                "defaultLocale": "en",
+                                "negotiateLocale": false,
+                                "supportedLocales": [
+                                    "en"
+                                ],
+                                "appTimezone": "Asia/Manila",
+                                "charset": "UTF-8",
+                                "forceGlobalSecureRequests": false,
+                                "sessionDriver": "CodeIgniter\\Session\\Handlers\\FileHandler",
+                                "sessionCookieName": "ci_session",
+                                "sessionExpiration": 7200,
+                                "sessionSavePath": "C:\\xampp\\htdocs\\autobilbayt_v2\\writable\\session",
+                                "sessionMatchIP": false,
+                                "sessionTimeToUpdate": 300,
+                                "sessionRegenerateDestroy": false,
+                                "cookiePrefix": "",
+                                "cookieDomain": "",
+                                "cookiePath": "/",
+                                "cookieSecure": false,
+                                "cookieHTTPOnly": true,
+                                "cookieSameSite": "Lax",
+                                "proxyIPs": "",
+                                "CSRFTokenName": "csrf_test_name",
+                                "CSRFHeaderName": "X-CSRF-TOKEN",
+                                "CSRFCookieName": "csrf_cookie_name",
+                                "CSRFExpire": 7200,
+                                "CSRFRegenerate": true,
+                                "CSRFRedirect": true,
+                                "CSRFSameSite": "Lax",
+                                "CSPEnabled": false
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\system\\CodeIgniter.php",
+            "line": 349,
+            "function": "handleRequest",
+            "class": "CodeIgniter\\CodeIgniter",
+            "type": "->",
+            "args": [
+                null,
+                {
+                    "handler": "file",
+                    "backupHandler": "dummy",
+                    "storePath": "C:\\xampp\\htdocs\\autobilbayt_v2\\writable\\cache/",
+                    "cacheQueryString": false,
+                    "prefix": "",
+                    "ttl": 60,
+                    "reservedCharacters": "{}()/\\@:",
+                    "file": {
+                        "storePath": "C:\\xampp\\htdocs\\autobilbayt_v2\\writable\\cache/",
+                        "mode": 416
+                    },
+                    "memcached": {
+                        "host": "127.0.0.1",
+                        "port": 11211,
+                        "weight": 1,
+                        "raw": false
+                    },
+                    "redis": {
+                        "host": "127.0.0.1",
+                        "password": null,
+                        "port": 6379,
+                        "timeout": 0,
+                        "database": 0
+                    },
+                    "validHandlers": {
+                        "dummy": "CodeIgniter\\Cache\\Handlers\\DummyHandler",
+                        "file": "CodeIgniter\\Cache\\Handlers\\FileHandler",
+                        "memcached": "CodeIgniter\\Cache\\Handlers\\MemcachedHandler",
+                        "predis": "CodeIgniter\\Cache\\Handlers\\PredisHandler",
+                        "redis": "CodeIgniter\\Cache\\Handlers\\RedisHandler",
+                        "wincache": "CodeIgniter\\Cache\\Handlers\\WincacheHandler"
+                    }
+                },
+                false
+            ]
+        },
+        {
+            "file": "C:\\xampp\\htdocs\\autobilbayt_v2\\index.php",
+            "line": 55,
+            "function": "run",
+            "class": "CodeIgniter\\CodeIgniter",
+            "type": "->",
+            "args": []
+        }
+    ]
+}"
