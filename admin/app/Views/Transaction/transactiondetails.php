@@ -50,13 +50,13 @@
     </select>
     </div>
 <div class="form-group"><label class="form-label"><?php echo $pade_title2 ?></label>
-    <input id="date<?=$i?>" name="date[]" class="form-control"  required/>
+    <input id="date<?=$i?>" name="date[]" type="text" class="form-control datepicker" placeholder="MM/DD/YYYY" required/>
     </div>    
 </div>
     <div class="col-md-3 col-sm-12">
     
         <div class="form-group"><label class="form-label"><?php echo $pade_title9 ?></label>
-    <input id="duedate<?=$i?>" name="duedate[]" class="form-control"  required/>
+    <input id="duedate<?=$i?>" name="duedate[]" placeholder="MM/DD/YYYY" class="form-control datepicker"  type="text"  required/>
     </div>
         <div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label> 
         <select name="currency[]"
@@ -159,14 +159,15 @@ document.getElementById("count_items").value = counter;
 count=$('#plansec tr').length;
 var data="<tr class='mobcheck'><td><input type='checkbox' class='case'/></td>";
 data += "<td ><div class='form-group'><label class='form-label'>Exposure Ref. No</label><input id='exposureref"+i+"' type='text' placeholder='Exposure Ref. No' name='exposureref[]' class='form-control'  required/></div><div class='form-group'><label class='form-label'>Counter Party</label><select name='counter[]' id='currency"+i+"' class='form-control' required> <option value=''>-- Counter Party -- </option> <?php foreach ($counterparty as $row) : ?> <option value='<?php echo $row['counterParty_id'] ?>'><?php echo $row['counterPartyName'] ?></option> <?php endforeach; ?> </select> </div><div class='form-group'><label class='form-label'>Counter Party Country</label><input id='counterPartycountry' type='text' name='counterPartycountry[]' placeholder='Counter Party Country' class='form-control'  required/></div></td>";
-data += "<td ><div class='form-group'><label class='form-label'>Exposure Type</label><select name='exposure[]' id='currency"+i+"'  class='form-control' required> <option value=''>-- Exposure Type -- </option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['exposure_type_id'] ?>'><?php echo $row['exposure_type'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Date of Invoice</label><div class='form-group'><input id='date"+i+"' name='date[]' class='form-control'  required/></div><div class='form-group'><label class='form-label'>Choose Bank</label><select name='bank[]' id='bank"+i+"' class='form-control' required> <option value=''>-- Choose Bank -- </option> <?php foreach ($bank  as $row) : ?> <option value='<?php echo $row['bank_id'] ?>'><?php echo $row['bank_name'] ?></option> <?php endforeach; ?> </select></div></td>";
-data += "<td ><label class='form-label'>Due Date</label><div class='form-group'><input id='duedate"+i+"' name='duedate[]' class='form-control'  required/></div><div class='form-group'><label class='form-label'>Currency</label><select name='currency[]' id='currency"+i+"' class='form-control' required> <option value=''>-- Choose Currency -- </option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' ><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select> </div><div class='heighsixrem'></div></td>";
+data += "<td ><div class='form-group'><label class='form-label'>Exposure Type</label><select name='exposure[]' id='currency"+i+"'  class='form-control' required> <option value=''>-- Exposure Type -- </option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['exposure_type_id'] ?>'><?php echo $row['exposure_type'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Date of Invoice</label><div class='form-group'><input id='date"+i+"' placeholder='MM/DD/YYYY' name='date[]' class='form-control datepicker' type='text' required/></div><div class='form-group'><label class='form-label'>Choose Bank</label><select name='bank[]' id='bank"+i+"' class='form-control' required> <option value=''>-- Choose Bank -- </option> <?php foreach ($bank  as $row) : ?> <option value='<?php echo $row['bank_id'] ?>'><?php echo $row['bank_name'] ?></option> <?php endforeach; ?> </select></div></td>";
+data += "<td ><label class='form-label'>Due Date</label><div class='form-group'><input id='duedate"+i+"' name='duedate[]' placeholder='MM/DD/YYYY' class='form-control datepicker' type='text'  required/></div><div class='form-group'><label class='form-label'>Currency</label><select name='currency[]' id='currency"+i+"' class='form-control' required> <option value=''>-- Choose Currency -- </option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' ><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select> </div><div class='heighsixrem'></div></td>";
 data += "<td ><div class='form-group'><label class='form-label'>Amount in FC</label><input id='amountinfc' type='number' name='amountinfc[]' placeholder='Amount in FC' class='form-control'  required/></div><div class='form-group'><label class='form-label'>Target Rate</label><input id='targetrat' type='number' min='0' value='0' step='.0001' name='targetrat[]' placeholder='Target Rat' class='form-control'  required/></div><div class='heighsixrem'></div></td></tr>";
 $('#plansec').append(data);
-var dateObject = pikadayResponsive(document.getElementById("date"+i));
-
-var dateObject = pikadayResponsive(document.getElementById("duedate"+i));
 i++;
+$('.datepicker').datepicker({
+showOtherMonths: true,
+selectOtherMonths: true
+});
 });
 
 </script>

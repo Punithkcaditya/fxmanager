@@ -113,10 +113,10 @@ class ForwardCancellation extends BaseController
             'deal_no' => $sid[0],
             'utilised_forward_amount' => $sid[1],
             'utilization_rate' => $sid[2],
-            'utilization_date' => $sid[3],
+            'utilization_date' => date("Y-m-d", strtotime($sid[3])),
             'cancelled_forward_amount' => $sid[4],
             'cancellation_rate' => $sid[5],
-            'cancellation_date' => $sid[6],
+            'cancellation_date' => date("Y-m-d", strtotime($sid[6])),
             'created_date' => date('Y-m-d'),
             ];
 

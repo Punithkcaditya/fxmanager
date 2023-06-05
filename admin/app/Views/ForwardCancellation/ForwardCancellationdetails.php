@@ -54,7 +54,7 @@
 	<input id="utilizationrate<?php echo  $i?>" type="text" name="utilizationrate[]" placeholder="Utilization Rate" class="form-control" required="">
 	</div>
 	 <div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label> 
-		 <input id="cancellationdate<?=$i?>" name="cancellationdate[]" class="form-control"  required/>
+		 <input id="cancellationdate<?=$i?>" placeholder="MM/DD/YYYY" name="cancellationdate[]" class="form-control datepicker" type="text" required/>
 		</div>
 </div>
 <div class="col-md-3 col-sm-12">
@@ -63,7 +63,7 @@
 
 
 		 <div class="form-group"><label class="form-label"><?php echo $pade_title7 ?></label>
-		 <input id="utilizationdate<?=$i?>" name="utilizationdate[]" class="form-control"  required/>
+		 <input id="utilizationdate<?=$i?>" placeholder="MM/DD/YYYY" name="utilizationdate[]" class="form-control datepicker" type="text"  required/>
 		 </div>
 
 	  
@@ -200,16 +200,17 @@ count=$('#plansec tr').length;
 var data="<tr class='mobcheck'><td><input type='checkbox' class='case'/></td>";
 data += "<td><label class='form-label'>Deal No</label><div class='form-group'><select class='form-control select2 deal_no"+i+" w-100' name='deal_no[]' data-dealcount="+i+" id='deal_no"+i+"'> <option value=''>Select Deal No</option> <?php foreach ($forwardcoverdetails as $row) : ?> <option value='<?php echo $row['forward_coverdetails_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['forward_coverdetails_id']) ? 'selected' : '' ?>><?php echo $row['deal_no'] ?></option> <?php endforeach; ?> </select></div><div class='form-group'><label class='form-label'>Cancelled Forward Amount (FC)</label><input type='hidden' name='cancelledforwardamounthid[]' id='cancelledforwardamounthid"+i+"'  /><input id='cancelledforwardamount"+i+"' type='number' name='cancelledforwardamount[]' placeholder='Cancelled Forward Amount (FC)' class='form-control' required=''><input id='utilisedamount"+i+"' name='utilisedamount[]' type='hidden' class='form-control'  required/></div></td>";
 data += "<td><div class='form-group'><label class='form-label'>Utilised Forward Amount (FC)</label><input id='utilisedforwardamount"+i+"' type='number' data-cancid="+i+" name='utilisedforwardamount[]' placeholder='Utilised Forward Amount (FC)' class='form-control utilisedforwardamount' required></div><label class='form-label'>Cancellation Rate</label><div class='form-group'><input id='cancellationrate"+i+"' name='cancellationrate[]' class='form-control' placeholder='Cancellation Rate'  required/></div></td>";
-data += "<td><label class='form-label'>Utilization Rate</label><div class='form-group'><input id='utilizationrate"+i+"' type='text' name='utilizationrate[]' class='form-control' placeholder='Utilization Rate'  required/></div><label class='form-label'>Cancellation Date</label> <div class='form-group'><input id='cancellationdate"+i+"' name='cancellationdate[]' class='form-control'  required/></div></td>";
-data += "<td><label class='form-label'>Utilization Date</label><div class='form-group'><input id='utilizationdate"+i+"' name='utilizationdate[]' class='form-control'  required/></div><div class='form-control invisible d-none d-sm-block'></div><div class='form-control invisible d-none d-sm-block'></div></td></tr>";
+data += "<td><label class='form-label'>Utilization Rate</label><div class='form-group'><input id='utilizationrate"+i+"' type='text' name='utilizationrate[]' class='form-control' placeholder='Utilization Rate'  required/></div><label class='form-label'>Cancellation Date</label> <div class='form-group'><input id='cancellationdate"+i+"' name='cancellationdate[]' type='text' placeholder='MM/DD/YYYY' class='form-control datepicker'  required/></div></td>";
+data += "<td><label class='form-label'>Utilization Date</label><div class='form-group'><input id='utilizationdate"+i+"' name='utilizationdate[]' class='form-control datepicker'  type='text' placeholder='MM/DD/YYYY' required/></div><div class='form-control invisible d-none d-sm-block'></div><div class='form-control invisible d-none d-sm-block'></div></td></tr>";
 $('#plansec').append(data);
 $('.deal_no'+i).select2({  width: '100%'});
 attachInputListeners();
 attachChangeListeners();
-var dateObject = pikadayResponsive(document.getElementById("utilizationdate"+i));
-var dateObject = pikadayResponsive(document.getElementById("cancellationdate"+i));
 i++;
-
+$('.datepicker').datepicker({
+showOtherMonths: true,
+selectOtherMonths: true
+});
 });
 
 

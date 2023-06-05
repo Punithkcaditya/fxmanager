@@ -4543,19 +4543,19 @@ function check(){
 
 // Call HTML Element named "date" in the element //
 
-var dateObject = pikadayResponsive(document.getElementById("date1"));
+// var dateObject = pikadayResponsive(document.getElementById("date1"));
 
-var dateObject = pikadayResponsive(document.getElementById("dealdate1"));
+// var dateObject = pikadayResponsive(document.getElementById("dealdate1"));
 
-var dateObject = pikadayResponsive(document.getElementById("expirydate1"));
+// var dateObject = pikadayResponsive(document.getElementById("expirydate1"));
 
-var dateObject = pikadayResponsive(document.getElementById("duedate1"));
+// var dateObject = pikadayResponsive(document.getElementById("duedate1"));
 
-var dateObject = pikadayResponsive(document.getElementById("utilizationdate1"));
+// var dateObject = pikadayResponsive(document.getElementById("utilizationdate1"));
 
-var dateObject = pikadayResponsive(document.getElementById("cancellationdate1"));
+// var dateObject = pikadayResponsive(document.getElementById("cancellationdate1"));
 
-var dateObject = pikadayResponsive(document.getElementById("dateof_Settlement1"));
+// var dateObject = pikadayResponsive(document.getElementById("dateof_Settlement1"));
 
 
 // CALENDAR  

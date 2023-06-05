@@ -164,10 +164,7 @@
 // adding more fields
 var i=2;
 numval = 2;
-$('.datepicker').datepicker({
-showOtherMonths: true,
-selectOtherMonths: true
-});
+
 
 
 async function checkSelection() {

@@ -30,7 +30,7 @@
         </div>
     
         <div class="form-group"><label class="form-label"><?php echo $pade_title12 ?></label>
-        <input id="expirydate<?=$i?>" name="expirydate[]" class="form-control"  required/>
+        <input id="expirydate<?=$i?>" name="expirydate[]" class="form-control datepicker" type="text" placeholder="MM/DD/YYYY"  required/>
         </div>
     </div>
     <div class="col-md-3 col-sm-12">
@@ -49,7 +49,7 @@
         <div class="col-md-3 col-sm-12">
         
             <div class="form-group"><label class="form-label"><?php echo $pade_title9 ?></label>
-        <input id="dealdate<?=$i?>" name="dealdate[]" class="form-control"  required/>
+        <input id="dealdate<?=$i?>" name="dealdate[]" class="form-control datepicker" type="text" placeholder="MM/DD/YYYY" required/>
         </div>
             <div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label> 
             <select name="currencysold[]"
@@ -145,15 +145,17 @@ $('#count_items').val(++counter);
 document.getElementById("count_items").value = counter;
 count=$('#plansec tr').length;
 var data="<tr class='mobcheck'><td><input type='checkbox' class='case'/></td>";
-data += "<td><div class='form-group'><label class='form-label'>Forward/ Option</label><input id='fordwardoption"+i+"' type='text' name='fordwardoption[]' placeholder='Forward/ Option' class='form-control' required=''> </div><div class='form-group'><label class='form-label'>Contracted rate</label><input id='contractedrate"+i+"' type='number' name='contractedrate[]' min='0' value='0' step='.0001' placeholder='Contracted Rate' class='form-control' required=''></div><label class='form-label'>Expiry Date</label><div class='form-group'><input id='expirydate"+i+"' name='expirydate[]' class='form-control'  required/></div></td>";
+data += "<td><div class='form-group'><label class='form-label'>Forward/ Option</label><input id='fordwardoption"+i+"' type='text' name='fordwardoption[]' placeholder='Forward/ Option' class='form-control' required=''> </div><div class='form-group'><label class='form-label'>Contracted rate</label><input id='contractedrate"+i+"' type='number' name='contractedrate[]' min='0' value='0' step='.0001' placeholder='Contracted Rate' class='form-control' required=''></div><label class='form-label'>Expiry Date</label><div class='form-group'><input id='expirydate"+i+"' name='expirydate[]' class='form-control datepicker'  type='text' placeholder='MM/DD/YYYY' required/></div></td>";
 data += "<td><div class='form-group'><label class='form-label'>Deal No</label><input id='dealno"+i+"' type='text' name='dealno[]' placeholder='Deal No' class='form-control' required=''></div><label class='form-label'>Currency Bought</label><div class='form-group'><select name='currencybought[]' id='currencybought"+i+"'  class='form-control' required> <option value=''>-- Currency Bought -- </option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select></div><div class='heighsvnrem'></div></td>";
-data += "<td><label class='form-label'>Deal Date</label><div class='form-group'><input id='dealdate"+i+"' name='dealdate[]' class='form-control'  required/></div><div class='form-group'><label class='form-label'>Currency Sold</label><select name='currencysold[]' id='currencysold"+i+"' class='form-control' required> <option value=''>-- Currency Sold -- </option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select> </div><div class='heighsvnrem'></div></td>";
+data += "<td><label class='form-label'>Deal Date</label><div class='form-group'><input id='dealdate"+i+"' name='dealdate[]' placeholder='MM/DD/YYYY' class='form-control datepicker' type='text'  required/></div><div class='form-group'><label class='form-label'>Currency Sold</label><select name='currencysold[]' id='currencysold"+i+"' class='form-control' required> <option value=''>-- Currency Sold -- </option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select> </div><div class='heighsvnrem'></div></td>";
 data += "<td><label class='form-label'>Underlying Exposure Ref.</label><div class='form-group'><select class='form-control select2 refno"+i+" w-100' name='refno[]' id='refno"+i+"'> <option>Select Underlying Exposure Ref No.</option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['transaction_id']) ? 'selected' : '' ?>><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?> </select></div><div class='form-group'><label class='form-label'>Amount (FC)</label><input id='targetrat' type='number' name='amountFC[]' placeholder='Amount FC' class='form-control' required=''></div><div class='heighsvnrem'></div></td></tr>";
 $('#plansec').append(data);
 $('.refno'+i).select2({  width: '100%'});
-var dateObject = pikadayResponsive(document.getElementById("dealdate"+i));
-var dateObject = pikadayResponsive(document.getElementById("expirydate"+i));
 i++;
+$('.datepicker').datepicker({
+showOtherMonths: true,
+selectOtherMonths: true
+});
 });
 
 </script>

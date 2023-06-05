@@ -113,14 +113,14 @@ class ForwardCoverdetails extends BaseController
             foreach ($result as $key => $sid) {
             $data = [
             'deal_no' => $sid[0],
-            'deal_date' => $sid[1],
+            'deal_date' => date("Y-m-d", strtotime($sid[1])),
             'underlying_exposure_ref' => $sid[2],
             'fordward_option' => $sid[3],
             'currencybought' => $sid[4],
             'currencysold' => $sid[5],
             'amount_FC' => $sid[6],
 			'contracted_Rate' => $sid[7],
-			'expiry_date' => $sid[8],
+			'expiry_date' => date("Y-m-d", strtotime($sid[8])),
             'created_date' => date('Y-m-d'),
             ];
 

@@ -113,14 +113,20 @@
     <script type="text/javascript" src="<?php echo base_url('assets/plugins/fileuploads/js/dropify.min.js'); ?>"></script>
  
 	<!-- calendar -->
-
+	<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 	<!-- Ansta JS -->
     <script type="text/javascript" src="<?php echo base_url('assets/js/custom.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('assets/js/customtwo.js'); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- multi sect -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+
     <script>
+		$('.datepicker').datepicker({
+showOtherMonths: true,
+selectOtherMonths: true
+});
 		$('.dropify').dropify({
 			messages: {
 				'default': 'Drag and drop a file here or click',
