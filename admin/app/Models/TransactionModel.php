@@ -52,8 +52,9 @@ class TransactionModel extends Model
 	
 	   public function getdependantData($transaction_id )
     {
-        $sql = 'SELECT a.* , am.deal_no, am.bankname, am.forward_coverdetails_id, GROUP_CONCAT(deal_no) as differentdealno, GROUP_CONCAT(forward_coverdetails_id) as differentcoverdetails  FROM transactiondetails as a  LEFT JOIN forward_coverdetails as am ON a.transaction_id  = am.underlying_exposure_ref  where a.transaction_id  = ' . $transaction_id . '  ';
-		$query = $this->db->query($sql);
+        $sql = 'SELECT a.* , bnk.bank_name, am.deal_no, am.forward_coverdetails_id, GROUP_CONCAT(deal_no) as differentdealno, GROUP_CONCAT(forward_coverdetails_id) as differentcoverdetails  FROM transactiondetails as a  LEFT JOIN forward_coverdetails as am ON a.transaction_id  = am.underlying_exposure_ref 
+        LEFT JOIN bank_master as bnk ON a.bank_id  = bnk.bank_id    where a.transaction_id  = ' . $transaction_id . '  ';
+        $query = $this->db->query($sql);
         $result = $query->getRow();
         return $result;
     }

@@ -255,8 +255,8 @@ $(function(e) {
 			$('#value_INRhidd').val(arr['targetRate']*arr['amountinFC']);
 			$('#amountfc1').val(arr['amountinFC']);
 			$('#amountfchidd').val(arr['amountinFC']);
-			$('#bankname1').val(arr['bankname']);
-			$('#banknamehidd').val(arr['bankname']);
+			$('#bankname1').val(arr['bank_name']);
+			$('#banknamehidd').val(arr['bank_name']);
 			$('#exposurecurrency1').val(arr['currency']);
 			$('#exposurecurrencyhidd').val(arr['currency']);
 			$("#bankname1").prop("disabled", true);
@@ -264,7 +264,11 @@ $(function(e) {
 			$("#amountfc1").prop("disabled", true);
 			$("#value_INR1").prop("disabled", true);
 			$("#target_Value1").prop("disabled", true);
-		 }
+		 },
+			error: function(xhr, status, error) {
+				// Handle the error
+				console.log('Error:', error);
+			}
 		});
 		}
 	});

@@ -71,12 +71,18 @@
 								$amountinFC = $row->amountinFC;
 								$forward_rate = $row->forward_rate;
 								$targetRate = $row->targetRate;
+								$targetValueInr = $targetRate*$amountinFC;
 								$Avgrate = $row->Avgrate;
 								$ToatalforwardAmount = $row->ToatalforwardAmount;
 								$Toatalallpayment = $row->Toatalallpayment;
 								$AvgspotamountRate = $row->AvgspotamountRate;
-								$portfoliorate = (($targetRate*$amountinFC)+($ToatalforwardAmount*$Avgrate))/ $amountinFC;
-								$ganorlose = ($targetRate*$amountinFC)+($ToatalforwardAmount*$Avgrate) - ($targetRate*$amountinFC);
+								$openAmountFC = $amountinFC-$ToatalforwardAmount;
+								$currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
+								$openAmountINR =  ($openAmountFC*$currentForwardRate);
+								$portfoliovalue = $openAmountINR + ($ToatalforwardAmount*$Avgrate);
+								$portfoliorate = $portfoliovalue / $amountinFC;
+								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
+								$ganorlose = $portfoliovalue - $targetValueInr;
 								?>
 
 								<tr>
@@ -94,18 +100,18 @@
 								<td><?php echo $targetRate ?></td>
 								<td><?php echo $targetRate*$amountinFC ?></td>
 								<td>-</td>
-								<td><?php echo $amountinFC-$ToatalforwardAmount ?></td>
-								<td><?php echo isset($crntfrrate->result->forward_rate) ? $crntfrrate->result->forward_rate : 0 ?></td>
-								<td><?php echo isset($crntfrrate->result->forward_rate) ? ($amountinFC-$ToatalforwardAmount)*$crntfrrate->result->forward_rate : ''   ?> </td>
-								<td><?php echo isset($crntfrrate->result->forward_rate) ? (($amountinFC-$ToatalforwardAmount)*$crntfrrate->result->forward_rate )-(($amountinFC-$ToatalforwardAmount)*$targetRate) : ''   ?></td>
+								<td><?php echo $openAmountFC ?></td>
+								<td><?php echo $currentForwardRate ?></td>
+								<td><?php echo $openAmountINR  ?> </td>
+								<td><?php echo number_format($ganorloseopendetails, 4)     ?></td>
 								<td>-</td>
 								<td>-</td>
 								<td><?php echo $ToatalforwardAmount ?></td>
 								<td><?php echo  number_format($Avgrate, 4) ?></td>
 								<td><?php echo number_format($ToatalforwardAmount*$Avgrate , 2) ?></td>
-								<td><?php echo (isset($crntfrrate->result->forward_rate) ? ($amountinFC-$ToatalforwardAmount)*$crntfrrate->result->forward_rate : 0) + ($ToatalforwardAmount*$Avgrate)?></td>
+								<td><?php echo number_format($portfoliovalue, 4) ?></td>
 								<td><?php echo number_format($portfoliorate, 4)  ?></td>
-								<td><?php echo  number_format($ganorlose, 4) ?></td>
+								<td><?php echo  $ganorlose ?></td>
 								<td>-</td>
 								<td>-</td>
 								<td><?php echo $Toatalallpayment + $AvgspotamountRate  ?></td>
