@@ -83,6 +83,7 @@
 								$portfoliorate = $portfoliovalue / $amountinFC;
 								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
 								$ganorlose = $portfoliovalue - $targetValueInr;
+								$settlementAmount = $Toatalallpayment + $AvgspotamountRate;
 								?>
 
 								<tr>
@@ -98,7 +99,7 @@
 								<td><?php echo $dueDate ?></td>
 								<td><?php echo $forward_rate ?></td>
 								<td><?php echo $targetRate ?></td>
-								<td><?php echo $targetRate*$amountinFC ?></td>
+								<td><?php echo $targetValueInr?></td>
 								<td>-</td>
 								<td><?php echo $openAmountFC ?></td>
 								<td><?php echo $currentForwardRate ?></td>
@@ -114,9 +115,9 @@
 								<td><?php echo  $ganorlose ?></td>
 								<td>-</td>
 								<td>-</td>
-								<td><?php echo $Toatalallpayment + $AvgspotamountRate  ?></td>
-								<td><?php echo ($Toatalallpayment + $AvgspotamountRate) /$amountinFC  ?></td>
-								<td><?php echo ($Toatalallpayment + $AvgspotamountRate)-($targetRate*$amountinFC)  ?></td>
+								<td><?php echo $settlementAmount  ?></td>
+								<td><?php echo  number_format($settlementAmount / $amountinFC, 4)   ?></td>
+								<td><?php echo $settlementAmount-$targetValueInr  ?></td>
 								</tr>
 							<?php endforeach; ?>
 							<?php if (count($transaction) <= 0) : ?>

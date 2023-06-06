@@ -50,8 +50,10 @@ class Exposuresummary extends BaseController
 	
 	 public function index()
     {
-		$curid = isset($_GET['currency']) ? $_GET['currency'] : 2; 
-
+        $data['style'] = isset($_GET['currency']) ? 'block' : 'none'; 
+        $curid = isset($_GET['currency']) ? $_GET['currency'] : 2; 
+        $data["transactiontabs"] = $this->transaction_model->tabsarrangement($curid);
+        $data["transactiontabsexport"] = $this->transaction_model->tabsarrangementforexport($curid);
         $session = session();
         $pot = json_decode(json_encode($session->get("userdata")), true);
         if (empty($pot)) {
@@ -71,7 +73,7 @@ class Exposuresummary extends BaseController
 		->select("transactiondetails.currency, currency.Currency")
 		->join('currency', "transactiondetails.currency = currency.currency_id", 'left')
 		->findAll();
-		$data["transactiontabs"] = $this->transaction_model->tabsarrangement($curid);
+		
 		$data_by_month = array();
 		// Iterate over the transactions and group them by month
 		foreach ($data["transactiontabs"] as $transaction) {
@@ -81,8 +83,6 @@ class Exposuresummary extends BaseController
 		}
 		$data_by_month[$month][] = $transaction;
 		}
-		
-		$data["transactiontabsexport"] = $this->transaction_model->tabsarrangementforexport($curid);
 		$data_by_month_export = array();
 		// Iterate over the transactions and group them by month
 		foreach ($data["transactiontabsexport"] as $transactionexport) {
@@ -95,7 +95,7 @@ class Exposuresummary extends BaseController
 	
 		$data['databymonthexport'] = $data_by_month_export;
 		$data['databymonth'] = $data_by_month;
-         $data['title'] = 'FX Exposure Summary as on '.date('d-M-y');
+         $data['title'] = isset($_GET['currency']) ? 'FX Exposure Summary as on '.date('d-M-y') : 'Select Currency To View FX Exposure Summary';
 		 $data['pade_title1'] = 'Currency';
 		 $data['i'] = 1;
 		 $data['pade_title5'] = 'Forward/ Option';

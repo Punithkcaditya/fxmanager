@@ -43,7 +43,7 @@
 
 <!-- start -->
 
-<div class="col-md-12">
+<div class="col-md-12 oklahoma" style="display:<?php echo $style ?>">
 <div class="card shadow">
 	<div class="card-header">
 		<h2 class="mb-0">MTM - Operating Risk</h2>
