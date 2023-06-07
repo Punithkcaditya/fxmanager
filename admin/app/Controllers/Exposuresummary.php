@@ -73,7 +73,6 @@ class Exposuresummary extends BaseController
 		->select("transactiondetails.currency, currency.Currency")
 		->join('currency', "transactiondetails.currency = currency.currency_id", 'left')
 		->findAll();
-		
 		$data_by_month = array();
 		// Iterate over the transactions and group them by month
 		foreach ($data["transactiontabs"] as $transaction) {
@@ -92,7 +91,6 @@ class Exposuresummary extends BaseController
 		}
 		$data_by_month_export[$month][] = $transactionexport;
 		}
-	
 		$data['databymonthexport'] = $data_by_month_export;
 		$data['databymonth'] = $data_by_month;
          $data['title'] = isset($_GET['currency']) ? 'FX Exposure Summary as on '.date('d-M-y') : 'Select Currency To View FX Exposure Summary';

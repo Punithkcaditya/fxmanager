@@ -89,19 +89,31 @@ class TransactionModel extends Model
 	
 	public function tabsarrangement($curid='')
     {
-		$sql = ' SELECT DATE_FORMAT(dueDate, "%Y-%m") AS month, SUM(amountinFC) as UnderlyingExposures, currency, amountinFC,
-		SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount		
-		 FROM   transactiondetails as a
-		 LEFT  JOIN (
-		 SELECT currency_id
-		 FROM   currency
-		 ) c ON c.currency_id = a.currency
-		 LEFT  JOIN (
-        SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount, AVG(contracted_Rate) as Avgrate
-        FROM   forward_coverdetails
-        GROUP  BY 1
-        ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref  WHERE `a`.`currency` = '.$curid.' AND `a`.`exposureType` = 2 GROUP BY 1';
-		 $query = $this->db->query($sql);
+        $sql = 'SELECT DATE_FORMAT(dueDate, "%Y-%m") AS month,
+        SUM(CASE WHEN a.exposureType = 1 THEN 0 ELSE amountinFC END) AS UnderlyingExposures,
+        SUM(CASE WHEN a.exposureType = 2 THEN amountinFC ELSE 0 END) AS SumImportsType,
+        SUM(CASE WHEN a.exposureType = 3 THEN amountinFC ELSE 0 END) AS SumBuyersCreditType,
+        SUM(CASE WHEN a.exposureType = 4 THEN amountinFC ELSE 0 END) AS CapitalPaymentsType,
+        SUM(CASE WHEN a.exposureType = 5 THEN amountinFC ELSE 0 END) AS OtherPaymentsType,
+        SUM(frcw.ToatalforwardAmount) AS ToatalforwardAmount,
+        amount_FC
+        FROM transactiondetails AS a
+        LEFT JOIN (
+            SELECT currency_id
+            FROM currency
+        ) c ON c.currency_id = a.currency
+        LEFT JOIN (
+            SELECT underlying_exposure_ref,
+                amount_FC,
+                SUM(amount_FC) AS ToatalforwardAmount,
+                AVG(contracted_Rate) AS Avgrate
+            FROM forward_coverdetails
+            GROUP BY 1
+        ) frcw ON a.transaction_id = frcw.underlying_exposure_ref
+        WHERE a.currency = '.$curid.'
+        AND a.exposureType != 1
+        GROUP BY 1';
+         $query = $this->db->query($sql);
         $result = $query->getResultArray();
         return $result;
 	}
@@ -117,11 +129,11 @@ class TransactionModel extends Model
 		 FROM   currency
 		 ) c ON c.currency_id = a.currency
 		 LEFT  JOIN (
-        SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount, AVG(contracted_Rate) as Avgrate
+        SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount
         FROM   forward_coverdetails
         GROUP  BY 1
         ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref  WHERE `a`.`currency` = '.$curid.' AND `a`.`exposureType` = 1 GROUP BY 1';
-		 $query = $this->db->query($sql);
+        $query = $this->db->query($sql);
         $result = $query->getResultArray();
         return $result;
 	}
