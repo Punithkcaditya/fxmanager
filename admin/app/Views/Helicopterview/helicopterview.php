@@ -92,6 +92,7 @@ class="form-control" required>
 	$hedgedpositionrate = $value["Q1"] != "" ? explode(",", $value["Q1"])[1] : 0;
 	$openpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : 0;
 	$mtmrate_1 = $value["Q1"] != "" ? $expotrate : 1;
+
 	$potential_portfolio_1 = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_1);
 	$exports_1 = ($value["Q1"] != "" ?  explode(",", $value["Q1"])[0] : "0");
 	$target_value_1 = ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "0");
@@ -125,6 +126,7 @@ class="form-control" required>
 	$openpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : 0;
 	$mtmrate_3 = $value["Q3"] != "" ? $expotrate : 1;
 	$potential_portfolio_3 = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_3);
+	
 	$exports_3 = ($value["Q3"] != "" ?  explode(",", $value["Q3"])[0] : "0");
 	$target_value_3 = ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "0");
 	$target_rate_3 = ($value["Q3"] != "" ?  explode(",", $value["Q3"])[2] : "0");
@@ -172,7 +174,7 @@ class="form-control" required>
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
 	. number_format($hedged_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
-	. $spotrateexports  . "</td><td>"
+	. $expotrate  . "</td><td>"
 	. $gainloss_sum  . "</td><td>"
 	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
@@ -395,7 +397,7 @@ class="form-control" required>
 	. number_format($hedgedperctage_sum, 4) . "</td><td>"
 	. number_format($hedged_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
-	. $spotrateimports  . "</td><td>"
+	. $importspotrate  . "</td><td>"
 	. $gainloss_sum  . "</td><td>"
 	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
@@ -619,7 +621,7 @@ class="form-control" required>
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
 	. number_format($hedged_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
-	. $spotrateexports . "</td><td>"
+	. $importspotrate . "</td><td>"
 	. $gainloss_sum  . "</td><td>"
 	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
@@ -843,7 +845,7 @@ class="form-control" required>
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
 	. number_format($hedged_sum, 4) . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
-	. $spotrateexports . "</td><td>"
+	. $importspotrate . "</td><td>"
 	. $gainloss_sum  . "</td><td>"
 	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
@@ -1066,7 +1068,7 @@ class="form-control" required>
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
 	. number_format($hedged_sum, 4) . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
-	. $spotrateexports  . "</td><td>"
+	. $importspotrate  . "</td><td>"
 	. $gainloss_sum  . "</td><td>"
 	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
