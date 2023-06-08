@@ -9,6 +9,8 @@ use Config\Database;
 use App\Models\TransactionModel as Transaction_Model;
 use App\Models\ForwardCoverdetails as ForwardCoverdetails_Model;
 use App\Models\CurrencyModel as Currency_Model;
+use App\Controllers\MtmOperatingrisk;
+
 class Helicopterview extends BaseController
 {
 protected $request;
@@ -51,8 +53,9 @@ public function __construct()
 
 	public function index()
 	{
-	$curid = isset($_GET['currencyieshelicopterview']) ? $_GET['currencyieshelicopterview'] : 5; 
-
+	$mtmOperatingrisk = new MtmOperatingrisk();
+	$curid = isset($_GET['currencyieshelicopterview']) ? $_GET['currencyieshelicopterview'] : 2; 
+	$data['style'] = isset($_GET['currencyieshelicopterview']) ? 'block' : 'none'; 
 	$session = session();
 	$pot = json_decode(json_encode($session->get("userdata")), true);
 	if (empty($pot)) {
@@ -74,13 +77,19 @@ public function __construct()
 	->findAll();
 	$data["helicoptertabs"] = $this->transaction_model->helicopterviewimport($curid);
 	$data["helicoptertabsexport"] = $this->transaction_model->helicopterviewexport($curid);
-	
 	$data["helicoptertabsbuyersCredit"] = $this->transaction_model->helicopterviewbuyersCredit($curid);
 	$data["helicoptertabsbuyersmisc"] = $this->transaction_model->helicopterviewbuyersmisc($curid);
 	$data["helicoptertabscapitalpaymnts"] = $this->transaction_model->helicoptertabscapitalpaymnts($curid);
-	$data['title'] = 'FX Exposure Summary as on '.date('d-M-y');
+	$data['title'] = isset($_GET['currencyieshelicopterview']) ? 'Helicopter View as on '.date('d-M-y') : 'Select Currency To View Helicopter View';
 	$data['pade_title1'] = 'Currency';
 	$data['i'] = 1;
+	$currentDate = new \DateTime();  // Create a DateTime object representing the current date
+	$currentDate->modify('+30 days');  // Add 30 days to the current date
+	$futureDate = $currentDate->format('Y-m-d');
+	$spotrateimportsval = $mtmOperatingrisk->forrwardCalculator($curid, 2, $futureDate);
+	$data['spotrateimports']  = floatval(json_decode($spotrateimportsval)->result->spot_rate);
+	$spotratexportsval = $mtmOperatingrisk->forrwardCalculator($curid, 1, $futureDate);
+	$data['spotrateexports']  = floatval(json_decode($spotratexportsval)->result->spot_rate);
 	$data['pade_title5'] = 'Forward/ Option';
 	$data["page_heading"] = "Helicopterview";
 	$data["table_heading"] = "Amount outstanding in USD";

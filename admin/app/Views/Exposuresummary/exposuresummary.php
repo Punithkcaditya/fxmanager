@@ -54,7 +54,7 @@
 <div class="accordion-header " data-toggle="collapse" data-target="#panel-body-2">
 <h4>EXPORT</h4>
 </div>
-<div class="accordion-body collapse border border-top-0 text-sm" id="panel-body-2" data-parent="#accordion">
+<div class="accordion-body show collapse border border-top-0 text-sm" id="panel-body-2" data-parent="#accordion">
 <div class='table-responsive'>
 <table id='example1' class='table table-striped table-bordered w-100 text-nowrap'>
 <thead>
@@ -154,7 +154,7 @@ $perctcoveredexpt[$i][$j] = 0;
 <div class="accordion-header" data-toggle="collapse" data-target="#panel-body-1">
 <h4>IMPORT</h4>
 </div>
-<div class="accordion-body collapse show border border-top-0 text-sm" id="panel-body-1" data-parent="#accordion">
+<div class="accordion-body collapse  border border-top-0 text-sm" id="panel-body-1" data-parent="#accordion">
 <?php 				
 echo "<div class='table-responsive'><table id='example' class='table table-striped table-bordered w-100 text-nowrap'>";
 		echo "<thead><tr>";
