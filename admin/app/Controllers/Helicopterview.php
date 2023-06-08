@@ -66,7 +66,7 @@ public function __construct()
 	$data["page_title"] = "Helicopterview Summary";
 	$data["session"] = $session;
 	if ($this->permission[0] > 0) {
-	$data["link"] = "addnewroles";
+	$data["link"] = "#";
 	} else {
 	$data["link"] = "#";
 	}

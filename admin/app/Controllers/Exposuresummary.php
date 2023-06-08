@@ -64,7 +64,7 @@ class Exposuresummary extends BaseController
         $data["page_title"] = "Exposure Summary";
         $data["session"] = $session;
         if ($this->permission[0] > 0) {
-            $data["link"] = "addnewroles";
+            $data["link"] = "#";
         } else {
             $data["link"] = "#";
         }
