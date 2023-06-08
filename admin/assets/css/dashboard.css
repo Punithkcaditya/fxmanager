@@ -11342,6 +11342,25 @@ img.profile-photo-lg {
 	.page-header .dropdown-menu.show {
 		left:0px !important;
 	}
+
+	.container-fluid.moblieviews{
+		padding-right: 5px !important;
+    	 padding-left: 5px !important;
+	}
+
+	.d-sm-none{
+		display: none !important;
+	}
+	.card-body.newcardstyle{
+		padding: 0.575rem !important;
+	}
+	.card-body.cardbodynopadding{
+		padding: 0px !important;
+	}
+	
+	.card-body.paddingtop-mobilestyle{
+		padding-top: unset !important;
+	}
 }
 .construction-limiter .progress-label span{
 	background:rgba(0,0,0,.1);

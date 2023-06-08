@@ -1,13 +1,13 @@
 
 <div class="container-fluid pt-8">
 <?= $this->include('bottomtopbar/topbar') ?>
-<div class="card-body">
+<div class="card-body paddingtop-mobilestyle">
 <div class="nav-wrapper p-0">
 <?php echo $this->include('message/message') ?>  
 </div>
 </div>
 <div class="card shadow ">
-<div class="card-body">
+<div class="card-body newcardstyle">
 
 <div class="tab-content" id="myTabContent">
 
@@ -27,13 +27,13 @@ class="form-control" required>
 </select>
 </div>
 </div>
-<div class="col-md-3 col-sm-12">
+<div class="col-md-3 d-sm-none">
 <label class="form-label"></label>
 <div class="form-group mt-3">
 	<!-- <label class="form-label card-title">spot ref.</label> -->
 </div>
 </div>
-<div class="col-md-3 col-sm-12">
+<div class="col-md-3 d-sm-none">
 <label class="form-label"></label>
 <div class="form-group mt-3">
 	<!-- <label class="form-label card-title">76.7000</label> -->
@@ -48,7 +48,7 @@ class="form-control" required>
 <div class="card-header">
 	<h2 class="mb-0">MTM - Operating Risk</h2>
 </div>
-<div class="card-body">
+<div class="card-body cardbodynopadding">
 
 
 <!-- export start -->
