@@ -60,17 +60,38 @@ class="form-control" required>
 	<?php 				
 	echo "<div class='table-responsive'><table id='example1' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
-	echo "<th>-</th>";
-	echo "<th>Exposure</th>";
-	echo "<th>Target Value</th>";
-	echo "<th>Target Rate</th>";
-	echo "<th>Hedged Amount</th>";
-	echo "<th>Hedged  %</th>";
-	echo "<th>Hedged Rate</th>";
-	echo "<th>Open Amount FC</th>";
-	echo "<th>MTM Rate</th>";
-	echo "<th>Open Details - Gain / Loss</th>";
-	echo "<th>Potential Gain / Loss on the Portfolio</th>";
+	$subheadings = array(
+		"-",
+		"Exposure",
+		"Target Value",
+		"Target Rate",
+		"Hedged %",
+		"Hedged Amount",
+		"Hedged Rate",
+		"Open Amount FC",
+		"MTM Rate",
+		"Open Details - Gain / Loss",
+		"Potential Gain / Loss on the Portfolio"
+	);
+
+	$mainheadings = array(
+		array("colspan" => "5", "content" => ""),
+		array("colspan" => "2", "content" => "Hedged Position"),
+		array("colspan" => "3", "content" => "Open Position"),
+		array("colspan" => "1", "content" => ""),
+	);
+
+	foreach ($mainheadings as  $heading) {
+		echo "<td colspan='" . $heading['colspan'] . "' class='text-center'><h3>" . $heading['content'] . "</h3></td>";
+		} 
+
+	echo "</tr><tr>";
+
+	foreach ($subheadings as $heading) {
+		echo "<th>".$heading."</th>";
+	}
+	
+
 	echo "</tr></thead><tbody>";
 	$expotrate = isset($spotrateexports) ?  $spotrateexports : 1;
 	foreach($helicoptertabsexport as $row => $value) {
@@ -170,8 +191,8 @@ class="form-control" required>
 	echo "<td>Exports</td><td>" . $exports_sum  . "</td>
 	<td>" . $targetvalue_sum  . "</td><td>"
 	. number_format($targetrate_sum, 4) . "</td><td>"
-	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedged_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
 	. $expotrate  . "</td><td>"
@@ -189,8 +210,8 @@ class="form-control" required>
 	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
 	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? $expotrate  : "-")  . "</td><td>"
@@ -208,8 +229,8 @@ class="form-control" required>
 	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
 	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? $expotrate  : "-")  . "</td><td>"
@@ -227,8 +248,8 @@ class="form-control" required>
 	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
 	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? $expotrate  : "-")  . "</td><td>"
@@ -246,8 +267,8 @@ class="form-control" required>
 	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
 	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? $expotrate : "-")  . "</td><td>"
@@ -287,18 +308,35 @@ class="form-control" required>
 	<?php 				
 	echo "<div class='table-responsive'><table id='example' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
-	echo "<th>-</th>";
-	echo "<th>Exposure</th>";
-	echo "<th>Target Value</th>";
-	echo "<th>Target Rate</th>";
-	echo "<th>Hedged Amount</th>";
-	echo "<th>Hedged  %</th>";
-	echo "<th>Hedged Rate</th>";
-	echo "<th>Open Amount FC</th>";
-	echo "<th>MTM Rate</th>";
-	echo "<th>Open Details - Gain / Loss</th>";
-	echo "<th>Potential Gain / Loss on the Portfolio</th>";
+	$subheadings = array(
+		"-",
+		"Exposure",
+		"Target Value",
+		"Target Rate",
+		"Hedged %",
+		"Hedged Amount",
+		"Hedged Rate",
+		"Open Amount FC",
+		"MTM Rate",
+		"Open Details - Gain / Loss",
+		"Potential Gain / Loss on the Portfolio"
+	);
+	$mainheadings = array(
+		array("colspan" => "5", "content" => ""),
+		array("colspan" => "2", "content" => "Hedged Position"),
+		array("colspan" => "3", "content" => "Open Position"),
+		array("colspan" => "1", "content" => ""),
+	);
+	foreach ($mainheadings as  $heading) {
+		echo "<td colspan='" . $heading['colspan'] . "' class='text-center'><h3>" . $heading['content'] . "</h3></td>";
+		} 
+
+	echo "</tr><tr>";
+	foreach ($subheadings as $heading) {
+		echo "<th>".$heading."</th>";
+	}
 	echo "</tr></thead><tbody>";
+
 	$importspotrate = isset($spotrateimports) ?  $spotrateimports : 1;
 	foreach($helicoptertabs as $row => $value) {
 	$exports_sum = 0;
@@ -393,8 +431,8 @@ class="form-control" required>
 	echo "<td>Imports</td><td>" . $exports_sum  . "</td>
 	<td>" . $targetvalue_sum  . "</td><td>"
 	. number_format($targetrate_sum, 4) . "</td><td>"
-	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedgedperctage_sum, 4) . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedged_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
 	. $importspotrate  . "</td><td>"
@@ -412,8 +450,8 @@ class="form-control" required>
 	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
 	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -431,8 +469,8 @@ class="form-control" required>
 	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
 	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -450,8 +488,8 @@ class="form-control" required>
 	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
 	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ?  number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4): "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4): "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -469,8 +507,8 @@ class="form-control" required>
 	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
 	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[2], 4): "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -511,17 +549,35 @@ class="form-control" required>
 	<?php 				
 	echo "<div class='table-responsive'><table id='example3' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
-	echo "<th></th>";
-	echo "<th>Exposure</th>";
-	echo "<th>Target Value</th>";
-	echo "<th>Target Rate</th>";
-	echo "<th>Hedged Amount</th>";
-	echo "<th>Hedged  %</th>";
-	echo "<th>Hedged Rate</th>";
-	echo "<th>Open Amount FC</th>";
-	echo "<th>MTM Rate</th>";
-	echo "<th>Open Details - Gain / Loss</th>";
-	echo "<th>Potential Gain / Loss on the Portfolio</th>";
+
+	$subheadings = array(
+		"-",
+		"Exposure",
+		"Target Value",
+		"Target Rate",
+		"Hedged %",
+		"Hedged Amount",
+		"Hedged Rate",
+		"Open Amount FC",
+		"MTM Rate",
+		"Open Details - Gain / Loss",
+		"Potential Gain / Loss on the Portfolio"
+	);
+	$mainheadings = array(
+		array("colspan" => "5", "content" => ""),
+		array("colspan" => "2", "content" => "Hedged Position"),
+		array("colspan" => "3", "content" => "Open Position"),
+		array("colspan" => "1", "content" => ""),
+	);
+	foreach ($mainheadings as  $heading) {
+		echo "<td colspan='" . $heading['colspan'] . "' class='text-center'><h3>" . $heading['content'] . "</h3></td>";
+		} 
+
+	echo "</tr><tr>";
+	foreach ($subheadings as $heading) {
+		echo "<th>".$heading."</th>";
+	}
+
 	echo "</tr></thead><tbody>";
 	foreach($helicoptertabsbuyersCredit as $row => $value) {
 	$exports_sum = 0;
@@ -617,8 +673,8 @@ class="form-control" required>
 	echo "<td>Buyers Credit</td><td>" . $exports_sum  . "</td>
 	<td>" . $targetvalue_sum  . "</td><td>"
 	. number_format($targetrate_sum, 4)  . "</td><td>"
-	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedged_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
 	. $importspotrate . "</td><td>"
@@ -636,8 +692,8 @@ class="form-control" required>
 	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
 	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4): "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -655,8 +711,8 @@ class="form-control" required>
 	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
 	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -674,8 +730,8 @@ class="form-control" required>
 	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
 	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -693,8 +749,8 @@ class="form-control" required>
 	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
 	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4): "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -734,17 +790,35 @@ class="form-control" required>
 	<?php 				
 	echo "<div class='table-responsive'><table id='example4' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
-	echo "<th>-</th>";
-	echo "<th>Exposure</th>";
-	echo "<th>Target Value</th>";
-	echo "<th>Target Rate</th>";
-	echo "<th>Hedged Amount</th>";
-	echo "<th>Hedged  %</th>";
-	echo "<th>Hedged Rate</th>";
-	echo "<th>Open Amount FC</th>";
-	echo "<th>MTM Rate</th>";
-	echo "<th>Open Details - Gain / Loss</th>";
-	echo "<th>Potential Gain / Loss on the Portfolio</th>";
+
+	$subheadings = array(
+		"-",
+		"Exposure",
+		"Target Value",
+		"Target Rate",
+		"Hedged %",
+		"Hedged Amount",
+		"Hedged Rate",
+		"Open Amount FC",
+		"MTM Rate",
+		"Open Details - Gain / Loss",
+		"Potential Gain / Loss on the Portfolio"
+	);
+	$mainheadings = array(
+		array("colspan" => "5", "content" => ""),
+		array("colspan" => "2", "content" => "Hedged Position"),
+		array("colspan" => "3", "content" => "Open Position"),
+		array("colspan" => "1", "content" => ""),
+	);
+	foreach ($mainheadings as  $heading) {
+		echo "<td colspan='" . $heading['colspan'] . "' class='text-center'><h3>" . $heading['content'] . "</h3></td>";
+		} 
+
+	echo "</tr><tr>";
+	foreach ($subheadings as $heading) {
+		echo "<th>".$heading."</th>";
+	}
+
 	echo "</tr></thead><tbody>";
 	foreach($helicoptertabscapitalpaymnts as $row => $value) {
 	$exports_sum = 0;
@@ -841,8 +915,8 @@ class="form-control" required>
 	echo "<td>Capital Payments</td><td>" . $exports_sum  . "</td>
 	<td>" . $targetvalue_sum  . "</td><td>"
 	. number_format($targetrate_sum, 4) . "</td><td>"
-	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
 	. number_format($hedged_sum, 4) . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
 	. $importspotrate . "</td><td>"
@@ -860,8 +934,8 @@ class="form-control" required>
 	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
 	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -879,8 +953,8 @@ class="form-control" required>
 	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
 	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -898,8 +972,8 @@ class="form-control" required>
 	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
 	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4): "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -917,8 +991,8 @@ class="form-control" required>
 	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
 	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4): "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -959,17 +1033,34 @@ class="form-control" required>
 	<?php 				
 	echo "<div class='table-responsive'><table id='example5' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
-	echo "<th>-</th>";
-	echo "<th>Exposure</th>";
-	echo "<th>Target Value</th>";
-	echo "<th>Target Rate</th>";
-	echo "<th>Hedged Amount</th>";
-	echo "<th>Hedged  %</th>";
-	echo "<th>Hedged Rate</th>";
-	echo "<th>Open Amount FC</th>";
-	echo "<th>MTM Rate</th>";
-	echo "<th>Open Details - Gain / Loss</th>";
-	echo "<th>Potential Gain / Loss on the Portfolio</th>";
+	$subheadings = array(
+		"-",
+		"Exposure",
+		"Target Value",
+		"Target Rate",
+		"Hedged %",
+		"Hedged Amount",
+		"Hedged Rate",
+		"Open Amount FC",
+		"MTM Rate",
+		"Open Details - Gain / Loss",
+		"Potential Gain / Loss on the Portfolio"
+	);
+	$mainheadings = array(
+		array("colspan" => "5", "content" => ""),
+		array("colspan" => "2", "content" => "Hedged Position"),
+		array("colspan" => "3", "content" => "Open Position"),
+		array("colspan" => "1", "content" => ""),
+	);
+	foreach ($mainheadings as  $heading) {
+		echo "<td colspan='" . $heading['colspan'] . "' class='text-center'><h3>" . $heading['content'] . "</h3></td>";
+		} 
+
+	echo "</tr><tr>";
+	foreach ($subheadings as $heading) {
+		echo "<th>".$heading."</th>";
+	}
+
 	echo "</tr></thead><tbody>";
 	foreach($helicoptertabsbuyersmisc as $row => $value) {
 	$exports_sum = 0;
@@ -1065,8 +1156,8 @@ class="form-control" required>
 	<td>" . $targetvalue_sum  . "</td><td>"
 	. number_format($targetrate_sum, 4)  . "</td><td>"
 	. $hedged_amount_sum  . "</td><td>"
-	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
 	. number_format($hedged_sum, 4) . "</td><td>"
+	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
 	. $openamountfc_sum  . "</td><td>"
 	. $importspotrate  . "</td><td>"
 	. $gainloss_sum  . "</td><td>"
@@ -1083,8 +1174,8 @@ class="form-control" required>
 	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
 	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
 	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -1102,8 +1193,8 @@ class="form-control" required>
 	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
 	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
 	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -1121,8 +1212,8 @@ class="form-control" required>
 	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
 	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4): "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
 	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
@@ -1140,8 +1231,8 @@ class="form-control" required>
 	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
 	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[2], 4) : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
 	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
