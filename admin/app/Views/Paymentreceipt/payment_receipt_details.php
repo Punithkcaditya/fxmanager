@@ -19,49 +19,55 @@
 				
 				<div class="row">
 					<div class="col-md-3 col-sm-12">
-					<div class="form-group"><label class="form-label"><?php echo $pade_title1 ?></label>
-				   <input id="bankname<?php echo  $i?>" type="text" name="bankname" placeholder="Bank Name"  class="form-control"  required/>
-
-					</div>
-					<input type="hidden" name="banknamehidd" id="banknamehidd"  />
-					<input type="hidden" name="value_INRhidd" id="value_INRhidd"  />
-					<input type="hidden" name="target_Valuehidd" id="target_Valuehidd"  />
-					<input type="hidden" name="exposurecurrencyhidd" id="exposurecurrencyhidd"  />
-					<input type="hidden" name="amountfchidd" id="amountfchidd"  />
+						<!-- Underlying Exposure Start -->
+						<div class="form-group"><label class="form-label"><?php echo $pade_title6 ?></label> 
+						<select class="form-control select2 refnom w-100" name="exposurerefno" id="exposurerefno<?php echo $i?>" required>
+						<option value="">Select Underlying Exposure Ref. No.</option>
+						<?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' ><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?>
+						</select>
+						</div>
+						<!-- Underlying Exposure End -->
+						<!-- dateof_Settlement -->
+						<div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label> 
+						<input id="dateof_Settlement<?=$i?>" name="dateof_Settlement" class="form-control datepicker" placeholder="MM/DD/YYYY" type="text" required>
+						</div>
+						<!-- dateof_Settlement -->
+						
+						<input type="hidden" name="banknamehidd" id="banknamehidd"  />
+						<input type="hidden" name="value_INRhidd" id="value_INRhidd"  />
+						<input type="hidden" name="target_Valuehidd" id="target_Valuehidd"  />
+						<input type="hidden" name="exposurecurrencyhidd" id="exposurecurrencyhidd"  />
+						<input type="hidden" name="amountfchidd" id="amountfchidd"  />
 						<input type="hidden" name="count_items" id="count_items" value="<?php echo  $i?>" />
-						<div class="form-group"><label class="form-label"><?php echo $pade_title5 ?></label> 
-							<select class="form-control w-100" name="exposurecurrency" id="exposurecurrency<?php echo $i?>" required>
-							<option value="">Exposure Currency</option>
-							<?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' ><?php echo $row['Currency'] ?></option> <?php endforeach; ?>
-							</select>
-						</div>
+						
 					</div>
-					<div class="col-md-3 col-sm-12">
-						   <div class="form-group"><label class="form-label"><?php echo $pade_title6 ?></label> 
-							<select class="form-control select2 refnom w-100" name="exposurerefno" id="exposurerefno<?php echo $i?>" required>
-							<option value="">Select Underlying Exposure Ref. No.</option>
-							<?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' ><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?>
-							</select>
-						</div>
-					<div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label> 
-					<input id="dateof_Settlement<?=$i?>" name="dateof_Settlement" class="form-control datepicker" placeholder="MM/DD/YYYY" type="text" required>
-				
-					</div>
-					 
-					</div>
-					<div class="col-md-3 col-sm-12">
 
-					<div class="form-group"><label class="form-label"><?php echo $pade_title9 ?></label>
-					<input id="value_INR<?php echo  $i?>" type="number" name="value_INR" placeholder="Value INR" class="form-control" required="">
-					</div>
-					<div class="form-group"><label class="form-label"><?php echo $pade_title8 ?></label>
-					<input id="amountfc<?php echo  $i?>" type="number" name="amountfc" placeholder="Amount (FC)" class="form-control" required="">
-					</div>
-					</div>
 					<div class="col-md-3 col-sm-12">
-					<div class="form-group"><label class="form-label"><?php echo $pade_title7 ?></label>
-					<input id="target_Value<?=$i?>" type="number" placeholder="Target Value" name="target_Value" class="form-control"  required/>
+						<!-- Bank Name -->
+						<div class="form-group"><label class="form-label"><?php echo $pade_title1 ?></label>
+						<input id="bankname<?php echo  $i?>" type="text" name="bankname" placeholder="Bank Name"  class="form-control"  required/>
+						</div>
+						<!-- Bank Name -->
+						
 					</div>
+
+					<div class="col-md-3 col-sm-12">
+						<!-- Exposure Currency  -->
+						<div class="form-group"><label class="form-label"><?php echo $pade_title5 ?></label> 
+						<select class="form-control w-100" name="exposurecurrency" id="exposurecurrency<?php echo $i?>" required>
+						<option value="">Exposure Currency</option>
+						<?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' ><?php echo $row['Currency'] ?></option> <?php endforeach; ?>
+						</select>
+						</div>
+						<!-- Exposure Currency End -->
+					</div>
+
+					<div class="col-md-3 col-sm-12">
+						<!-- Amount in FC -->
+					<div class="form-group"><label class="form-label"><?php echo $pade_title8 ?></label>
+						<input id="amountfc<?php echo  $i?>" type="number" name="amountfc" placeholder="Amount (FC)" class="form-control" required="">
+						</div>
+						<!-- Amount in FC -->
 					</div>
 					
 					

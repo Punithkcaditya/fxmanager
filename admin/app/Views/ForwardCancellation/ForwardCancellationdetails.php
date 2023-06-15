@@ -209,7 +209,9 @@ attachChangeListeners();
 i++;
 $('.datepicker').datepicker({
 showOtherMonths: true,
-selectOtherMonths: true
+selectOtherMonths: true,
+format: "dd/mm/yyyy",
+autoclose: true
 });
 });
 

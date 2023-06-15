@@ -120,7 +120,8 @@ class Transactiondetails extends BaseController
             }
             }
             foreach ($result as $key => $sid) {
-            $resoval = $this->forrwardCalculator($sid[3], $sid[6], $sid[5]);
+                $formatedduedate = $this->convertDateFormat($sid[5]);
+            $resoval = $this->forrwardCalculator($sid[3], $sid[6], $formatedduedate);
             $response = json_decode($resoval);
             try {           
             $data = [
@@ -128,8 +129,8 @@ class Transactiondetails extends BaseController
 			'counterPartycountry' => $sid[1],
             'counterParty' => $sid[2],
             'exposureType' => $sid[3],
-            'dateofInvoice' => date("Y-m-d", strtotime($sid[4])),
-            'dueDate' => date("Y-m-d", strtotime($sid[5])),
+            'dateofInvoice' => $this->convertDateFormat($sid[4]),
+            'dueDate' => $formatedduedate,
             'currency' => $sid[6],
             'targetRate' => $sid[7],
             'spot_rate' => $response->result->spot_rate,
@@ -140,6 +141,9 @@ class Transactiondetails extends BaseController
             ];
             $saved = $this->transaction_model->save($data);
             } catch (\Exception$e) {
+                echo '<pre>';
+                print_r($e);
+                exit;
                 $session->setFlashdata('error', 'No Data for Selected Due Date');
                 return redirect()->to('transactiondetails');
             }
@@ -211,6 +215,18 @@ class Transactiondetails extends BaseController
                 } catch (\Exception$e) {
                     return "";
                 }            
+            }
+
+
+            
+            function convertDateFormat($dateString)
+            {
+            $date = date_create_from_format('d/m/Y', $dateString);
+            if ($date) {
+            return date_format($date, 'Y-m-d');
+            } else {
+            return '1970-01-01'; // Return false if the date format is invalid
+            }
             }
         
 
