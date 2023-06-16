@@ -113,10 +113,10 @@ class ForwardCancellation extends BaseController
             'deal_no' => $sid[0],
             'utilised_forward_amount' => $sid[1],
             'utilization_rate' => $sid[2],
-            'utilization_date' => date("Y-m-d", strtotime($sid[3])),
+            'utilization_date' => $this->convertDateFormat($sid[3]),
             'cancelled_forward_amount' => $sid[4],
             'cancellation_rate' => $sid[5],
-            'cancellation_date' => date("Y-m-d", strtotime($sid[6])),
+            'cancellation_date' => $this->convertDateFormat($sid[6]),
             'created_date' => date('Y-m-d'),
             ];
 
@@ -128,5 +128,16 @@ class ForwardCancellation extends BaseController
             $session->setFlashdata('error', 'Fill All Fields');
             }
             return redirect()->to('forwardcancellationutilizationdetails');
+            }
+
+
+            function convertDateFormat($dateString)
+            {
+            $date = date_create_from_format('d/m/Y', $dateString);
+            if ($date) {
+            return date_format($date, 'Y-m-d');
+            } else {
+            return '1970-01-01'; // Return false if the date format is invalid
+            }
             }
 }

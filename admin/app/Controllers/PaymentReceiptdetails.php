@@ -140,7 +140,7 @@ class PaymentReceiptdetails extends BaseController
 				$udata["spotamount_Rate"] = $spotAmountrate;
 				$udata["exposure_Currency"] = $exposurecurrencyhidd;
 				$udata["bank_Name"] = $banknamehidd;
-				$udata["dateof_Settlement"] = date("Y-m-d", strtotime($dateof_Settlement));
+				$udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
 				$saved = $this->paymentreceiptdetails_model->save($udata);
 			}
 			(empty($saved)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
@@ -169,5 +169,16 @@ class PaymentReceiptdetails extends BaseController
 			}, $array1, $array2, $array3);
 			return $result;
 			}
+
+
+			function convertDateFormat($dateString)
+            {
+            $date = date_create_from_format('d/m/Y', $dateString);
+            if ($date) {
+            return date_format($date, 'Y-m-d');
+            } else {
+            return '1970-01-01'; // Return false if the date format is invalid
+            }
+            }
 			
 }

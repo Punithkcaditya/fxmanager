@@ -125,7 +125,7 @@
 						
 						<div class="form-group">
 						<label class="form-label"><?php echo $pade_title18 ?></label>
-						<input id="spotAmountrate<?php echo  $i?>" type="number" name="spotAmountrate" placeholder="Rate" class="form-control" required="">
+						<input id="spotAmountrate<?php echo  $i?>" type="number" name="spotAmountrate" step=".0001" placeholder="Rate" class="form-control" required="">
 						</div>
 							</div>
 						</div>
@@ -261,6 +261,7 @@ $(function(e) {
 			$('#value_INRhidd').val(arr['targetRate']*arr['amountinFC']);
 			$('#amountfc1').val(arr['amountinFC']);
 			$('#amountfchidd').val(arr['amountinFC']);
+			$('#spotAmount1').val(arr['amountinFC']);
 			$('#bankname1').val(arr['bank_name']);
 			$('#banknamehidd').val(arr['bank_name']);
 			$('#exposurecurrency1').val(arr['currency']);
@@ -294,8 +295,8 @@ $(function(e) {
 		 success: function(data) {
 			var arr = $.parseJSON(data);
 			var data="<div class='row'><div class='col-lg-6'><div class='form-group'><label class='form-label'>Forward Amount</label>";
-			data += " <input  type='number' value='"+arr['amount_FC']+"' name='forwardAmount[]' placeholder='Forward Amount' class='form-control'>";
-			data += "</div> </div> <div class='col-lg-6'> <div class='form-group'> <label class='form-label'>Rate</label> <input  type='number' name='forwardamountRate[]' placeholder='Rate' class='form-control' value='"+arr['contracted_Rate']+"'>";
+			data += " <input  type='number' value='"+arr['amount_FC']+"' name='forwardAmount[]' placeholder='Forward Amount' class='form-control' readonly>";
+			data += "</div> </div> <div class='col-lg-6'> <div class='form-group'> <label class='form-label'>Rate</label> <input  type='number' name='forwardamountRate[]' placeholder='Rate' class='form-control' value='"+arr['contracted_Rate']+"' readonly>";
 			data += "</div></div></div>";
 			$('#addnewrow').append(data);
 			sum += parseInt(arr['amount_FC']);	
