@@ -9,6 +9,7 @@ use Config\Database;
 use App\Models\TransactionModel as Transaction_Model;
 use App\Models\ForwardCoverdetails as ForwardCoverdetails_Model;
 use App\Models\CurrencyModel as Currency_Model;
+use App\Models\OpenDetailsModel as OpenDetails_Model;
 class ForwardCoverdetails extends BaseController
 {
             protected $request;
@@ -22,6 +23,7 @@ class ForwardCoverdetails extends BaseController
             $this->transaction_model = new Transaction_Model();
             $this->forwardcoverdetails_model = new ForwardCoverdetails_Model();
             $this->currency_model = new Currency_Model();
+            $this->opendetails_model = new OpenDetails_Model();
             $pot = json_decode(json_encode($session->get("userdata")), true);
             if (empty($pot)) {
             return redirect()->to("/");
@@ -98,7 +100,6 @@ class ForwardCoverdetails extends BaseController
             if ($this->request->getMethod() == 'post') {
             extract($this->request->getPost());
             }
-			
             $input = $this->validate(['dealno' => 'required', 'dealdate' => 'required', 'refno' => 'required', 'fordwardoption' => 'required', 'currencybought' => 'required', 'currencysold' => 'required', 'amountFC' => 'required', 'contractedrate' => 'required' , 'expirydate' => 'required']);
             if (!empty($input)) {
             $result = array_map(null,  $dealno, $dealdate, $refno, $fordwardoption, $currencybought, $currencysold, $amountFC, $contractedrate, $expirydate);
@@ -121,12 +122,22 @@ class ForwardCoverdetails extends BaseController
 			'expiry_date' => $this->convertDateFormat($sid[8]),
             'created_date' => date('Y-m-d'),
             ];
-
-         
-
-            $saved = $this->forwardcoverdetails_model->save($data);
+            $AmountInFc = $this->transaction_model->select('amountinFC')->where('transaction_id',  $sid[2])->first();
+            $totalAmount = $this->opendetails_model->select('open_amount')->where('transactionforeing_id',  $sid[2])->first();
+            if (isset($totalAmount['open_amount'])) {
+                // If a record exists, update the total_amount by adding the new value
+                $totalAmount['open_amount'] -= $sid[6];
+                $dataopendetails = ['open_amount' => $totalAmount['open_amount']];
+                $update =  $this->opendetails_model->where('transactionforeing_id', $sid[2])->set($dataopendetails)->update();
+            }else {
+                $AmountInFc['amountinFC'] -= $sid[6];
+                $dataopendetails = ['open_amount' => $AmountInFc['amountinFC'], 'transactionforeing_id' => $sid[2] ];
+                $this->opendetails_model->save($dataopendetails);
             }
             
+            $saved = $this->forwardcoverdetails_model->save($data);
+        }
+
             (empty($saved)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully');
             } else {
             $session->setFlashdata('error', 'Fill All Fields');

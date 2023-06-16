@@ -10,6 +10,7 @@ use App\Models\TransactionModel as Transaction_Model;
 use App\Models\ForwardCoverdetails as ForwardCoverdetails_Model;
 use App\Models\CurrencyModel as Currency_Model;
 use App\Models\PaymentreceiptdetailsModel as Paymentreceiptdetails_Model;
+use App\Models\OpenDetailsModel as OpenDetails_Model;
 use CodeIgniter\Helpers\DateHelper;
 class PaymentReceiptdetails extends BaseController
 {
@@ -25,6 +26,7 @@ class PaymentReceiptdetails extends BaseController
 		$this->forwardcoverdetails_model = new ForwardCoverdetails_Model();
 		$this->currency_model = new Currency_Model();
 		$this->paymentreceiptdetails_model = new Paymentreceiptdetails_Model();
+        $this->opendetails_model = new OpenDetails_Model();
         $pot = json_decode(json_encode($session->get("userdata")), true);
         if (empty($pot)) {
             return redirect()->to("/");
@@ -53,8 +55,7 @@ class PaymentReceiptdetails extends BaseController
 	
 	 public function index()
     {
-		
-        $session = session();
+		 $session = session();
         $pot = json_decode(json_encode($session->get("userdata")), true);
         if (empty($pot)) {
             return redirect()->to("/");
@@ -143,7 +144,11 @@ class PaymentReceiptdetails extends BaseController
 				$udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
 				$saved = $this->paymentreceiptdetails_model->save($udata);
 			}
-			(empty($saved)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
+            $totalAmount = $this->opendetails_model->select('open_amount')->where('transactionforeing_id',  $exposurerefno)->first();
+            $totalAmount['open_amount'] -= $spotAmount;
+            $dataopendetails = ['open_amount' => $totalAmount['open_amount'], 'isSettled' => 1];
+            $update =  $this->opendetails_model->where('transactionforeing_id', $exposurerefno)->set($dataopendetails)->update();
+			(empty($saved) && empty($update)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
             } else {
             $session->setFlashdata('error', 'Fill All Fields');
             }

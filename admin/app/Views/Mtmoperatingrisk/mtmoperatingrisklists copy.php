@@ -83,10 +83,10 @@
 								$ToatalforwardAmount = $row->ToatalforwardAmount;
 								$Toatalallpayment = $row->Toatalallpayment;
 								$AvgspotamountRate = $row->AvgspotamountRate;
-								$openAmountFC = $row->isSettled ?  $row->open_amount  : $amountinFC-$ToatalforwardAmount;
+								$openAmountFC = $amountinFC-$ToatalforwardAmount;
 								$currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
 								$openAmountINR =  ($openAmountFC*$currentForwardRate);
-								$portfoliovalue = $row->isSettled ? $AvgspotamountRate + $Toatalallpayment : $openAmountINR + ($ToatalforwardAmount*$Avgrate);
+								$portfoliovalue = $openAmountINR + ($ToatalforwardAmount*$Avgrate);
 								$portfoliorate = $portfoliovalue / $amountinFC;
 								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
 								$ganorlose = $portfoliovalue - $targetValueInr;

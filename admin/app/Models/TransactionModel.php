@@ -50,6 +50,12 @@ class TransactionModel extends Model
        
     }
 	
+    public function opendetails()
+    {
+        return $this->hasMany(OpenDetailsModel::class, 'transactionforeing_id', 'transaction_id');
+    }
+
+
 	   public function getdependantData($transaction_id )
     {
         $sql = 'SELECT a.* , bnk.bank_name, am.deal_no, am.forward_coverdetails_id, GROUP_CONCAT(deal_no) as differentdealno, GROUP_CONCAT(forward_coverdetails_id) as differentcoverdetails  FROM transactiondetails as a  LEFT JOIN forward_coverdetails as am ON a.transaction_id  = am.underlying_exposure_ref 
@@ -64,6 +70,7 @@ class TransactionModel extends Model
         $sql = 'SELECT a.*, 
         cr.Currency, cp.counterPartyName,
         ex.exposure_type,
+        op.open_amount, op.isSettled,
         SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
         SUM(frcw.Avgrate) as Avgrate,
         SUM(p.Toatalallpayment) as Toatalallpayment,
@@ -77,6 +84,7 @@ class TransactionModel extends Model
         LEFT JOIN currency as cr ON a.currency   = cr.currency_id
         LEFT JOIN counter_party as cp ON a.counterParty = cp.counterParty_id
         LEFT JOIN exposure_type as ex ON a.exposureType = ex.exposure_type_id
+        LEFT JOIN open_details as op ON a.transaction_id  = op.transactionforeing_id
         LEFT  JOIN (
         SELECT  underlying_exposure_ref, SUM(forward_Amount*forward_Rate)  as Toatalallpayment, (spot_Amount*spotamount_Rate) as AvgspotamountRate
         FROM   paymentreceiptdetails
