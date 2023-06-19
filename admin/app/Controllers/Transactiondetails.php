@@ -113,7 +113,7 @@ class Transactiondetails extends BaseController
             }
             $input = $this->validate(['exposureref' => 'required', 'counterPartycountry' => 'required', 'counter' => 'required', 'exposure' => 'required', 'date' => 'required', 'duedate' => 'required', 'currency' => 'required', 'targetrat' => 'required', 'amountinfc' => 'required', 'bank' => 'required']);
             if (!empty($input)) {
-            $result = array_map(null, $exposureref, $counterPartycountry, $counter, $exposure, $date, $duedate, $currency, $targetrat, $amountinfc, $bank);
+            $result = array_map(null, $exposureref, $counterPartycountry, $counter, $exposure, $date, $duedate, $currency, $targetrat, $amountinfc, $bank, $inr_field_value);
             foreach ($result as $key => $sid) {
             if (empty($result[$key])) {
             unset($result[$key]);
@@ -137,13 +137,11 @@ class Transactiondetails extends BaseController
             'forward_rate' => $response->result->forward_rate,
             'amountinFC' => $sid[8],
             'bank_id' => $sid[9],
+            'inr_target_value' => $sid[10],
             'created_date' => date('Y-m-d'),
             ];
             $saved = $this->transaction_model->save($data);
             } catch (\Exception$e) {
-                echo '<pre>';
-                print_r($e);
-                exit;
                 $session->setFlashdata('error', 'No Data for Selected Due Date');
                 return redirect()->to('transactiondetails');
             }

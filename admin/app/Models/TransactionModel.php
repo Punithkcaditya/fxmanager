@@ -15,7 +15,7 @@ class TransactionModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['exposurereInfo', 'currency', 'dateofInvoice', 'counterParty',  'counterPartycountry', 'exposureType', 'spot_rate', 'forward_rate', 'exposureidentificationdate' , 'bank_id', 'dueDate', 'amountinFC', 'targetRate', 'created_at'];
+    protected $allowedFields    = ['exposurereInfo', 'currency', 'dateofInvoice', 'counterParty',  'counterPartycountry', 'exposureType', 'spot_rate', 'forward_rate', 'exposureidentificationdate' , 'bank_id', 'dueDate', 'amountinFC', 'inr_target_value', 'targetRate', 'created_at'];
 
     // Dates
     protected $useTimestamps = false;
