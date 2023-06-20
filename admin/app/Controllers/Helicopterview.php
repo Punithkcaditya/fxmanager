@@ -84,11 +84,11 @@ public function __construct()
 	$data['pade_title1'] = 'Currency';
 	$data['i'] = 1;
 	$currentDate = new \DateTime();  // Create a DateTime object representing the current date
-	$currentDate->modify('+30 days');  // Add 30 days to the current date
+	$futureDate = $currentDate->modify('+30 days');  // Add 30 days to the current date
 	$futureDate = $currentDate->format('Y-m-d');
-	$spotrateimportsval = $mtmOperatingrisk->forrwardCalculator($curid, 2, $futureDate);
+	$spotrateimportsval = $mtmOperatingrisk->forrwardCalculator(2, $curid, $futureDate);
 	$data['spotrateimports']  = floatval(json_decode($spotrateimportsval)->result->spot_rate);
-	$spotratexportsval = $mtmOperatingrisk->forrwardCalculator($curid, 1, $futureDate);
+	$spotratexportsval = $mtmOperatingrisk->forrwardCalculator( 1, $curid,  $futureDate);
 	$data['spotrateexports']  = floatval(json_decode($spotratexportsval)->result->spot_rate);
 	$data['pade_title5'] = 'Forward/ Option';
 	$data["page_heading"] = "Helicopterview";

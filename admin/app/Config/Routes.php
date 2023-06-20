@@ -79,6 +79,8 @@ $routes->group('admin', static function ($routes) {
 	//Forward Cover Details
 	 $routes->get('forwardcoverdetails', 'ForwardCoverdetails');
 	 $routes->match(['post'], 'saveforwardcoverdetails', 'ForwardCoverdetails::saveforwardcoverdetails');
+	// Currency Sold And Brought
+	$routes->match(['post'], 'dependantcurrency', 'ForwardCoverdetails::dependantcurrency'); 
 	 
 	 //Forward Cancellation Details
 	 $routes->get('forwardcancellationutilizationdetails', 'ForwardCancellation');

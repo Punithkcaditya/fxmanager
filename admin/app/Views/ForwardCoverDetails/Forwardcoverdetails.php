@@ -21,7 +21,7 @@
 <div class="col-md-3 col-sm-12">
 <!-- Underlying Exposure strat -->
 <div class="form-group"><label class="form-label"><?php echo $pade_title7 ?></label>
-<select class="form-control select2 w-100" name="refno[]" id="refno<?php echo $i?>">
+<select class="form-control select2 w-100" name="refno[]" data-currencytype="<?php echo $i?>" id="refno<?php echo $i?>">
 <option>Select Underlying Exposure Ref No.</option>
 <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['transaction_id']) ? 'selected' : '' ?>><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?>
 </select>
@@ -31,9 +31,7 @@
 
 <!-- Currency Bought Start -->
 <div class="form-group"><label class="form-label"><?php echo $pade_title2 ?></label>
-<select class="form-control" name="currencybought[]"id="currencybought<?php echo $i?>">
-<option>Currency Bought</option>
-<?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select>
+<input class="form-control" type="text" placeholder="Currency Bought" name="currencybought[]" id="currencybought<?php echo $i?>" readonly required/>
 </div>
 
 <!-- Currency Bought End -->
@@ -61,15 +59,7 @@
 <!-- Currency Sold Start -->
 
 <div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label> 
-<select name="currencysold[]"
-id="currencysold<?=$i?>"
-class="form-control" required>
-<option value="">-- Choose Sold --
-</option>
-<?php foreach ($currency as $row) : ?>
-<option value="<?php echo $row['currency_id'] ?>" <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option>
-<?php endforeach; ?>
-</select>
+<input class="form-control" type="text" placeholder="Currency Sold" name="currencysold[]" id="currencysold<?php echo $i?>" readonly required/>
 </div>
 
 <!-- Currency Sold End -->
@@ -161,6 +151,10 @@ class="fas fa-minus"></i> Delete Forward Cover Details</button>
 <script type="text/javascript" src="<?php echo base_url('assets/calendar/calendar.js'); ?>"></script>
 
 <script>
+
+
+
+
 // adding more fields
 var i=2;
 numval = 2;
@@ -173,12 +167,47 @@ $('#count_items').val(++counter);
 document.getElementById("count_items").value = counter;
 count=$('#plansec tr').length;
 var data="<tr class='mobcheck'><td><input type='checkbox' class='case'/></td>";
-data += "<td><label class='form-label'>Underlying Exposure Ref.</label><div class='form-group'><select class='form-control select2 refno"+i+" w-100' name='refno[]' id='refno"+i+"'> <option>Select Underlying Exposure Ref No.</option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['transaction_id']) ? 'selected' : '' ?>><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Currency Bought</label><div class='form-group'><select name='currencybought[]' id='currencybought"+i+"'  class='form-control' required> <option value=''>-- Currency Bought -- </option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Expiry Date</label><div class='form-group'><input id='expirydate"+i+"' name='expirydate[]' class='form-control datepicker'  type='text' placeholder='MM/DD/YYYY' required/></div></td>";
-data += "<td><div class='form-group'><label class='form-label'>Forward/ Option</label><select name='fordwardoption[]' id='fordwardoption"+i+"' class='form-control' required><option value=''>Choose type</option><option value='Forward'>Forward</option><option value='Option'>Option</option></select> </div><div class='form-group'><label class='form-label'>Currency Sold</label><select name='currencysold[]' id='currencysold"+i+"' class='form-control' required> <option value=''>Currency Sold</option> <?php foreach ($currency as $row) : ?> <option value='<?php echo $row['currency_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['currency_id']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option> <?php endforeach; ?> </select> </div><div class='heighsvnrem'></div></td>";
+data += "<td><label class='form-label'>Underlying Exposure Ref.</label><div class='form-group'><select class='form-control select2 refno"+i+" w-100' name='refno[]' id='refno"+i+"' data-currencytype='"+i+"'> <option>Select Underlying Exposure Ref No.</option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['transaction_id']) ? 'selected' : '' ?>><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Currency Bought</label><div class='form-group'><input class='form-control' type='text' placeholder='Currency Bought' name='currencybought[]' id='currencybought"+i+"' readonly required/></div><label class='form-label'>Expiry Date</label><div class='form-group'><input id='expirydate"+i+"' name='expirydate[]' class='form-control datepicker'  type='text' placeholder='MM/DD/YYYY' required/></div></td>";
+data += "<td><div class='form-group'><label class='form-label'>Forward/ Option</label><select name='fordwardoption[]' id='fordwardoption"+i+"' class='form-control' required><option value=''>Choose type</option><option value='Forward'>Forward</option><option value='Option'>Option</option></select> </div><div class='form-group'><label class='form-label'>Currency Sold</label><input class='form-control' type='text' placeholder='Currency Sold' name='currencysold[]' id='currencysold"+i+"' readonly required/> </div><div class='heighsvnrem'></div></td>";
 data += "<td><div class='form-group'><label class='form-label'>Deal No</label><input id='dealno"+i+"' type='text' name='dealno[]' placeholder='Deal No' class='form-control' required=''></div><div class='form-group'><label class='form-label'>Amount (FC)</label><input id='targetrat' type='number' name='amountFC[]' placeholder='Amount FC' class='form-control' required=''></div><div class='heighsvnrem'></div></td>";
 data += "<td><div class='form-group'><label class='form-label'>Deal Date</label><input id='dealdate"+i+"' name='dealdate[]' placeholder='MM/DD/YYYY' class='form-control datepicker' type='text'  required/></div><div class='form-group'><label class='form-label'>Contracted rate</label><input id='contractedrate"+i+"' type='number' name='contractedrate[]' min='0' value='0' step='.0001' placeholder='Contracted Rate' class='form-control' required=''></div><div class='heighsvnrem'></div></td></tr>";
 $('#plansec').append(data);
 $('.refno'+i).select2({  width: '100%'});
+$(document).on("select2:select", ".select2", function(e) {
+var selectedValue = e.params.data.id;
+var datacurrencyid = $(this).data("currencytype");
+console.log(datacurrencyid);
+            if(selectedValue) {
+                $.ajax({
+                    url: '<?php echo base_url("/dependantcurrency"); ?>',
+                    type: "POST",
+                    dataType: 'Json',
+                    data: {'selectedValue':selectedValue},
+                    success: function(data) {
+                            var response = JSON.stringify(data);
+                        var parsedResponse = JSON.parse(response);
+                        var currencyValue = parsedResponse.Currency;
+                        var currencyBought, currencySold;
+                        if (parsedResponse.exposureType === "1") {
+                            currencyBought = currencyValue.substring(currencyValue.length / 2);
+                            currencySold = currencyValue.substring(0, currencyValue.length / 2);
+                            } else {
+                            currencyBought = currencyValue.substring(0, currencyValue.length / 2);
+                            currencySold = currencyValue.substring(currencyValue.length / 2);
+                            }
+                            $('#currencybought'+datacurrencyid).val(currencyBought);
+                            $('#currencysold'+datacurrencyid).val(currencySold);
+                    },
+                error: function(xhr, status, error) {
+                    // Handle the error
+                    console.log('Error:', error);
+                }
+            });
+            }else{
+                $('#currencybought'+datacurrencyid).val('');
+                $('#currencysold'+datacurrencyid).val('');
+            }
+});
 i++;
 $('.datepicker').datepicker({
 showOtherMonths: true,

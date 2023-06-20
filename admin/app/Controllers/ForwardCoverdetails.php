@@ -154,4 +154,19 @@ class ForwardCoverdetails extends BaseController
             return '1970-01-01'; // Return false if the date format is invalid
             }
             }
+
+
+            public function dependantcurrency()
+            {
+                if ($this->request->getMethod() == 'post') {
+                    extract($this->request->getPost());
+                    if(!empty($selectedValue)){
+                       $transactiondata = $this->transaction_model
+                       ->select("transactiondetails.exposureType, transactiondetails.currency, currency.Currency, ")
+                       ->join('currency',"transactiondetails.currency = currency.currency_id",'left')
+                       ->where("transactiondetails.transaction_id = $selectedValue")->first();
+                       echo json_encode($transactiondata);
+                    }        
+            }
+            }
 }
