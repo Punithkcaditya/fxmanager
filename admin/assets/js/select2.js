@@ -11,7 +11,7 @@ $(function(e) {
 		
 			        if(selectedValue) {
 			            $.ajax({
-							url: '/FXmanager/admin//dependantcurrency',
+							url: '/FXmanager/admin/dependantcurrency',
 							type: "POST",
 							dataType: 'Json',
 			                data: {'selectedValue':selectedValue},
