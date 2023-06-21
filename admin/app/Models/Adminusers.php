@@ -15,7 +15,7 @@ class Adminusers extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['employee_id' , 'first_name', 'username', 'user_session_id', 'profile_pic', 'customer_location_id', 'is_type', 'last_active', 'login_token', 'modified_by' , 'modified_date',  'last_name', 'phone_number', 'role_id' , 'status_ind' , 'created_by', 'user_name', 'created_date', 'email', 'password'];
+    protected $allowedFields    = ['employee_id' , 'first_name', 'username', 'user_session_id', 'profile_pic', 'customer_location_id', 'is_type', 'last_active', 'login_token', 'modified_by' , 'modified_date', 'company_name', 'industry_name', 'name_of_exposure', 'turnover', 'phone_number',  'last_name', 'phone_number', 'role_id' , 'status_ind' , 'created_by', 'user_name', 'created_date', 'email', 'password'];
 
     // Dates
     protected $useTimestamps = false;
@@ -72,6 +72,27 @@ class Adminusers extends Model
       
 	}
 
+    public function loginviaweb( $data) { 
+        if(isset($data['password']) && isset($data['email'])){
+        $sql1 = 'SELECT role_id from admin_users where password = "' .$data['password']. '" and email = "'.$data['email'].'"';
+        $query1 = $this->db->query($sql1);
+        $result1 = $query1->getResultObject();
+        if(!empty($result1)){
+            foreach($result1 as $value1){
+                $id1  = $value1;
+                    }
+                    if (empty($id1) ) {
+                        return false;
+                    }
+            $sql = 'SELECT a.*   FROM ' . $this->table . ' a LEFT JOIN admin_roles ar ON a.role_id = ar.role_id where a.role_id = ' .$id1->role_id. ' AND  a.password = "' .$data['password']. '"  AND a.email = "'.$data['email'].'"'; 
+           
+            $query = $this->db->query($sql);
+            $result = $query->getRow();
+            return $result;
+                }
+        }
+      
+    }
 
     public function updateData()
     {

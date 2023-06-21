@@ -66,9 +66,6 @@ class Index extends BaseController
                 ->where("role_id", 4)
                 ->countAllResults(); 
 
-               
-
-
                 if ($checkRole > 0) {   
                 $employee = $this->admin_users_model->select('user_id')->where("user_name", $user_name)
                 ->where("role_id", 4)

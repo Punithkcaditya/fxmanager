@@ -12,7 +12,7 @@ class Auth extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $request = \Config\Services::request();
+        $this->request = \Config\Services::request();
         helper(['form', 'url', 'string']);
     }
 
@@ -21,6 +21,21 @@ class Auth extends BaseController
         $session = session();
         $data=[];
         $data['page_title']="Login";
+        $login_user = json_decode(urldecode($this->request->getGet('login_user')), true);
+        $login_detail = (array) $this->admin_users_model->loginviaweb($login_user);
+        if (!empty($login_detail)) {
+            unset($login_detail["logged_session_id"]);
+            $user_session_id = rand("2659748135965", "088986555510245579");
+            $this->admin_users_model->data["user_session_id"] = $user_session_id;
+            $login_detail["logged_session_id"] = md5($user_session_id);
+            $session->set("userdata", $login_detail);
+            $pot = json_decode(json_encode($session->userdata), true);
+            $this->admin_users_model->primary_key = [
+                "user_id" => $pot["user_id"],
+            ];
+            $this->admin_users_model->updateData();
+            return redirect()->to("Admindashboard");
+        }
         $logged_in = $session->get("userdata");
         if($logged_in)
         {
@@ -37,7 +52,7 @@ class Auth extends BaseController
         $session = session();
         $session->destroy();
         $session = session();
-        return redirect()->to('/');
+        return redirect()->to('https://localhost/Devisen/');
     }
 
   
