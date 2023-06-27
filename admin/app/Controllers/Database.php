@@ -32,10 +32,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'u842713721_sms',
-        'password' => 'Q!W@Er4t5y6',
-        'database' => 'u842713721_sms',
+        'hostname' => 'godigistores.cmnfaak6okbi.ap-south-1.rds.amazonaws.com:3306',
+        'username' => 'retail',
+        'password' => 'q1w2e3r4t5Y^U&I*O(P)',
+        'database' => 'fxdatabase',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -52,30 +52,30 @@ class Database extends Config
 
 
 
+    
 
 
-    public $second_db = [
-        'dsn'      => '',
-        'hostname' => 'localhost:3308',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'phillip_db',
-        'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
-        'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
-        'cacheOn'  => false,
-        'cacheDir' => '',
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
-        'swapPre'  => '',
-        'encrypt'  => false,
-        'compress' => false,
-        'strictOn' => false,
-        'failover' => [],
-        'port'     => 3306,
-    ];
-
+$db['second_db'] = array(
+	'dsn'	=> '',
+	'hostname' => 'godigistores.cmnfaak6okbi.ap-south-1.rds.amazonaws.com:3306',
+        'username' => 'retail',
+        'password' => 'q1w2e3r4t5Y^U&I*O(P)',
+	'database' => 'devisen',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
 
 
     // public $default = [

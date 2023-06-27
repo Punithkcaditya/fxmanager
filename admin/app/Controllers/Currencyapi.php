@@ -390,6 +390,51 @@ class Currencyapi extends ResourceController
 
     }
 
+        public function currencyperformance(){
+            $check = $this->authUser();
+            if ($check) {
+            $jsonResponse = json_encode([
+                "status" => 1,
+                "Today" => [
+                    "Open" => "57.3525",
+                    "High" => "58.2888",
+                    "Low" => "7.01"
+                ],
+                "Yesterday" => [
+                    "Open" => "50.3525",
+                    "High" => "52.2888",
+                    "Low" => "76.01"
+                ],
+                "This Week" => [
+                    "Open" => "72.3525",
+                    "High" => "83.2888",
+                    "Low" => "77.01"
+                ],
+                "This Month" => [
+                    "Open" => "12.3525",
+                    "High" => "23.2888",
+                    "Low" => "67.01"
+                ],
+                "This Quarter" => [
+                    "Open" => "82.3525",
+                    "High" => "03.2888",
+                    "Low" => "107.01"
+                ],
+            ]);
+    
+            // Set the appropriate headers
+            $this->response
+                ->setHeader('Content-Type', 'application/json')
+                ->setStatusCode(200);
+    
+            // Send the JSON response
+            return $this->respond($jsonResponse);
+        }else {
+            return $this->fail('Invalid Token !!');
+        }
+        }
+
+
     public function forrwardCalculator($cover_type , $currency , $forward_date )
     {
         
@@ -399,7 +444,7 @@ class Currencyapi extends ResourceController
             $covertype = !empty($cover_type) && $cover_type == 1 ? 1 : 2;
             $curl = curl_init();
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.phillipforex.in/ajax/ajaxbroken',
+              CURLOPT_URL => 'https://fxmanagers.in/ajax/ajaxbroken',
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -417,4 +462,5 @@ class Currencyapi extends ResourceController
         }            
     }
 
+    
 }

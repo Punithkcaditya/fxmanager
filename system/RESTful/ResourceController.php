@@ -12,6 +12,7 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\API\ResponseTrait;
+use Config\Database;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.
@@ -29,6 +30,7 @@ class ResourceController extends BaseResource
     {
         
         $this->session = \Config\Services::session();
+        $this->secondDb = Database::connect('second_db');
         
     }
     public function index()
@@ -116,6 +118,8 @@ class ResourceController extends BaseResource
 
     public function authUser()
     {
+       
+
         $header_values = getallheaders();
         file_put_contents(ROOTPATH."logs/stripe_log.txt", print_r($header_values, true), FILE_APPEND);
         $data = array();
@@ -124,7 +128,8 @@ class ResourceController extends BaseResource
         if ((isset($header_values['token']) && !empty($header_values['token']))) {
             $token = $header_values['token'];
             if (!empty($token)) {
-                $data['user_data'] = $this->users->where('login_token', $token)->first();
+                $data['user_data'] = $this->secondDb->table('users')->where('login_token', $token)->get()
+                ->getRow();
                 if (!empty($data['user_data'])) {
                     $this->session->set($data);
                     return true;
