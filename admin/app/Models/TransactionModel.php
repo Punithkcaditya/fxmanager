@@ -216,7 +216,8 @@ class TransactionModel extends Model
 	}
 
 
-    public function totaloutwrds($curid=''){
+    public function totaloutwrds($curid='')
+    {
         $sql = "SELECT YEAR(td.dueDate) AS `Year`,
         IF(MONTH(td.dueDate) = MONTH(CURRENT_DATE()), 
         SUM(CASE WHEN MONTH(td.dueDate) = MONTH(CURRENT_DATE()) AND td.exposureType = 1 THEN 1 ELSE 0 END),
@@ -225,11 +226,13 @@ class TransactionModel extends Model
         FROM transactiondetails AS td
         LEFT JOIN currency AS currencynew ON td.currency = currencynew.currency_id
         WHERE td.exposureType = 1 AND currencynew.Currency = '".$curid."'
-        GROUP BY YEAR(td.dueDate), MONTH(td.dueDate);";	
+        GROUP BY YEAR(td.dueDate), MONTH(td.dueDate)
+        LIMIT 1;";	
         $query = $this->db->query($sql);
         $result = $query->getResultArray();
         return $result;
     }
+    
 
     public function totalinwrds($curid=''){
         $sql = "SELECT YEAR(td.dueDate) AS `Year`,
@@ -282,7 +285,7 @@ class TransactionModel extends Model
 
     public function currentportfoliovalueimp($curid='')
     {
-        $sql = 'SELECT a.currency, a.transaction_id, a.targetRate, a.amountinFC, a.inr_target_value,
+        $sql = 'SELECT a.currency, a.transaction_id, a.targetRate, a.amountinFC, a.inr_target_value, a.dueDate,
         cr.Currency,
         op.open_amount, op.isSettled,
         SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
@@ -311,7 +314,7 @@ class TransactionModel extends Model
 
     public function currentportfoliovalueexp($curid='')
     {
-        $sql = 'SELECT a.currency, a.transaction_id, a.targetRate, a.amountinFC, a.inr_target_value,
+        $sql = 'SELECT a.currency, a.transaction_id, a.targetRate, a.amountinFC, a.inr_target_value, a.dueDate,
         cr.Currency,
         op.open_amount, op.isSettled,
         SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
@@ -460,6 +463,66 @@ public function lastquarterportfoliovaluexp($curid='')
 
     // Details of Settled Invoices
     
+    $query = $this->db->query($sql);
+    $result = $query->getResultArray();
+    return $result;
+}
+
+public function quarterportfoliovalueexp($curid='')
+{
+    $sql = 'SELECT a.currency, a.transaction_id, a.targetRate, a.amountinFC, a.inr_target_value, a.dueDate,
+    cr.Currency,
+    op.open_amount, op.isSettled,
+    SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
+    SUM(frcw.Avgrate) as Avgrate,
+    SUM(p.Toatalallpayment) as Toatalallpayment,
+    SUM(p.AvgspotamountRate) as AvgspotamountRate
+    FROM transactiondetails as a
+    LEFT  JOIN (
+    SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount, AVG(contracted_Rate) as Avgrate
+    FROM   forward_coverdetails
+    GROUP  BY 1
+    ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref
+    LEFT JOIN currency as cr ON a.currency   = cr.currency_id
+    LEFT JOIN open_details as op ON a.transaction_id  = op.transactionforeing_id
+    LEFT  JOIN (
+    SELECT  underlying_exposure_ref, SUM(forward_Amount*forward_Rate)  as Toatalallpayment, (spot_Amount*spotamount_Rate) as AvgspotamountRate
+    FROM   paymentreceiptdetails
+    GROUP  BY 1
+    ) p ON a.transaction_id  = p.underlying_exposure_ref
+    WHERE a.exposureType = 1 AND cr.Currency = "'.$curid.'"
+     AND QUARTER(a.dueDate) = QUARTER(CURDATE())
+    GROUP  BY a.transaction_id';
+    $query = $this->db->query($sql);
+    $result = $query->getResultArray();
+    return $result;
+}
+
+public function quarterportfoliovalueimp($curid='')
+{
+    $sql = 'SELECT a.currency, a.transaction_id, a.targetRate, a.amountinFC, a.inr_target_value, a.dueDate,
+    cr.Currency,
+    op.open_amount, op.isSettled,
+    SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
+    SUM(frcw.Avgrate) as Avgrate,
+    SUM(p.Toatalallpayment) as Toatalallpayment,
+    SUM(p.AvgspotamountRate) as AvgspotamountRate
+    FROM transactiondetails as a
+    LEFT  JOIN (
+    SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount, AVG(contracted_Rate) as Avgrate
+    FROM   forward_coverdetails
+    GROUP  BY 1
+    ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref
+    LEFT JOIN currency as cr ON a.currency   = cr.currency_id
+    LEFT JOIN open_details as op ON a.transaction_id  = op.transactionforeing_id
+    LEFT  JOIN (
+    SELECT  underlying_exposure_ref, SUM(forward_Amount*forward_Rate)  as Toatalallpayment, (spot_Amount*spotamount_Rate) as AvgspotamountRate
+    FROM   paymentreceiptdetails
+    GROUP  BY 1
+    ) p ON a.transaction_id  = p.underlying_exposure_ref
+    WHERE a.exposureType = 1 AND cr.Currency = "'.$curid.'"
+     AND QUARTER(a.dueDate) = QUARTER(CURDATE())
+    GROUP  BY a.transaction_id';
     $query = $this->db->query($sql);
     $result = $query->getResultArray();
     return $result;

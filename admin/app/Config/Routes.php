@@ -51,6 +51,10 @@ $routes->get('/', 'Auth::index', ['filter' => 'authenticated']);
 $routes->group('admin', static function ($routes) {
 	// apiiiss start
 	$routes->get('appdashboard', 'Currencyapi::index');
+	$routes->get('exposuredetails', 'Currencyapi::exposuredetails');
+	$routes->get('quaterdetails', 'Currencyapi::quaterdetails');
+	$routes->get('currentmonthdetails', 'Currencyapi::currentmonthdetails');
+	$routes->get('settledinvoices', 'Currencyapi::settledinvoices');
 	// apiii end
     $routes->match(['post'], 'dashboard', 'Index::index');
     $routes->match(['post'], 'savenewroles', 'Index::savenewroles');
