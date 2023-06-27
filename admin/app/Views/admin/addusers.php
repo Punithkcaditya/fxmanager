@@ -21,7 +21,7 @@
 													<tr>
 														<th class="wd-15p">First name</th>
 														<th class="wd-20p">Email</th>
-														<th class="wd-20p">User Name</th>
+														<th class="wd-20p">Phone Number</th>
 														<!-- <th class="wd-10p">Created Date</th> -->
 														<th class="wd-25p">Actions</th>
 													</tr>
@@ -32,7 +32,7 @@
 															<th><?= $row['first_name'] ?></th>
 									
 															<td><?= $row['email'] ?></td>
-													      <td><?= $row['user_name'] ?></td>												
+													      <td><?= $row['phone_number'] ?></td>												
 															<!-- <td>
                                                 <p class="text-muted"><?php echo $row['created_date'] ?></p>
                                             </td> -->

@@ -10,7 +10,7 @@
  */
 
 namespace CodeIgniter\RESTful;
-use App\Models\Users;
+
 use CodeIgniter\API\ResponseTrait;
 
 /**
@@ -27,7 +27,7 @@ class ResourceController extends BaseResource
      */
     public function __construct()
     {
-        $this->users = new Users();
+        
         $this->session = \Config\Services::session();
         
     }

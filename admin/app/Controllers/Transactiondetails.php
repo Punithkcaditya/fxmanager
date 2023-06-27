@@ -33,7 +33,6 @@ class Transactiondetails extends BaseController
             $role_id = $pot["role_id"];
         }
         $menutext = $this->request->uri->getSegment(2);
-
         if (isset($_SESSION['sidebar_menuitems'])) {
             foreach ($_SESSION['sidebar_menuitems'] as $main_menus):
                 if (strtolower($main_menus->menuitem_link) == strtolower($menutext)) {

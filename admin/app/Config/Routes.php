@@ -49,6 +49,9 @@ $routes->get('/', 'Auth::index', ['filter' => 'authenticated']);
 // });
 
 $routes->group('admin', static function ($routes) {
+	// apiiiss start
+	$routes->get('appdashboard', 'Currencyapi::index');
+	// apiii end
     $routes->match(['post'], 'dashboard', 'Index::index');
     $routes->match(['post'], 'savenewroles', 'Index::savenewroles');
     $routes->match(['post'], 'editnewroles', 'Index::editnewroles');

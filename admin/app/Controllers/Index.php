@@ -840,7 +840,7 @@ public function savefilesuploaded($ssjl_files){
             $data["user_delete"] = "#";
         }
         $data["menuslinks"] = $this->request->uri->getSegment(1);
-        $data["users"] = $this->admin_users_model->where("created_by= '{$pot['user_id']}'")
+        $data["users"] = $this->admin_users_model
             ->orderBy("user_id", "ASCE")
             ->findAll();
         $data["view"] = "admin/addusers";
