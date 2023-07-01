@@ -4,11 +4,19 @@ namespace Config;
 
 use CodeIgniter\Database\Config;
 
+
+use Config\Services;
+
+
+
+// Get the database name from the session
+
 /**
  * Database Configuration
  */
 class Database extends Config
 {
+ 
     /**
      * The directory that holds the Migrations
      * and Seeds directories.
@@ -32,10 +40,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'u842713721_sms',
-        'password' => 'Q!W@Er4t5y6',
-        'database' => 'u842713721_sms',
+        'hostname' => 'localhost:3308',
+        'username' => 'root',
+        'password' => '',
+        'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -51,7 +59,7 @@ class Database extends Config
     ];
 
 
-
+  
 
 
     public $second_db = [
@@ -80,10 +88,10 @@ class Database extends Config
 
     // public $default = [
     //     'DSN'      => '',
-    //     'hostname' => 'localhost',
+    //     'hostname' => 'localhost:3308',
     //     'username' => 'root',
     //     'password' => '',
-    //     'database' => 'sms',
+    //     'database' => DB_NAME,
     //     'DBDriver' => 'MySQLi',
     //     'DBPrefix' => '',
     //     'pConnect' => false,

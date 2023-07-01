@@ -23,7 +23,9 @@ class Index extends BaseController
         } else {
             $role_id = $pot["role_id"];
         }
+        
         $menutext = $this->request->uri->getSegment(2);
+   
         if (isset($_SESSION['sidebar_menuitems'])) {
             foreach ($_SESSION['sidebar_menuitems'] as $main_menus) :
                 if (strtolower($main_menus->menuitem_link) == strtolower($menutext)) {
@@ -58,40 +60,11 @@ class Index extends BaseController
                 $this->request->getPost()
             );
 
+
             if (!empty($login_detail)) {
                 extract($this->request->getPost());
 
-                $checkRole = $this->admin_users_model
-                ->where("user_name", $user_name)
-                ->where("role_id", 4)
-                ->countAllResults(); 
-
-                if ($checkRole > 0) {   
-                $employee = $this->admin_users_model->select('user_id')->where("user_name", $user_name)
-                ->where("role_id", 4)
-                ->first();
-
-                 $checkCondition = $this->introductionform_model
-                ->where("ssjl_employee_id", $employee['user_id'])
-                ->where("ssjl_isapproved", 1)
-                ->countAllResults();
-
-                 $waitCondition = $this->introductionform_model
-                ->where("ssjl_employee_id", $employee['user_id'])
-                ->where("ssjl_isapproved", 0)
-                ->countAllResults();
-                if($waitCondition > 0){
-                    $session->setFlashdata("warning", "Waiting For Approval");
-                    $data["session"] = $session;
-                    return redirect()->to("/");
-                }
-
-                if($checkCondition == 0){
-                    $data = urlencode($employee['user_id']);
-                    return redirect()->to("introduction?employee=". $data);
-                }
-      
-                }
+           
                 unset($login_detail["logged_session_id"]);
                 $user_session_id = rand("2659748135965", "088986555510245579");
 

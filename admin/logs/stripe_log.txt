@@ -68,3 +68,14 @@ Array
     [Connection] => keep-alive
     [Cookie] => ci_session=kg75f2t6d1hbphopa07lu7uf6o8afl0q
 )
+Array
+(
+    [token] => xBTH2zsyuY6La7MHZS54YlQB9nSO7XML6XARicv6MTsZONKV2S
+    [User-Agent] => PostmanRuntime/7.32.3
+    [Accept] => */*
+    [Postman-Token] => 9d1f942f-5a6e-441a-a2b9-d4b26cfba127
+    [Host] => localhost
+    [Accept-Encoding] => gzip, deflate, br
+    [Connection] => keep-alive
+    [Cookie] => ci_session=2r1b55qtgvivbae76pmqpa2f3je79khl
+)

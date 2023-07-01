@@ -30,12 +30,13 @@ class Database extends Config
      *
      * @var array
      */
-    public $default = [
+
+     public $default = [
         'DSN'      => '',
-        'hostname' => 'godigistores.cmnfaak6okbi.ap-south-1.rds.amazonaws.com:3306',
-        'username' => 'retail',
-        'password' => 'q1w2e3r4t5Y^U&I*O(P)',
-        'database' => 'fxdatabase',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'fx',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -47,35 +48,37 @@ class Database extends Config
         'compress' => false,
         'strictOn' => false,
         'failover' => [],
-        'port'     => 3306,
+        'port'     => 3308,
     ];
+
+
 
 
 
     
 
 
-$db['second_db'] = array(
-	'dsn'	=> '',
-	'hostname' => 'godigistores.cmnfaak6okbi.ap-south-1.rds.amazonaws.com:3306',
-        'username' => 'retail',
-        'password' => 'q1w2e3r4t5Y^U&I*O(P)',
-	'database' => 'devisen',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+//     public $second_db = [
+// 	'dsn'	=> '',
+// 	'hostname' => 'godigistores.cmnfaak6okbi.ap-south-1.rds.amazonaws.com:3306',
+//         'username' => 'retail',
+//         'password' => 'q1w2e3r4t5Y^U&I*O(P)',
+// 	'database' => 'devisen',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// ];
 
 
     // public $default = [

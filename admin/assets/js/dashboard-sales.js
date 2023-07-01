@@ -115,6 +115,8 @@ option8 = {
 	}, ]
 };
 myChart.setOption(option8);
+
+//  pie
 var myChart2 = echarts.init(document.getElementById('echart2'));
 option2 = {
 	title: {
@@ -177,3 +179,64 @@ option2 = {
 	color: [ '#d62649', '#18b16f', '#fb1b84',' #0b1e70 ', '#00c3ed',  '#ffa21d','#6AF9C4']
 };
 myChart2.setOption(option2);
+
+// pie 2
+var myChart1 = echarts.init(document.getElementById('echart1'));
+option1 = {
+  title: {
+    text: '',
+    subtext: '',
+    x: 'center'
+  },
+  tooltip: {
+    trigger: 'item',
+    formatter: "{a} <br/>{b} : {c} ({d}%)"
+  },
+  legend: {
+    x: 'center',
+    y: 'bottom',
+    data: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
+  },
+  calculable: true,
+  series: [{
+    name: '',
+    type: 'pie',
+    radius: [30, 150],
+    center: ['50%', '50%'],
+    roseType: 'radius',
+    label: {
+      normal: {
+        show: false
+      },
+      emphasis: {
+        show: true
+      }
+    },
+    labelLine: {
+      normal: {
+        show: false
+      },
+      emphasis: {
+        show: true
+      }
+    },
+    data: [{
+      value: 10,
+      name: 'Category 1'
+    }, {
+      value: 15,
+      name: 'Category 2'
+    }, {
+      value: 20,
+      name: 'Category 3'
+    }, {
+      value: 25,
+      name: 'Category 4'
+    }, {
+      value: 30,
+      name: 'Category 5'
+    }]
+  }],
+  color: ['#d62649', '#18b16f', '#fb1b84', '#0b1e70', '#00c3ed']
+};
+myChart1.setOption(option1);

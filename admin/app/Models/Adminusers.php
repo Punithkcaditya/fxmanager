@@ -45,7 +45,13 @@ class Adminusers extends Model
     public function __construct()
     {
         parent::__construct();
+        $session = session(); 
+        $dbNames = $session->get('db_names');
         $this->db = Database::connect();
+        if(!isset($dbNames)){
+            $dbNames = 'fx';
+        }
+        $this->db->setDatabase($dbNames);
         $this->primary_key = array();
         $this->date = array();
        
@@ -110,23 +116,17 @@ class Adminusers extends Model
 
 
     public function session_id() {
-
-    
         foreach($this->primary_key as $value){
-    $id  = $value;
+        $id  = $value;
         }
        
         $sql = 'SELECT *   FROM ' . $this->table . '  where user_id = ' .$id. '';
         $query = $this->db->query($sql);
         $result = $query->getResultObject();
-       
             if (!empty($result)) {
                 foreach( $result as $value){
                     $user_session_id  = $value->user_session_id;
                 }
-//  echo "<pre>";
-//         print_r($user_session_id);
-//         exit;
                 return $user_session_id;
             } else {
                 return false;

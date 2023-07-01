@@ -7,6 +7,9 @@ use CodeIgniter\Session\Handlers\FileHandler;
 
 class App extends BaseConfig
 {
+
+   
+
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
@@ -27,7 +30,7 @@ class App extends BaseConfig
   
     // public $baseURL = 'https://erpcloud.in/sms/admin';
   
-    public $baseURL = 'http://localhost/FX/admin';
+    public $baseURL = 'https://localhost/FXmanager/admin';
     // public $baseURL = 'https://posmab.com/project/sms/admin';
     /**
      * --------------------------------------------------------------------------

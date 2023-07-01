@@ -56,6 +56,7 @@ $routes->group('admin', static function ($routes) {
 	$routes->get('currentmonthdetails', 'Currencyapi::currentmonthdetails');
 	$routes->get('settledinvoices', 'Currencyapi::settledinvoices');
 	$routes->get('currencyperformance', 'Currencyapi::currencyperformance');
+	$routes->get('fxmanagerdashboard', 'Currencyapi::fxmanagerdashboard');
 	// apiii end
     $routes->match(['post'], 'dashboard', 'Index::index');
     $routes->match(['post'], 'savenewroles', 'Index::savenewroles');

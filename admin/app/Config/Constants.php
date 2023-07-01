@@ -1,5 +1,7 @@
 <?php
 
+
+
 /*
  | --------------------------------------------------------------------
  | App Namespace
@@ -100,3 +102,27 @@ define('EVENT_PRIORITY_HIGH', 10);
   $base = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']) : 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']);
 
   defined('BASEPATH') || define('BASEPATH', $base);
+
+  $url = parse_url($_SERVER['REQUEST_URI']);
+
+  if(isset($url['query'])){
+    $decodedUrl = urldecode($url['query']);
+    $decodedParams = explode('=', $decodedUrl);
+    
+    if (count($decodedParams) === 2 && $decodedParams[0] === 'login_user') {
+        $jsonString = $decodedParams[1];
+        $jsonData = json_decode($jsonString, true);
+  
+    }
+  }
+
+
+
+  if(isset($jsonData['fx_db'])){
+    define('DB_NAME', $jsonData['fx_db']);
+}else{
+  define('DB_NAME', 'fx');
+}
+
+
+

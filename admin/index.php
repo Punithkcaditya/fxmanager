@@ -6,6 +6,8 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 // Ensure the current directory is pointing to the front controller's directory
 chdir(FCPATH);
 
+
+
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
@@ -45,6 +47,19 @@ $app = Config\Services::codeigniter();
 $app->initialize();
 $context = is_cli() ? 'php-cli' : 'web';
 $app->setContext($context);
+
+// attempt to connect database
+
+$request = service('request');
+$session = service('session');
+
+$login_user = json_decode(urldecode($request->getGet('login_user')), true);
+
+if(isset($login_user['fx_db'])){
+    $session->set('db_names', $login_user['fx_db']);
+}
+
+
 
 /*
  *---------------------------------------------------------------

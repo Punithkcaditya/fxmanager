@@ -81,7 +81,7 @@ abstract class BaseController extends Controller
         $this->admin_roles_model->primary_key = ["role_id" => $role_id];
         $user_session_id = $this->admin_users_model->session_id();
         if ($session->userdata["logged_session_id"] != md5($user_session_id) ) {
-            redirect("");
+            return redirect("/");
         }
         else{
             $this->sideMenu();
@@ -101,7 +101,6 @@ abstract class BaseController extends Controller
             $side_menu_roles = $this->admin_roles_accesses_model->get_role_access(
                 $role_id
             );
-
             $_SESSION["sidebar_menuitems"] = !empty(
                 $_SESSION["sidebar_menuitems"]
             )

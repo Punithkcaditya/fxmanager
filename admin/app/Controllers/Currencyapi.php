@@ -31,14 +31,14 @@ class Currencyapi extends ResourceController
             
             // Data for     1st part
                 // current month
-                $data['totaloutwardscurrentmonth'] = array();
-                $data['totalinwardscurrentmonth'] = array();
-                $data['hedgeoutwardscurrentmonth'] = array();
-                $data['hedgeinwardscurrentmonth'] = array();
-                $data['totalquartertotaloutwards'] = array();
-                $data['hedgequartertotaloutwards'] = array();
-                $data['totalquartertotalinwards'] = array();
-                $data['hedgequartertotalinwards'] = array();
+                $data['totaloutwardsone'] = array();
+                $data['totalinwardsone'] = array();
+                $data['hedgeoutwardsone'] = array();
+                $data['hedgeinwardsone'] = array();
+                $data['totaloutwardstwo'] = array();
+                $data['hedgeoutwardstwo'] = array();
+                $data['totalinwardstwo'] = array();
+                $data['hedgeinwardstwo'] = array();
 
             $datatableout = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS sum_amountinFC, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
@@ -59,13 +59,13 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $datatableout  as $row){
-                $data['totaloutwardscurrentmonth'] = $row['sum_amountinFC'];
-                $data['hedgeoutwardscurrentmonth'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
+                $data['totaloutwardsone'] = $row['sum_amountinFC'];
+                $data['hedgeoutwardsone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
             }
 
             foreach( $datatableinw  as $row){
-                $data['totalinwardscurrentmonth'] = $row['sum_amountinFC'];
-                $data['hedgeinwardscurrentmonth'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
+                $data['totalinwardsone'] = $row['sum_amountinFC'];
+                $data['hedgeinwardsone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
             }
 
             $currentquartertotaloutwards = $this->transaction_model
@@ -78,8 +78,8 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $currentquartertotaloutwards  as $row){
-                $data['totalquartertotaloutwards'] = $row['sum_amountinFC'];
-                $data['hedgequartertotaloutwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
+                $data['totaloutwardstwo'] = $row['sum_amountinFC'];
+                $data['hedgeoutwardstwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
             }
 
             $currentquartertotalinwards = $this->transaction_model
@@ -92,8 +92,8 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $currentquartertotalinwards  as $row){
-                $data['totalquartertotalinwards'] = $row['sum_amountinFC'];
-                $data['hedgequartertotalinwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
+                $data['totalinwardstwo'] = $row['sum_amountinFC'];
+                $data['hedgeinwardstwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
             }
 
 
@@ -108,18 +108,18 @@ class Currencyapi extends ResourceController
     // Exposure Details
     public function exposuredetails(){
         if(isset($_GET['currency'])){
-            $data['percentagehedgedoutwards'] = array();
-            $data['totalexposureoutwards'] = array();
-            $data['percentagehedgedinwards'] = array();
-            $data['totalexposureinwards'] = array();
-            $data['avghedgeoutwards'] = array();
-            $data['avghedgeinwards'] = array();
-            $data['avgavgtargetoutwards'] = array();
-            $data['avgavgtargetinwards'] = array();
-            $data["currentportfoliovalueimp"] = 0; 
-            $data["currentportfoliovalueexp"] = 0; 
-            $data["currentganorloseimp"] = 0;
-            $data["currentganorloseexp"] = 0;
+            $data['percentagehedgedtwo'] = array();
+            $data['totalexposuretwo'] = array();
+            $data['percentagehedgedone'] = array();
+            $data['totalexposureone'] = array();
+            $data['avghedgetwo'] = array();
+            $data['avghedgeone'] = array();
+            $data['avgtargettwo'] = array();
+            $data['avgtargetone'] = array();
+            $data["currentportfoliovaluetwo"] = 0; 
+            $data["currentportfoliovalueone"] = 0; 
+            $data["currentganorlosetwo"] = 0;
+            $data["currentganorloseone"] = 0;
             $percentagehedgedoutwards = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
             ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
@@ -128,10 +128,10 @@ class Currencyapi extends ResourceController
             ->where('currency.Currency', $_GET['currency'])
             ->findAll();
             foreach( $percentagehedgedoutwards  as $row){
-                $data['totalexposureoutwards'] = $row['totalexposure'];
-                $data['avghedgeoutwards'] = $row['avghedge'];
-                $data['avgavgtargetoutwards'] = $row['avgtarget'];
-                $data['percentagehedgedoutwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['totalexposuretwo'] = $row['totalexposure'];
+                $data['avghedgetwo'] = $row['avghedge'];
+                $data['avgtargettwo'] = $row['avgtarget'];
+                $data['percentagehedgedtwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
             $percentagehedgedinwards = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
@@ -141,10 +141,10 @@ class Currencyapi extends ResourceController
             ->where('currency.Currency', $_GET['currency'])
             ->findAll();
             foreach( $percentagehedgedinwards  as $row){
-                $data['avghedgeinwards'] = $row['avghedge'];
-                $data['avgavgtargetinwards'] = $row['avgtarget'];
-                $data['totalexposureinwards'] = $row['totalexposure'];
-                $data['percentagehedgedinwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['avghedgeone'] = $row['avghedge'];
+                $data['avgtargetone'] = $row['avgtarget'];
+                $data['totalexposureone'] = $row['totalexposure'];
+                $data['percentagehedgedone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
 
             $currentportfoliovalueimp = $this->transaction_model->currentportfoliovalueimp($_GET['currency']);
@@ -159,8 +159,8 @@ class Currencyapi extends ResourceController
                 $openAmountFC = isset($row['isSettled']) ? $row['open_amount'] : ($row['amountinFC'] - $row['ToatalforwardAmount']);
                 $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
                 $currentportfoliovalueimpval = isset($row['isSettled']) ? ($row['AvgspotamountRate'] + $row['Toatalallpayment']) : ($openAmountINR + ($row['ToatalforwardAmount'] * $row['Avgrate']));
-                $data["currentportfoliovalueimp"] += $currentportfoliovalueimpval; // Sum the value in each iteration
-                $data["currentganorloseimp"] += $currentportfoliovalueimpval - $targetValueInr; // Sum the value in each iteration
+                $data["currentportfoliovaluetwo"] += $currentportfoliovalueimpval; // Sum the value in each iteration
+                $data["currentganorlosetwo"] += $currentportfoliovalueimpval - $targetValueInr; // Sum the value in each iteration
             }
 
             $currentportfoliovalueexp = $this->transaction_model->currentportfoliovalueexp($_GET['currency']);
@@ -174,8 +174,8 @@ class Currencyapi extends ResourceController
                 $openAmountFC = isset($row['isSettled']) ? $row['open_amount'] : ($row['amountinFC'] - $row['ToatalforwardAmount']);
                 $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
                 $currentportfoliovalueexpval = isset($row['isSettled']) ? ($row['AvgspotamountRate'] + $row['Toatalallpayment']) : ($openAmountINR + ($row['ToatalforwardAmount'] * $row['Avgrate']));
-                $data["currentportfoliovalueexp"] += $currentportfoliovalueexpval; // Sum the value in each iteration
-                $data["currentganorloseexp"] += $currentportfoliovalueexpval - $targetValueInr; // Sum the value in each iteration
+                $data["currentportfoliovalueone"] += $currentportfoliovalueexpval; // Sum the value in each iteration
+                $data["currentganorloseone"] += $currentportfoliovalueexpval - $targetValueInr; // Sum the value in each iteration
             }
 
             return $this->respond($data, 200);
@@ -199,10 +199,10 @@ class Currencyapi extends ResourceController
             ->where('MONTH(transactiondetails.dueDate)', date('n'))
             ->findAll();
             foreach( $currentmonthexpodetimp  as $row){
-                $data['currentmontheravghedgeoutwards'] = $row['avghedge'];
-                $data['currentmontheravgavgtargetoutwards'] = $row['avgtarget'];
-                $data['currentmonthertotalexposureoutwards'] = $row['totalexposure'];
-                $data['currentmontherpercentagehedgedoutwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['avghedgetwo'] = $row['avghedge'];
+                $data['avgtargettwo'] = $row['avgtarget'];
+                $data['currentmonthtotalexposuretwo'] = $row['totalexposure'];
+                $data['currentmonthpercentagehedgedtwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
             $currentmonthexpodetexp = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
@@ -213,10 +213,10 @@ class Currencyapi extends ResourceController
             ->where('MONTH(transactiondetails.dueDate)', date('n'))
             ->findAll();
             foreach( $currentmonthexpodetexp  as $row){
-                $data['currentmontheravghedgeinwards'] = $row['avghedge'];
-                $data['currentmontheravgavgtargetinwards'] = $row['avgtarget'];
-                $data['currentmonthertotalexposureinwards'] = $row['totalexposure'];
-                $data['currentmontherpercentagehedgedinwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['avghedgeone'] = $row['avghedge'];
+                $data['avgtargeone'] = $row['avgtarget'];
+                $data['currentmonthtotalexposureone'] = $row['totalexposure'];
+                $data['currentmonthpercentagehedgedone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
             return $this->respond($data, 200);
         }else{
@@ -228,6 +228,10 @@ class Currencyapi extends ResourceController
 
     public function quaterdetails(){
         if(isset($_GET['currency'])){
+            $data["current-portfolio-valueone"] = 0;
+            $data["last-portfolio-valueone"] = 0;
+            $data["current-portfolio-valuetwo"] = 0;
+            $data["last-portfolio-valuetwo"] = 0;
             $currentquarterexpodetimp = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
             ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
@@ -238,10 +242,10 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $currentquarterexpodetimp  as $row){
-                $data['currentquarteravghedgeoutwards'] = $row['avghedge'];
-                $data['currentquarteravgavgtargetoutwards'] = $row['avgtarget'];
-                $data['currentquartertotalexposureoutwards'] = $row['totalexposure'];
-                $data['currentquarterpercentagehedgedoutwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['current-quarter-avghedgetwo'] = $row['avghedge'];
+                $data['current-quarter-avgavgtargettwo'] = $row['avgtarget'];
+                $data['current-quarter-totalexposuretwo'] = $row['totalexposure'];
+                $data['current-quarter-percentagehedgedtwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
 
             $lastquarterexpodetimp = $this->transaction_model
@@ -254,10 +258,10 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $lastquarterexpodetimp  as $row){
-                $data['lastquarteravghedgeoutwards'] = $row['avghedge'];
-                $data['lastquarteravgavgtargetoutwards'] = $row['avgtarget'];
-                $data['lastquartertotalexposureoutwards'] = $row['totalexposure'];
-                $data['lastquarterpercentagehedgedoutwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['last-quarter-avghedgetwo'] = $row['avghedge'];
+                $data['last-quarter-avgavgtargettwo'] = $row['avgtarget'];
+                $data['last-quarter-totalexposuretwo'] = $row['totalexposure'];
+                $data['last-quarter-percentagehedgedtwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
 
             $currentquarterexpodetexp = $this->transaction_model
@@ -270,10 +274,10 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $currentquarterexpodetexp  as $row){
-                $data['currentquarteravghedgeinwards'] = $row['avghedge'];
-                $data['currentquarteravgavgtargetinwards'] = $row['avgtarget'];
-                $data['currentquartertotalexposureinwards'] = $row['totalexposure'];
-                $data['currentquarterpercentagehedgedinwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['current-quarter-avghedgeone'] = $row['avghedge'];
+                $data['current-quarter-avgavgtargetone'] = $row['avgtarget'];
+                $data['current-quarter-totalexposureone'] = $row['totalexposure'];
+                $data['current-quarter-percentagehedgedone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
 
             $lastquarterexpodexp = $this->transaction_model
@@ -286,10 +290,10 @@ class Currencyapi extends ResourceController
             ->findAll();
 
             foreach( $lastquarterexpodexp  as $row){
-                $data['lastquarteravghedgeinwards'] = $row['avghedge'];
-                $data['lastquarteravgavgtargetinwards'] = $row['avgtarget'];
-                $data['lastquartertotalexposureinwards'] = $row['totalexposure'];
-                $data['lastquarterpercentagehedgedinwards'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
+                $data['last-quarter-avghedgeone'] = $row['avghedge'];
+                $data['last-quarter-avgavgtargetone'] = $row['avgtarget'];
+                $data['last-quarter-totalexposureone'] = $row['totalexposure'];
+                $data['last-quarter-percentagehedgedone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['totalexposure']) * 100 : '';
             }
 
             $currentportfoliovalueexp = $this->transaction_model->quarterportfoliovalueexp($_GET['currency']);
@@ -303,8 +307,21 @@ class Currencyapi extends ResourceController
                 $openAmountFC = isset($row['isSettled']) ? $row['open_amount'] : ($row['amountinFC'] - $row['ToatalforwardAmount']);
                 $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
                 $currentportfoliovalueexpval = isset($row['isSettled']) ? ($row['AvgspotamountRate'] + $row['Toatalallpayment']) : ($openAmountINR + ($row['ToatalforwardAmount'] * $row['Avgrate']));
-                $data["currentportfoliovalueexp"] += $currentportfoliovalueexpval; // Sum the value in each iteration
-                $data["currentganorloseexp"] += $currentportfoliovalueexpval - $targetValueInr; // Sum the value in each iteration
+                $data["current-portfolio-valueone"] += $currentportfoliovalueexpval; // Sum the value in each iteration
+            }
+
+            $lastportfoliovalueexp = $this->transaction_model->lastquarterportfoliovalueexp($_GET['currency']);
+            foreach ($lastportfoliovalueexp as $row) {
+                $resoval = $this->forrwardCalculator(1, $_GET['currency'], $row['dueDate']);
+                $crntfrrate = json_decode($resoval);
+                $currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
+                $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
+                $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
+                $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
+                $openAmountFC = isset($row['isSettled']) ? $row['open_amount'] : ($row['amountinFC'] - $row['ToatalforwardAmount']);
+                $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
+                $lastportfoliovalueexpval = isset($row['isSettled']) ? ($row['AvgspotamountRate'] + $row['Toatalallpayment']) : ($openAmountINR + ($row['ToatalforwardAmount'] * $row['Avgrate']));
+                $data["last-portfolio-valueone"] += $lastportfoliovalueexp; // Sum the value in each iteration
             }
 
             $currentportfoliovalueimp = $this->transaction_model->quarterportfoliovalueimp($_GET['currency']);
@@ -318,8 +335,21 @@ class Currencyapi extends ResourceController
                 $openAmountFC = isset($row['isSettled']) ? $row['open_amount'] : ($row['amountinFC'] - $row['ToatalforwardAmount']);
                 $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
                 $currentportfoliovalueimpval = isset($row['isSettled']) ? ($row['AvgspotamountRate'] + $row['Toatalallpayment']) : ($openAmountINR + ($row['ToatalforwardAmount'] * $row['Avgrate']));
-                $data["currentportfoliovalueimp"] += $currentportfoliovalueimpval; // Sum the value in each iteration
-                $data["currentganorloseimp"] += $currentportfoliovalueimpval - $targetValueInr; // Sum the value in each iteration
+                $data["current-portfolio-valuetwo"] += $currentportfoliovalueimpval; // Sum the value in each iteration
+            }
+
+            $lastportfoliovalueimp = $this->transaction_model->lastquarterportfoliovalueimp($_GET['currency']);
+            foreach ($lastportfoliovalueimp as $row) {
+                $resoval = $this->forrwardCalculator(2, $_GET['currency'], $row['dueDate']);
+                $crntfrrate = json_decode($resoval);
+                $currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
+                $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
+                $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
+                $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
+                $openAmountFC = isset($row['isSettled']) ? $row['open_amount'] : ($row['amountinFC'] - $row['ToatalforwardAmount']);
+                $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
+                $lastportfoliovalueimpval = isset($row['isSettled']) ? ($row['AvgspotamountRate'] + $row['Toatalallpayment']) : ($openAmountINR + ($row['ToatalforwardAmount'] * $row['Avgrate']));
+                $data["last-portfolio-valuetwo"] += $lastportfoliovalueimpval; // Sum the value in each iteration
             }
 
             return $this->respond($data, 200);
@@ -334,18 +364,22 @@ class Currencyapi extends ResourceController
     public function settledinvoices(){
 
         if(isset($_GET['currency'])){
-            $data['currentquartersettamtinwards'] = 0;
-            $data['currentquartersetrateinwards'] = 0;
-            $data['currentquarteractualgainlossinwards'] = 0;
-            $data['currentquartersettamtoutwards'] = 0;
-            $data['currentquartersetrateoutwards'] = 0;
-            $data['currentquarteractualgainlossoutwards'] = 0;
-            $data['lastquartersettamtoutwards'] = 0;
-            $data['lastquartersetrateoutwards'] = 0;
-            $data['lastquarteractualgainlossoutwards'] = 0;
-            $data['lastquartersettamtinwards'] = 0;
-            $data['lastquartersetrateinwards'] = 0;
-            $data['lastquarteractualgainlossinwards'] = 0;
+            $data['current-quarter-settamtinFC_one'] = 0;
+            $data['last-quarter-settamtinFC_one'] = 0;
+            $data['current-quarter-settamtinFC_two'] = 0;
+            $data['last-quarter-settamtinFC_two'] = 0;
+            $data['current-quarter-settamtone'] = 0;
+            $data['current-quarter-setrateone'] = 0;
+            $data['current-quarter-actualgainlossone'] = 0;
+            $data['current-quarter-settamttwo'] = 0;
+            $data['current-quarter-setratetwo'] = 0;
+            $data['current-quarter-actualgainlosstwo'] = 0;
+            $data['last-quarter-settamttwo'] = 0;
+            $data['last-quarter-setrateouttwo'] = 0;
+            $data['last-quarter-actualgainlosstwo'] = 0;
+            $data['last-quarter-settamtone'] = 0;
+            $data['last-quarter-setrateone'] = 0;
+            $data['last-quarter-actualgainlossone'] = 0;
             $currentquarterportfoliovalueexp = $this->transaction_model->currentquarterportfoliovalueexp($_GET['currency']);
             $currentquarterportfoliovaluimp = $this->transaction_model->currentquarterportfoliovaluimp($_GET['currency']);
             $lastquarterportfoliovaluimp = $this->transaction_model->lastquarterportfoliovaluimp($_GET['currency']);
@@ -354,33 +388,33 @@ class Currencyapi extends ResourceController
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
                 $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
                 $currentquartersettamtinwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
-                $data['currentquartersettamtinwards'] += $currentquartersettamtinwardsval; 
-                $data['currentquartersetrateinwards'] += $currentquartersettamtinwardsval / $row['amountinFC'];
-                $data['currentquarteractualgainlossinwards'] += $currentquartersettamtinwardsval - $targetValueInr;
+                $data['current-quarter-settamtone'] += $currentquartersettamtinwardsval; 
+                $data['current-quarter-setrateone'] += $currentquartersettamtinwardsval / $row['amountinFC'];
+                $data['current-quarter-actualgainone'] += $currentquartersettamtinwardsval - $targetValueInr;
             }
             foreach( $currentquarterportfoliovaluimp  as $row){
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
                 $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
                 $currentquartersettamtoutwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
-                $data['currentquartersettamtoutwards'] += $currentquartersettamtoutwardsval; 
-                $data['currentquartersetrateoutwards'] += $currentquartersettamtoutwardsval / $row['amountinFC'];
-                $data['currentquarteractualgainlossoutwards'] += $currentquartersettamtoutwardsval - $targetValueInr;
+                $data['current-quarter-settamttwo'] += $currentquartersettamtoutwardsval; 
+                $data['current-quarter-setratetwo'] += $currentquartersettamtoutwardsval / $row['amountinFC'];
+                $data['current-quarter-actualgainlosstwo'] += $currentquartersettamtoutwardsval - $targetValueInr;
             }
             foreach( $lastquarterportfoliovaluimp  as $row){
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
                 $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
                 $lastquartersettamtoutwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
-                $data['lastquartersettamtoutwards'] += $lastquartersettamtoutwardsval; 
-                $data['lastquartersetrateoutwards'] += $lastquartersettamtoutwardsval / $row['amountinFC'];
-                $data['lastquarteractualgainlossoutwards'] += $lastquartersettamtoutwardsval - $targetValueInr;
+                $data['last-quarter-settamttwo'] += $lastquartersettamtoutwardsval; 
+                $data['last-quarter-setrateouttwo'] += $lastquartersettamtoutwardsval / $row['amountinFC'];
+                $data['last-quarter-actualgainlosstwo'] += $lastquartersettamtoutwardsval - $targetValueInr;
             }
             foreach( $lastquarterportfoliovaluexp  as $row){
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
                 $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
                 $lastquartersettamtinwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
-                $data['lastquartersettamtinwards'] += $lastquartersettamtinwardsval; 
-                $data['lastquartersetrateinwards'] += $lastquartersettamtinwardsval / $row['amountinFC'];
-                $data['lastquarteractualgainlossinwards'] += $lastquartersettamtinwardsval - $targetValueInr;
+                $data['last-quarter-settamtone'] += $lastquartersettamtinwardsval; 
+                $data['last-quarter-setrateone'] += $lastquartersettamtinwardsval / $row['amountinFC'];
+                $data['last-quarter-actualgainlossone'] += $lastquartersettamtinwardsval - $targetValueInr;
             }
             return $this->respond($data, 200);
 
@@ -462,5 +496,9 @@ class Currencyapi extends ResourceController
         }            
     }
 
+
+    public function fxmanagerdashboard(){
+        return $this->respond(1);
+    }
     
 }
