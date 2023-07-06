@@ -2,13 +2,11 @@
 
 namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
-use Config\Database;
 use CodeIgniter\RESTful\ResourceController;
-use App\Controllers\BaseController;
 use App\Models\TransactionModel as Transaction_Model;
 use App\Models\ExposureType as ExposureType_Model;
 use App\Models\CurrencyModel as Currency_Model;
-class Currencyapi extends BaseController
+class Currencyapi extends ResourceController
 { 
     use ResponseTrait;
     /**
@@ -41,106 +39,70 @@ class Currencyapi extends BaseController
                 $data['hedgeoutwardstwo'] = 0;
                 $data['totalinwardstwo'] = 0;
                 $data['hedgeinwardstwo'] = 0;
-        
 
-                $querytotalout = $this->transaction_model
-                ->select("SUM(transactiondetails.amountinFC) AS sum_amountinFC, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
-                ->join('currency', "currency.currency_id = transactiondetails.currency", 'left')
-                ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
-                ->where('transactiondetails.exposureType !=', 1)
-                ->where('currency.Currency', $_GET['currency'])
-                ->where('MONTH(transactiondetails.dueDate)', date('n'))
-                ->get();
-           
-                if (is_object($querytotalout)) {
-                $datatableout = $querytotalout->getResultArray();
-                }
-            
-                if(isset($datatableout)){
-                    foreach( $datatableout  as $row){
-                        $data['totaloutwardsone'] += $row['sum_amountinFC'];
-                        $data['hedgeoutwardsone'] += $this->calculatehedgeper($row['sum_amount_FC'], $row['sum_amountinFC']);
-                    }
-                }
-            
-            $queryinw = $this->transaction_model
+            $datatableout = $this->transaction_model
+            ->select("SUM(transactiondetails.amountinFC) AS sum_amountinFC, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+            ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+            ->join('currency', "currency.currency_id = transactiondetails.currency", 'left')
+            ->where('transactiondetails.exposureType !=', 1)
+            ->where('currency.Currency', $_GET['currency'])
+            ->where('MONTH(transactiondetails.dueDate)', date('n'))
+            ->findAll();
+
+            $datatableinw = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS sum_amountinFC, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
             ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
             ->join('currency', "currency.currency_id = transactiondetails.currency", 'left')
             ->where('transactiondetails.exposureType', 1)
             ->where('currency.Currency', $_GET['currency'])
             ->where('MONTH(transactiondetails.dueDate)', date('n'))
-            ->get();
+            ->findAll();
 
-            if (is_object($queryinw)) {
-                $datatableinw = $queryinw->getResultArray();
+            foreach( $datatableout  as $row){
+                $data['totaloutwardsone'] = $row['sum_amountinFC'];
+                $data['hedgeoutwardsone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : 0;
             }
 
-        
-            if(isset($datatableinw)){
             foreach( $datatableinw  as $row){
-            $data['totalinwardsone'] += $row['sum_amountinFC'];
-            $data['hedgeinwardsone'] += $this->calculatehedgeper($row['sum_amount_FC'], $row['sum_amountinFC']);
-            }
+                $data['totalinwardsone'] = $row['sum_amountinFC'];
+                $data['hedgeinwardsone'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : 0;
             }
 
-
-            $querytotaloutwards = $this->transaction_model
+            $currentquartertotaloutwards = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS sum_amountinFC, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
             ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
             ->join('currency', "currency.currency_id = transactiondetails.currency", 'left')
             ->where('transactiondetails.exposureType !=', 1)
             ->where('currency.Currency', $_GET['currency'])
             ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(CURDATE())', false)
-            ->get();
+            ->findAll();
 
-    
-
-            if (is_object($querytotaloutwards)) {
-                $currentquartertotaloutwards = $querytotaloutwards->getResultArray();
-            }
-          
-            if(isset($currentquartertotaloutwards)){
             foreach( $currentquartertotaloutwards  as $row){
-                $data['totaloutwardstwo'] += $row['sum_amountinFC'];
-                $data['hedgeoutwardstwo'] += $this->calculatehedgeper($row['sum_amount_FC'], $row['sum_amountinFC']);
+                $data['totaloutwardstwo'] = $row['sum_amountinFC'];
+                $data['hedgeoutwardstwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
             }
-        }
-    
 
-            $querytotalinwards = $this->transaction_model
+            $currentquartertotalinwards = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS sum_amountinFC, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
             ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
             ->join('currency', "currency.currency_id = transactiondetails.currency", 'left')
             ->where('transactiondetails.exposureType', 1)
             ->where('currency.Currency', $_GET['currency'])
             ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(CURDATE())', false)
-            ->get();
+            ->findAll();
 
-            if (is_object($querytotalinwards)) {
-                $currentquartertotalinwards = $querytotalinwards->getResultArray();
-            }
-
-            if(isset($currentquartertotalinwards)){
             foreach( $currentquartertotalinwards  as $row){
-                $data['totalinwardstwo'] += $row['sum_amountinFC'];
-                $data['hedgeinwardstwo'] += $this->calculatehedgeper($row['sum_amount_FC'], $row['sum_amountinFC']);
+                $data['totalinwardstwo'] = $row['sum_amountinFC'];
+                $data['hedgeinwardstwo'] = isset($row['sum_amount_FC']) ? ($row['sum_amount_FC'] / $row['sum_amountinFC']) * 100 : '';
             }
-        }
 
+
+        
             return $this->respond($data, 200);
         }else{
             return $this->fail('No Currency Found !!');
         }
 
-    }
-
-
-
-
-    public function calculatehedgeper($sum_amount_FC, $sum_amountinFC){
-        $value = isset($sum_amount_FC) ? ($sum_amount_FC / $sum_amountinFC) * 100 : 0;
-        return $value;
     }
 
     // Exposure Details

@@ -35,7 +35,7 @@ defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . '../vendor/autolo
  | Provide simple ways to work with the myriad of PHP functions that
  | require information to be in seconds.
  */
-define('SITE_TITLE', "<span style='font-size: 18px;'>FX Managers Risk <br/> Management</span>");
+define('SITE_TITLE', "<span style='font-size: 18px;'>FX Managers<br/>Exposure Management</span>");
 defined('SECOND') || define('SECOND', 1);
 defined('MINUTE') || define('MINUTE', 60);
 defined('HOUR')   || define('HOUR', 3600);
