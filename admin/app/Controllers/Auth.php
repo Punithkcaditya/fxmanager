@@ -57,7 +57,7 @@ class Auth extends BaseController
         $session = session();
         $session->destroy();
         $session = session();
-        return redirect()->to('https://localhost/Devisen/');
+        return redirect()->to('/');
     }
 
   

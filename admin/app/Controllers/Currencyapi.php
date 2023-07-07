@@ -7,7 +7,7 @@ use App\Controllers\BaseController;
 use App\Models\TransactionModel as Transaction_Model;
 use App\Models\ExposureType as ExposureType_Model;
 use App\Models\CurrencyModel as Currency_Model;
-class Currencyapi extends ResourceController
+class Currencyapi extends BaseController
 { 
     use ResponseTrait;
     /**
@@ -541,7 +541,10 @@ class Currencyapi extends ResourceController
     }
 
         public function currencyperformance(){
-            $check = $this->authUser();
+            $check = $this->testauthUser();
+        echo '<pre>';
+        print_r($check);
+        exit;
             if ($check) {
             $jsonResponse = json_encode([
                 "status" => 1,
@@ -615,6 +618,55 @@ class Currencyapi extends ResourceController
 
     public function fxmanagerdashboard(){
         return $this->respond(1);
+    }
+
+    public function authUser()
+    {
+       
+        $secondDB = \Config\Database::connect('second_db');
+        $header_values = getallheaders();
+        file_put_contents(ROOTPATH."logs/stripe_log.txt", print_r($header_values, true), FILE_APPEND);
+        $data = array();
+        $response = array();
+    //   return $this->respond($header_values['Auth-Token']);
+        if ((isset($header_values['token']) && !empty($header_values['token']))) {
+            $token = $header_values['token'];
+            if (!empty($token)) {
+                $data['user_data'] = $secondDB->table('users')->where('login_token', $token)->get()
+                ->getRow();
+                return $data['user_data'];
+                $secondDB->close();
+                if (!empty($data['user_data'])) {
+                    $this->session->set($data);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public function testauthUser()
+    {
+       
+        $secondDB = \Config\Database::connect('second_db');
+        $data = array();
+        $response = array();
+    //   return $this->respond($header_values['Auth-Token']);
+            $token = $_GET['token'];
+            if (!empty($token)) {
+                $data['user_data'] = $secondDB->table('users')->where('login_token', $token)->get()
+                ->getRow();
+                return $data['user_data'];
+                $secondDB->close();
+                if (!empty($data['user_data'])) {
+                    $this->session->set($data);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        
     }
     
 }

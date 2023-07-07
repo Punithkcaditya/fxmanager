@@ -135,6 +135,7 @@ class ResourceController extends BaseResource
             if (!empty($token)) {
                 $data['user_data'] = $this->secondDb->table('users')->where('login_token', $token)->get()
                 ->getRow();
+                $this->secondDb->close();
                 if (!empty($data['user_data'])) {
                     $this->session->set($data);
                     return true;
@@ -143,7 +144,6 @@ class ResourceController extends BaseResource
                 }
             }
         }
-        $this->secondDb->close();
     }
    
 }

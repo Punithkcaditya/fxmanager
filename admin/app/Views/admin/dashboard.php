@@ -9,7 +9,7 @@
             <div class="form-group">
                <select name="currencyselection"
                   class="form-control" required>
-                  <option value="" selected>SELECT CURRENCY</option>
+                  <option value="2" selected>SELECT CURRENCY EURUSD</option>
                   <?php foreach ($transaction as $row): ?>
                   <option value="<?php echo $row['currency'] ?>" <?php echo ((!empty($row['currency']) && isset($_GET['currency'])) && $row['currency'] == $_GET['currency']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option>
                   <?php endforeach;?>
