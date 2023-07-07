@@ -79,3 +79,25 @@ Array
     [Connection] => keep-alive
     [Cookie] => ci_session=2r1b55qtgvivbae76pmqpa2f3je79khl
 )
+Array
+(
+    [token] => xBTH2zsyuY6La7MHZS54YlQB9nSO7XML6XARicv6MTsZONKV2S
+    [User-Agent] => PostmanRuntime/7.32.3
+    [Accept] => */*
+    [Postman-Token] => dc3a0809-d830-4231-912e-7e3bc0552f37
+    [Host] => localhost
+    [Accept-Encoding] => gzip, deflate, br
+    [Connection] => keep-alive
+    [Cookie] => ci_session=8japh4537ilqa7kglstpcdu6n43gdo1r
+)
+Array
+(
+    [token] => 520620141cdc4c55c16cf375778ab5cc
+    [User-Agent] => PostmanRuntime/7.32.3
+    [Accept] => */*
+    [Postman-Token] => 39ba43f5-6000-46d7-80b2-1458cd869413
+    [Host] => localhost
+    [Accept-Encoding] => gzip, deflate, br
+    [Connection] => keep-alive
+    [Cookie] => ci_session=8japh4537ilqa7kglstpcdu6n43gdo1r
+)

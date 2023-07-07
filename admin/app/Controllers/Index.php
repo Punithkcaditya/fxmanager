@@ -108,10 +108,13 @@ class Index extends BaseController
             return redirect()->to("/");
         }
         $curid = isset($_GET['currency']) ? $_GET['currency'] : 2; 
+        $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
         $data['totaldetails'] = $this->totaldetails($curid);
-        $data['exposuredetails'] = $this->exposuredetails($curid);
+        $data['exposuredetails'] = $this->exposuredetails($curid , $curren);
         $data['currentmonthdetails'] = $this->currentmonthdetails($curid);
-        $data['quaterdetails'] = $this->quaterdetails($curid);
+        $data['quaterdetails'] = $this->quaterdetails($curid,  $curren);
+        $data['settledinvoices'] = $this->settledinvoices($curid,  $curren);
+        $data['currencyperformance'] = json_decode($this->currencyperformance(), true);
         $data["transaction"] = $this->transaction_model
 		->distinct()
 		->select("transactiondetails.currency, currency.Currency")
@@ -136,9 +139,107 @@ class Index extends BaseController
     }
 
 
+    // settledinvoices
+
+    public function settledinvoices($curid = '', $curren = ''){
+ 
+        if(isset($curren['Currency'])){
+        $data['current-quarter-settamtinFC_one'] = 0;
+        $data['last-quarter-settamtinFC_one'] = 0;
+        $data['current-quarter-settamtinFC_two'] = 0;
+        $data['current-quarter-actualgainone'] = 0;
+        $data['last-quarter-settamtinFC_two'] = 0;
+        $data['current-quarter-settamtone'] = 0;
+        $data['current-quarter-setrateone'] = 0;
+        $data['current-quarter-actualgainlossone'] = 0;
+        $data["last-quarter-avgavgtargettwo"] = 0;
+        $data['current-quarter-settamttwo'] = 0;
+        $data['current-quarter-setratetwo'] = 0;
+        $data['current-quarter-actualgainlosstwo'] = 0;
+        $data['last-quarter-settamttwo'] = 0;
+        $data['last-quarter-setrateouttwo'] = 0;
+        $data['last-quarter-actualgainlosstwo'] = 0;
+        $data['last-quarter-settamtone'] = 0;
+        $data['last-quarter-setrateone'] = 0;
+        $data['last-quarter-actualgainlossone'] = 0;
+        $data["current-quarter-avgavgtargettwo"] = 0;
+        $currentquarterportfoliovalueexp = $this->transaction_model->currentquarterportfoliovalueexp($curren['Currency']);
+        $currentquarterportfoliovaluimp = $this->transaction_model->currentquarterportfoliovaluimp($curren['Currency']);
+        $lastquarterportfoliovaluimp = $this->transaction_model->lastquarterportfoliovaluimp($curren['Currency']);
+        $lastquarterportfoliovaluexp = $this->transaction_model->lastquarterportfoliovaluexp($curren['Currency']);
+        foreach( $currentquarterportfoliovalueexp  as $row){
+            $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
+            $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
+            $currentquartersettamtinwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
+            $data['current-quarter-settamtone'] += $currentquartersettamtinwardsval; 
+            $data['current-quarter-setrateone'] += $currentquartersettamtinwardsval / $row['amountinFC'];
+            $data['current-quarter-actualgainone'] += $currentquartersettamtinwardsval - $targetValueInr;
+        }
+        foreach( $currentquarterportfoliovaluimp  as $row){
+            $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
+            $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
+            $currentquartersettamtoutwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
+            $data['current-quarter-settamttwo'] += $currentquartersettamtoutwardsval; 
+            $data['current-quarter-setratetwo'] += $currentquartersettamtoutwardsval / $row['amountinFC'];
+            $data['current-quarter-actualgainlosstwo'] += $currentquartersettamtoutwardsval - $targetValueInr;
+        }
+        foreach( $lastquarterportfoliovaluimp  as $row){
+            $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
+            $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
+            $lastquartersettamtoutwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
+            $data['last-quarter-settamttwo'] += $lastquartersettamtoutwardsval; 
+            $data['last-quarter-setrateouttwo'] += $lastquartersettamtoutwardsval / $row['amountinFC'];
+            $data['last-quarter-actualgainlosstwo'] += $lastquartersettamtoutwardsval - $targetValueInr;
+        }
+        foreach( $lastquarterportfoliovaluexp  as $row){
+            $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
+            $targetValueInr = ($row['targetRate']*$inr_target_value)*$row['amountinFC'];
+            $lastquartersettamtinwardsval = $row['Toatalallpayment'] + $row['AvgspotamountRate'];
+            $data['last-quarter-settamtone'] += $lastquartersettamtinwardsval; 
+            $data['last-quarter-setrateone'] += $lastquartersettamtinwardsval / $row['amountinFC'];
+            $data['last-quarter-actualgainlossone'] += $lastquartersettamtinwardsval - $targetValueInr;
+        }
+        return $data;
+        }
+        
+    }
+
+
+    // cyrrency performance
+    public function currencyperformance(){
+        $jsonResponse = json_encode([
+            "status" => 1,
+            "Today" => [
+                "Open" => "57.3525",
+                "High" => "58.2888",
+                "Low" => "7.01"
+            ],
+            "Yesterday" => [
+                "Open" => "50.3525",
+                "High" => "52.2888",
+                "Low" => "76.01"
+            ],
+            "ThisWeek" => [
+                "Open" => "72.3525",
+                "High" => "83.2888",
+                "Low" => "77.01"
+            ],
+            "ThisMonth" => [
+                "Open" => "12.3525",
+                "High" => "23.2888",
+                "Low" => "67.01"
+            ],
+            "ThisQuarter" => [
+                "Open" => "82.3525",
+                "High" => "03.2888",
+                "Low" => "107.01"
+            ],
+        ]);
+        return $jsonResponse;
+    }
 
     // Quarter details
-    public function quaterdetails($curid = ''){
+    public function quaterdetails($curid = '',  $curren = ''){
             $data["current-portfolio-valueone"] = 0;
             $data["last-portfolio-valueone"] = 0;
             $data["current-portfolio-valuetwo"] = 0;
@@ -169,11 +270,14 @@ class Index extends BaseController
             ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(CURDATE())', false)
             ->get();
 
+   
+
             if (is_object($querycurrentquarter)) {
                 $currentquarterexpodetimp = $querycurrentquarter->getResultArray();
                 }
 
                 if(isset($currentquarterexpodetimp)){
+           
                     foreach( $currentquarterexpodetimp  as $row){
                         $data['current-quarter-avghedgetwo'] += $row['avghedge'];
                         $data['current-quarter-avgavgtargettwo'] += $row['avgtarget'];
@@ -195,7 +299,7 @@ class Index extends BaseController
             $lastquarterexpodetimp = $querlastquarter->getResultArray();
             }
 
-                if(isset($currentquarterexpodetimp)){
+                if(isset($lastquarterexpodetimp)){
                 foreach( $lastquarterexpodetimp  as $row){
                 $data['last-quarter-avghedgetwo'] += $row['avghedge'];
                 $data['last-quarter-avgavgtargettwo'] += $row['avgtarget'];
@@ -246,7 +350,7 @@ class Index extends BaseController
                     }
                 }
 
-            $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
+           
       
             $currentportfoliovalueexp = $this->transaction_model->quarterportfoliovalueexp($curren['Currency']);
 
@@ -263,32 +367,38 @@ class Index extends BaseController
             }
 
             $currentportfoliovalueimp = $this->transaction_model->quarterportfoliovalueimp($curren['Currency']);
+
             foreach ($currentportfoliovalueimp as $row) {
                 $resoval = $this->forrwardCalculator(2, $curid, $row['dueDate']);
                 $data["current-portfolio-valuetwo"] += $this->quarterdetailscalc($resoval, $row['inr_target_value'], $row['amountinFC'], $row['targetRate'], $row['open_amount'], $row['isSettled'], $row['ToatalforwardAmount'], $row['AvgspotamountRate'], $row['Toatalallpayment'], $row['Avgrate']);
             }
 
             $lastportfoliovalueimp = $this->transaction_model->lastquarterportfoliovalueimp($curren['Currency']);
+
             foreach ($lastportfoliovalueimp as $row) {
                 $resoval = $this->forrwardCalculator(2, $curid, $row['dueDate']);
                 $data["last-portfolio-valuetwo"] += $this->quarterdetailscalc($resoval, $row['inr_target_value'], $row['amountinFC'], $row['targetRate'], $row['open_amount'], $row['isSettled'], $row['ToatalforwardAmount'], $row['AvgspotamountRate'], $row['Toatalallpayment'], $row['Avgrate']);
+                
             }
+
             return $data;
     }
 
 
 
-    public function quarterdetailscalc($resoval, $inr_target_value, $amountinFC, $targetRate, $open_amount, $isSettled, $ToatalforwardAmount, $AvgspotamountRate , $Toatalallpayment, $Avgrate ){
-        $crntfrrate = json_decode($resoval);
-        $currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
-        $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
-        $inr_target_value = ($inr_target_value > 0.00) ? $inr_target_value : 1;
-        $targetValueInr = ($targetRate*$inr_target_value)*$amountinFC;
-        $openAmountFC = isset($isSettled) ? $open_amount : ($amountinFC - $ToatalforwardAmount);
-        $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
-        $currentportfoliovalue = isset($isSettled) ? ($AvgspotamountRate + $Toatalallpayment) : ($openAmountINR + ($ToatalforwardAmount * $Avgrate));
-        return $currentportfoliovalue;
-    }
+    public function quarterdetailscalc($resoval, $inr_target_value, $amountinFC, $targetRate, $open_amount, $isSettled, $ToatalforwardAmount, $AvgspotamountRate, $Toatalallpayment, $Avgrate)
+{
+    $crntfrrate = json_decode($resoval);
+    $currentForwardRate = isset($crntfrrate->result->forward_rate) ? $crntfrrate->result->forward_rate : 1;
+    $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ? $crntfrrate->result->spot_rate : 1;
+    $inr_target_value = ($inr_target_value > 0.00) ? $inr_target_value : 1;
+    $targetValueInr = ($targetRate * $inr_target_value) * $amountinFC;
+    $openAmountFC = isset($isSettled) && !empty($isSettled) ? $open_amount : ($amountinFC - $ToatalforwardAmount);
+    $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
+    $currentportfoliovalue = isset($isSettled) && !empty($isSettled) ? ($AvgspotamountRate + $Toatalallpayment) : ($openAmountINR + ($ToatalforwardAmount * $Avgrate));
+    return $currentportfoliovalue;
+}
+
 
     // Current Month Details
 
@@ -349,7 +459,7 @@ class Index extends BaseController
 
     // exposuredetails
 
-    public function exposuredetails($curid = ''){
+    public function exposuredetails($curid = '', $curren= ''){
         $data['percentagehedgedtwo'] = 0;
         $data['totalexposuretwo'] = 0;
         $data['percentagehedgedone'] = 0;
@@ -404,7 +514,7 @@ class Index extends BaseController
             }
         }
 
-        $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
+        
 
         $currentportfoliovalueimp = $this->transaction_model->currentportfoliovalueimp($curren['Currency']);
         if(isset($currentportfoliovalueimp)){
@@ -434,9 +544,9 @@ class Index extends BaseController
         $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
         $inr_target_value = ($inr_target_value > 0.00) ? $inr_target_value : 1;
         $targetValueInr = ($targetRate*$inr_target_value)*$amountinFC;
-        $openAmountFC = isset($isSettled) ? $open_amount : ($amountinFC - $ToatalforwardAmount);
+        $openAmountFC = isset($isSettled) && !empty($isSettled) ? $open_amount : ($amountinFC - $ToatalforwardAmount);
         $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
-        $currentportfoliovalueexpval = isset($isSettled) ? ($AvgspotamountRate + $Toatalallpayment) : ($openAmountINR + ($ToatalforwardAmount * $Avgrate));
+        $currentportfoliovalueexpval = isset($isSettled) && !empty($isSettled) ? ($AvgspotamountRate + $Toatalallpayment) : ($openAmountINR + ($ToatalforwardAmount * $Avgrate));
         $data["currentportfoliovalue"] = $currentportfoliovalueexpval; // Sum the value in each iteration
         $data["currentganorlose"] = $currentportfoliovalueexpval - $targetValueInr; 
         return $data;

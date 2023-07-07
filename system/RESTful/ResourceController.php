@@ -13,6 +13,9 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
+use App\Models\TransactionModel as Transaction_Model;
+use App\Models\ExposureType as ExposureType_Model;
+use App\Models\CurrencyModel as Currency_Model;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.
@@ -30,8 +33,10 @@ class ResourceController extends BaseResource
     {
         
         $this->session = \Config\Services::session();
-        $this->secondDb = Database::connect('second_db');
-        
+        $this->transaction_model = new Transaction_Model();
+		$this->exposuretype_model = new ExposureType_Model();
+		$this->currency_model = new Currency_Model();
+
     }
     public function index()
     {
@@ -119,7 +124,7 @@ class ResourceController extends BaseResource
     public function authUser()
     {
        
-
+        $this->secondDb = Database::connect('second_db');
         $header_values = getallheaders();
         file_put_contents(ROOTPATH."logs/stripe_log.txt", print_r($header_values, true), FILE_APPEND);
         $data = array();
@@ -138,6 +143,7 @@ class ResourceController extends BaseResource
                 }
             }
         }
+        $this->secondDb->close();
     }
    
 }

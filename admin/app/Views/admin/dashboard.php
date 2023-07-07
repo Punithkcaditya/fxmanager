@@ -608,7 +608,7 @@
                      <div aria-labelledby="tabs-icons-text-4-tab" class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel">
                         <h2 class="text-center mb-5">Details of Settled Invoices</h2>
                         <div class="row">
-                           <div class="col-md-5">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
@@ -617,6 +617,11 @@
                                        </tr>
                                     </thead>
                                     <tbody>
+                                    <tr>
+                                          <td>
+                                             <h4></h4>
+                                          </td>
+                                       </tr>
                                        <tr>
                                           <td>
                                              <h4>Settlement Amount In FC :</h4>
@@ -632,11 +637,7 @@
                                              <h4>Settlement Rate :</h4>
                                           </td>
                                        </tr>
-                                       <tr>
-                                          <td>
-                                             <h4>Average Target Rate :</h4>
-                                          </td>
-                                       </tr>
+                                       
                                        <tr>
                                           <td>
                                              <h4>Actual Gain/Loss :</h4>
@@ -646,78 +647,112 @@
                                  </table>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
-                                 <table class="table table-striped table-bordered w-100 text-nowrap ">
+                              <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
                                        <tr>
-                                          <th class="wd-15p">Inwards</th>
+                                          <th class="wd-15p text-center">Inwards</th>
                                        </tr>
                                     </thead>
                                     <tbody class="col-lg-3 p-2">
+                                    <table class="table table-striped table-bordered w-100 text-nowrap">
+                                       <thead>
+                                       <tr>
+                                       <th class="wd-50p">Current Quarter</th>
+                                       <th class="wd-50p">Last Quarter</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4>--</h4>
+                                          </td>
+                                          <td>
+                                             <h4>--</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-settamtinFC_one'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-settamtinFC_one'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-setrateone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-setrateone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-actualgainone'], 4) ?></h4>
                                           </td>
-                                       </tr>
-                                       <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-actualgainlossone'], 4) ?></h4>
                                           </td>
                                        </tr>
+                                       </tbody>
+                                       </table>
                                     </tbody>
                                  </table>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
-                                 <table class="table table-striped table-bordered w-100 text-nowrap ">
+                              <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
                                        <tr>
-                                          <th class="wd-15p">Outwards</th>
+                                          <th class="wd-15p text-center">Outwards</th>
                                        </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="col-lg-3 p-2">
+                                    <table class="table table-striped table-bordered w-100 text-nowrap">
+                                       <thead>
+                                       <tr>
+                                       <th class="wd-50p">Current Quarter</th>
+                                       <th class="wd-50p">Last Quarter</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4>--</h4>
+                                          </td>
+                                          <td>
+                                             <h4>--</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-settamtinFC_two'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-settamtinFC_two'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-setratetwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-settamttwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-actualgainlosstwo'], 4) ?></h4>
                                           </td>
-                                       </tr>
-                                       <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-actualgainlosstwo'], 4) ?></h4>
                                           </td>
                                        </tr>
+                                       </tbody>
+                                       </table>
                                     </tbody>
                                  </table>
                               </div>
@@ -728,122 +763,122 @@
                      <!-- tab 6 -->
 
                      <div aria-labelledby="tabs-icons-text-5-tab" class="tab-pane fade" id="tabs-icons-text-5" role="tabpanel">
-                        <h2 class="text-center mb-5">Details of Settled Invoices</h2>
+                        <h2 class="text-center mb-5">Currency Performance (Spot)</h2>
                         <div class="row">
-                           <div class="col-md-5">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
                                        <tr>
-                                          <th class="wd-15p">Category</th>
+                                          <th class="wd-15p"><h4>&nbsp;</h4></th>
                                        </tr>
                                     </thead>
                                     <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Settlement Amount In FC :</h4>
+                                             <h4>Today :</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Settlement Amount In INR :</h4>
+                                             <h4>Yesterday :</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Settlement Rate :</h4>
+                                             <h4>This Week :</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Average Target Rate :</h4>
+                                             <h4>This Month :</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Actual Gain/Loss :</h4>
+                                             <h4>This Quarter:</h4>
                                           </td>
                                        </tr>
                                     </tbody>
                                  </table>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col-md-8">
                               <div class="table-responsive border ">
-                                 <table class="table table-striped table-bordered w-100 text-nowrap ">
-                                    <thead>
-                                       <tr>
-                                          <th class="wd-15p">Inwards</th>
-                                       </tr>
-                                    </thead>
+                              <table class="table table-striped table-bordered w-100 text-nowrap ">
+                            
                                     <tbody class="col-lg-3 p-2">
-                                       <tr>
-                                          <td>
-                                             <h4>Website :</h4>
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <h4>Email :</h4>
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <h4>Phone :</h4>
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <h4>Phone :</h4>
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <h4>Phone :</h4>
-                                          </td>
-                                       </tr>
-                                    </tbody>
-                                 </table>
-                              </div>
-                           </div>
-                           <div class="col-md-3">
-                              <div class="table-responsive border ">
-                                 <table class="table table-striped table-bordered w-100 text-nowrap ">
+                                    <table class="table table-striped table-bordered w-100 text-nowrap">
                                     <thead>
-                                       <tr>
-                                          <th class="wd-15p">Outwards</th>
-                                       </tr>
+                                    <tr>
+                                    <th class="wd-50p"><h4>Open</h4></th>
+                                    <th class="wd-50p"><h4>High</h4></th>
+                                    <th class="wd-50p"><h4>Low</h4></th>
+                                    </tr>
                                     </thead>
-                                    <tbody>
+                                       <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo $currencyperformance['Today']['Open']; ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo $currencyperformance['Today']['High']; ?></h4>
+                                          </td>
+                                          <td>
+                                          <h4><?php echo $currencyperformance['Today']['Low']; ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
+                                       <td>
+                                             <h4><?php echo $currencyperformance['Yesterday']['Open']; ?></h4>
+                                          </td>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo $currencyperformance['Yesterday']['High']; ?></h4>
+                                          </td>
+                                          <td>
+                                          <h4><?php echo $currencyperformance['Yesterday']['Low']; ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
+                                       <td>
+                                             <h4><?php echo $currencyperformance['ThisWeek']['Open']; ?></h4>
+                                          </td>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo $currencyperformance['ThisWeek']['High']; ?></h4>
+                                          </td>
+                                          <td>
+                                          <h4><?php echo $currencyperformance['ThisWeek']['Low']; ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
+                                       <td>
+                                             <h4><?php echo $currencyperformance['ThisMonth']['Open']; ?></h4>
+                                          </td>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo $currencyperformance['ThisMonth']['High']; ?></h4>
+                                          </td>
+                                          <td>
+                                          <h4><?php echo $currencyperformance['ThisMonth']['Low']; ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
+                                       <td>
+                                             <h4><?php echo $currencyperformance['ThisQuarter']['Open']; ?></h4>
+                                          </td>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo $currencyperformance['ThisQuarter']['High']; ?></h4>
+                                          </td>
+                                          <td>
+                                          <h4><?php echo $currencyperformance['ThisQuarter']['Low']; ?></h4>
                                           </td>
                                        </tr>
+                                       </tbody>
+                                       </table>
                                     </tbody>
                                  </table>
                               </div>
                            </div>
+                           
                         </div>
                      </div>
 

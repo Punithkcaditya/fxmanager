@@ -90,9 +90,13 @@ class TransactionModel extends Model
         FROM   paymentreceiptdetails
         GROUP  BY 1
         ) p ON a.transaction_id  = p.underlying_exposure_ref GROUP  BY a.transaction_id';
-        $query = $this->db->query($sql);
-        $result = $query->getResult();
-        return $result;
+          $query = $this->db->query($sql);
+          if (is_object($query)) {
+              $result = $query->getResult();
+              return $result;
+          }else{
+              return [];
+          }
     }
 	
 	public function tabsarrangement($curid='')
@@ -121,9 +125,13 @@ class TransactionModel extends Model
         WHERE a.currency = '.$curid.'
         AND a.exposureType != 1
         GROUP BY 1';
-         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        $query = $this->db->query($sql);
+        if (is_object($query)) {
+           $result = $query->getResultArray();
+           return $result;
+       }else{
+           return [];
+       }
 	}
 	
 	
@@ -141,9 +149,13 @@ class TransactionModel extends Model
         FROM   forward_coverdetails
         GROUP  BY 1
         ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref  WHERE `a`.`currency` = '.$curid.' AND `a`.`exposureType` = 1 GROUP BY 1';
-        $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+         $query = $this->db->query($sql);
+         if (is_object($query)) {
+           $result = $query->getResultArray();
+           return $result;
+       }else{
+           return [];
+       }
 	}
 	
 	public function helicopterviewimport($curid='')
@@ -154,9 +166,12 @@ class TransactionModel extends Model
 		IF(QUARTER(td.dueDate) = 3, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.contracted_Rate END),  ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.spot_rate END) ), NULL) AS `Q3`, 
 		IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END),  ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END) ), NULL) AS `Q4`
 		FROM transactiondetails AS td INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref WHERE `td`.`exposureType` = 2 AND `td`.`currency` = ".$curid." GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";	
-        $query = $this->db->query($sql);
-		$result = $query->getResultArray();
-		return $result;
+          if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
 
 	}
 	
@@ -168,9 +183,13 @@ class TransactionModel extends Model
 		IF(QUARTER(td.dueDate) = 3, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.amount_FC END) ,',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.spot_rate END)), NULL) AS `Q3`, 
 		IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END) ,',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END)), NULL) AS `Q4`
 		FROM transactiondetails AS td INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref WHERE `td`.`exposureType` = 1 AND `td`.`currency` = ".$curid." GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";	
-		$query = $this->db->query($sql);
-		$result = $query->getResultArray();
-		return $result;
+			$query = $this->db->query($sql);
+            if (is_object($query)) {
+                $result = $query->getResultArray();
+                return $result;
+            }else{
+                return [];
+            }
 	}
 	
 	public function helicopterviewbuyersCredit($curid='')
@@ -182,8 +201,12 @@ class TransactionModel extends Model
 		IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END) ,',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END)), NULL) AS `Q4`
 		FROM transactiondetails AS td INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref WHERE `td`.`exposureType` = 3 AND `td`.`currency` = ".$curid." GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";	
 		$query = $this->db->query($sql);
-		$result = $query->getResultArray();
-		return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
 
 	}
 	
@@ -196,8 +219,12 @@ class TransactionModel extends Model
 		IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END) ,',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END)), NULL) AS `Q4`
 		FROM transactiondetails AS td INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref WHERE `td`.`exposureType` = 5 AND `td`.`currency` = ".$curid." GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";	
 		$query = $this->db->query($sql);
-		$result = $query->getResultArray();
-		return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
 
 	}
 	
@@ -210,8 +237,12 @@ class TransactionModel extends Model
 		IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END) ), NULL) AS `Q4`
 		FROM transactiondetails AS td INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref WHERE `td`.`exposureType` = 4 AND `td`.`currency` = ".$curid." GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";	
 		$query = $this->db->query($sql);
-		$result = $query->getResultArray();
-		return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
 
 	}
 
@@ -229,8 +260,12 @@ class TransactionModel extends Model
         GROUP BY YEAR(td.dueDate), MONTH(td.dueDate)
         LIMIT 1;";	
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
     }
     
 
@@ -246,8 +281,12 @@ class TransactionModel extends Model
         GROUP BY YEAR(td.dueDate), MONTH(td.dueDate)
         LIMIT 1;";	
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
     }
 
     public function totalinwrdscurrentquarter($curid=''){
@@ -262,8 +301,12 @@ class TransactionModel extends Model
         GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate)
         LIMIT 1;";
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
 
     }
 
@@ -279,8 +322,12 @@ class TransactionModel extends Model
         GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate)
         LIMIT 1;";
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
     }
 
     public function currentportfoliovalueimp($curid='')
@@ -308,8 +355,12 @@ class TransactionModel extends Model
         WHERE a.exposureType != 1 AND cr.Currency = "'.$curid.'"
         GROUP  BY a.transaction_id';
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
     }
 
     public function currentportfoliovalueexp($curid='')
@@ -337,8 +388,12 @@ class TransactionModel extends Model
         WHERE a.exposureType = 1 AND cr.Currency = "'.$curid.'"
         GROUP  BY a.transaction_id';
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        }else{
+            return [];
+        }
     }
 
     public function currentquarterportfoliovalueexp($curid='')
@@ -368,8 +423,12 @@ class TransactionModel extends Model
     GROUP BY a.transaction_id';
     
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 public function currentquarterportfoliovaluimp($curid='')
@@ -399,8 +458,13 @@ public function currentquarterportfoliovaluimp($curid='')
     GROUP BY a.transaction_id';
     
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    $query = $this->db->query($sql);
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 public function lastquarterportfoliovaluimp($curid='')
@@ -430,8 +494,12 @@ public function lastquarterportfoliovaluimp($curid='')
     GROUP BY a.transaction_id';
     
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 
@@ -464,8 +532,12 @@ public function lastquarterportfoliovaluexp($curid='')
     // Details of Settled Invoices
     
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 public function quarterportfoliovalueexp($curid='')
@@ -494,8 +566,12 @@ public function quarterportfoliovalueexp($curid='')
      AND QUARTER(a.dueDate) = QUARTER(CURDATE())
     GROUP  BY a.transaction_id';
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 public function lastquarterportfoliovalueexp($curid='')
@@ -524,8 +600,12 @@ public function lastquarterportfoliovalueexp($curid='')
     AND QUARTER(a.dueDate) = QUARTER(DATE_SUB(CURDATE(), INTERVAL 1 QUARTER))
     GROUP  BY a.transaction_id';
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 public function quarterportfoliovalueimp($curid='')
@@ -550,12 +630,16 @@ public function quarterportfoliovalueimp($curid='')
     FROM   paymentreceiptdetails
     GROUP  BY 1
     ) p ON a.transaction_id  = p.underlying_exposure_ref
-    WHERE a.exposureType = 1 AND cr.Currency = "'.$curid.'"
+    WHERE a.exposureType != 1 AND cr.Currency = "'.$curid.'"
      AND QUARTER(a.dueDate) = QUARTER(CURDATE())
     GROUP  BY a.transaction_id';
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 
@@ -581,12 +665,16 @@ public function lastquarterportfoliovalueimp($curid='')
     FROM   paymentreceiptdetails
     GROUP  BY 1
     ) p ON a.transaction_id  = p.underlying_exposure_ref
-    WHERE a.exposureType = 1 AND cr.Currency = "'.$curid.'"
+    WHERE a.exposureType != 1 AND cr.Currency = "'.$curid.'"
     AND QUARTER(a.dueDate) = QUARTER(DATE_SUB(CURDATE(), INTERVAL 1 QUARTER))
     GROUP  BY a.transaction_id';
     $query = $this->db->query($sql);
-    $result = $query->getResultArray();
-    return $result;
+    if (is_object($query)) {
+        $result = $query->getResultArray();
+        return $result;
+    }else{
+        return [];
+    }
 }
 
 }
