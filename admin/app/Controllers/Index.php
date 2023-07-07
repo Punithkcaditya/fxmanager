@@ -7,6 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use App\Controllers\BaseController;
 use Config\Database;
 use App\Models\TransactionModel as Transaction_Model;
+use App\Models\CurrencyModel as Currency_Model;
 
 class Index extends BaseController
 {
@@ -19,6 +20,7 @@ class Index extends BaseController
         helper(['form', 'url', 'string']);
         $session = session();
         $this->transaction_model = new Transaction_Model();
+        $this->currency_model = new Currency_Model();
         $pot = json_decode(json_encode($session->get("userdata")), true);
         if (empty($pot)) {
             return redirect()->to("/");
@@ -91,175 +93,10 @@ class Index extends BaseController
     }
 
 
-    public function Introduction()
-    {
-        $employee = !empty($_GET['employee']) ? $_GET['employee'] : '';
-        if (empty($employee)) {
-            return redirect()->to("/");
-        }
-        $data['employee_id'] = $employee;
-        return view('admin/introduction', $data);
-    }
 
 
 
-    public function addemployeedetails()
-    {
 
-        $session = session();
-        $input = $this->validate([
-            "ssjl_date" => "required",
-            "ssjl_full_name" => "required",
-            "ssjl_mobile" => "required",
-            "ssjl_email" => "required",
-            "ssjl_blood_group" => "required",
-            "ssjl_adhaar_no" => "required",
-            "ssjl_bank_name" => "required",
-            "ssjl_marital_status" => "required",
-            "ssjl_date_of_birth" => "required",
-            "ssjl_pan_no" => "required",
-            "employee_id" => "required",
-            "ssjl_bank_ac_no" => "required",
-            "ssjl_fathers_name" => "required",
-            "ssjl_emergency_contact_no" => "required",
-            "ssjl_contact_no" => "required",
-
-        ]);
-
-        if (!empty($input)) {
-
-            if ($this->request->getMethod() == "post") {
-                extract($this->request->getPost());
-                $udata = [];
-
-            $checkPan = $this->introductionform_model
-            ->where("ssjl_pan_no", $ssjl_pan_no)
-            ->countAllResults();
-
-                if ($checkPan > 0) {
-                     $session->setFlashdata("error", "PAN No Taken");
-                    return redirect()->to("introduction");
-                }
-
-
-                $validated = $this->validate([
-                    "file" => [
-                        "uploaded[file]",
-                        "mime_in[file,image/jpg,image/jpeg,image/gif,image/png]",
-                        "max_size[file,4096]",
-                    ],
-                ]);
-
-                $ssjl_education_documents = $this
-                    ->request
-                    ->getFile('ssjl_education_documents');
-                $udata["ssjl_education_documents"]  =  $this->savefilesuploaded($ssjl_education_documents);
-
-                $ssjl_pan_copy = $this
-                    ->request
-                    ->getFile('ssjl_pan_copy');
-                 $udata["ssjl_pan_copy"]  =  $this->savefilesuploaded($ssjl_pan_copy);
-
-
-                $ssjl_releiving_letter = $this
-                    ->request
-                    ->getFile('ssjl_releiving_letter');
-                      $udata["ssjl_releiving_letter"]  =  $this->savefilesuploaded($ssjl_releiving_letter);
-
-                $ssjl_resume = $this
-                    ->request
-                    ->getFile('ssjl_resume');
-                      $udata["ssjl_resume"]  =  $this->savefilesuploaded($ssjl_resume);
-
-                $ssl_profile_pic = $this
-                    ->request
-                    ->getFile('ssl_profile_pic');
-                      $udata["ssl_profile_pic"]  =  $this->savefilesuploaded($ssl_profile_pic);
-
-
-                $ssjl_adhaar_copy = $this
-                    ->request
-                    ->getFile('ssjl_adhaar_copy');
-                    $udata["ssjl_adhaar_copy"]  =  $this->savefilesuploaded($ssjl_adhaar_copy);
-
-            
-                $ssjl_previous_pay_slips = $this
-                    ->request
-                    ->getFile('ssjl_previous_pay_slips');
-                    $udata["ssjl_previous_pay_slips"]  =  $this->savefilesuploaded($ssjl_previous_pay_slips);
-
-                $ssjl_rent_agreement = $this
-                    ->request
-                    ->getFile('ssjl_rent_agreement');
-                     $udata["ssjl_rent_agreement"]  =  $this->savefilesuploaded($ssjl_rent_agreement);
-
-           
-                $date = strtotime($ssjl_date);
-                $ssjl_date_conv = date("Y-m-d", $date);
-                $ssjl_date_of_birth_conv = strtotime($ssjl_date_of_birth);
-                $ssjl_date_of_birth_new = date("Y-m-d", $ssjl_date_of_birth_conv);
-                $udata["ssjl_date"] = $ssjl_date_conv;
-                $udata["ssjl_email"] = $ssjl_email;
-                $udata["ssjl_employee_id"] = $employee_id;
-                $udata["ssjl_full_name"] = $ssjl_full_name;
-                $udata["ssjl_mobile"] = $ssjl_mobile;
-                $udata["ssjl_blood_group"] = $ssjl_blood_group;
-                $udata["ssjl_adhaar_no"] = $ssjl_adhaar_no;
-                $udata["ssjl_bank_name"] = $ssjl_bank_name;
-                $udata["ssjl_marital_status"] = $ssjl_marital_status;
-                $udata["ssjl_emergency_contact_person"] = !empty($ssjl_emergency_contact_person) ? $ssjl_emergency_contact_person : 0;
-                $udata["ssjl_reference_person"] = !empty($ssjl_reference_person) ? $ssjl_reference_person : 'N/A' ;
-                $udata["ssjl_health_issue_any"] = !empty($ssjl_health_issue_any) ? $ssjl_health_issue_any : 'N/A';
-                $udata["ssjl_date_of_birth"] = $ssjl_date_of_birth_new;
-                $udata["ssjl_pan_no"] = $ssjl_pan_no;
-                $udata["ssjl_fathers_name"] = $ssjl_fathers_name;
-                $udata["ssjl_emergency_contact_no"] = $ssjl_emergency_contact_no;
-                $udata["ssjl_contact_no"] = $ssjl_contact_no;
-                $udata["ssjl_uan_no"] = $ssjl_uan_no;
-                $udata["ssjl_bank_ac_no"] = $ssjl_bank_ac_no;
-                $udata["ssjl_isapproved"] = 0;
-                 $session->setFlashdata("success", "Information Saved Successfully");
-                $save = $this->introductionform_model->save($udata);
-                 return redirect()->to("/");
-            }
-        } else {
-            $session->setFlashdata("error", "Incorrect Email and Password");
-            $data["session"] = $session;
-            return redirect()->to("introduction");
-        }
-    }
-
-public function savefilesuploaded($ssjl_files){
-  if ($ssjl_files->isValid() && !$ssjl_files->hasMoved()) {
-                    $name = $ssjl_files->getRandomName();
-                    $ext = $ssjl_files->getClientExtension();
-                    $ssjl_files_pic =  $name;
-                    $ssjl_files->move("admin/uploads/", $ssjl_files_pic);
-                    $filepath = base_url() . "/uploads/" . $ssjl_files_pic;
-                    session()->setFlashdata("filepath", $filepath);
-                    session()->setFlashdata("extension", $ext);
-                    return $ssjl_files_pic;
-                }else{
-                    return '';
-                }
-}
-
-// view pdf files
-     public function showPdf($filename)
-    {
-         // $filepath = base_url() . "/uploads/" . $ssjl_rent_agreement_pic;
-         //            session()->setFlashdata("filepath", $filepath);
-        $filepath = base_url() . '/uploads/' . $filename;
-       
-        $content = file_get_contents($filepath);
-        header('Content-Type: application/pdf');
-        header('Content-Length: ' . strlen($content));
-        header('Content-Disposition: inline; filename="' . $filename . '"');
-        header('Cache-Control: private, max-age=0, must-revalidate');
-        header('Pragma: public');
-        ini_set('zlib.output_compression', '0');
-        die($content);
-    }
 
 
     public function dashboard()
@@ -273,8 +110,9 @@ public function savefilesuploaded($ssjl_files){
         $curid = isset($_GET['currency']) ? $_GET['currency'] : 2; 
         $data['totaldetails'] = $this->totaldetails($curid);
         $data['exposuredetails'] = $this->exposuredetails($curid);
-   
-         $data["transaction"] = $this->transaction_model
+        $data['currentmonthdetails'] = $this->currentmonthdetails($curid);
+        $data['quaterdetails'] = $this->quaterdetails($curid);
+        $data["transaction"] = $this->transaction_model
 		->distinct()
 		->select("transactiondetails.currency, currency.Currency")
 		->join('currency', "transactiondetails.currency = currency.currency_id", 'left')
@@ -298,12 +136,311 @@ public function savefilesuploaded($ssjl_files){
     }
 
 
-    // exposuredetails
 
-    public function exposuredetails($curid = ''){
+    // Quarter details
+    public function quaterdetails($curid = ''){
+            $data["current-portfolio-valueone"] = 0;
+            $data["last-portfolio-valueone"] = 0;
+            $data["current-portfolio-valuetwo"] = 0;
+            $data["last-portfolio-valuetwo"] = 0;
+            $data["current-quarter-avghedgetwo"] = 0;
+            $data["current-quarter-avgavgtargettwo"] = 0;
+            $data["current-quarter-totalexposuretwo"] = 0;
+            $data["current-quarter-percentagehedgedtwo"] = 0;
+            $data["last-quarter-avghedgetwo"] = 0;
+            $data["last-quarter-avgavgtargettwo"] = 0;
+            $data["last-quarter-totalexposuretwo"] = 0;
+            $data["last-quarter-percentagehedgedtwo"] = 0;
+            $data["current-quarter-avghedgeone"] = 0;
+            $data["current-quarter-totalexposureone"] = 0;
+            $data["current-quarter-percentagehedgedone"] = 0;
+            $data["current-quarter-avgavgtargetone"] = 0;
+            $data["last-quarter-avghedgeone"] = 0;
+            $data["last-quarter-totalexposureone"] = 0;
+            $data["last-quarter-percentagehedgedone"] = 0;
+            $data["last-quarter-avgavgtargetone"] = 0;
+
+
+            $querycurrentquarter = $this->transaction_model
+            ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+            ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+            ->where('transactiondetails.exposureType !=', 1)
+            ->where('transactiondetails.currency', $curid)
+            ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(CURDATE())', false)
+            ->get();
+
+            if (is_object($querycurrentquarter)) {
+                $currentquarterexpodetimp = $querycurrentquarter->getResultArray();
+                }
+
+                if(isset($currentquarterexpodetimp)){
+                    foreach( $currentquarterexpodetimp  as $row){
+                        $data['current-quarter-avghedgetwo'] += $row['avghedge'];
+                        $data['current-quarter-avgavgtargettwo'] += $row['avgtarget'];
+                        $data['current-quarter-totalexposuretwo'] += $row['totalexposure'];
+                        $data['current-quarter-percentagehedgedtwo'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+                    }
+                }
+
+
+            $querlastquarter = $this->transaction_model
+            ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+            ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+            ->where('transactiondetails.exposureType !=', 1)
+            ->where('transactiondetails.currency', $curid)
+            ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(DATE_SUB(CURDATE(), INTERVAL 1 QUARTER))')
+            ->get();
+
+            if (is_object($querlastquarter)) {
+            $lastquarterexpodetimp = $querlastquarter->getResultArray();
+            }
+
+                if(isset($currentquarterexpodetimp)){
+                foreach( $lastquarterexpodetimp  as $row){
+                $data['last-quarter-avghedgetwo'] += $row['avghedge'];
+                $data['last-quarter-avgavgtargettwo'] += $row['avgtarget'];
+                $data['last-quarter-totalexposuretwo'] += $row['totalexposure'];
+                $data['last-quarter-percentagehedgedtwo'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+                }
+                }
+
+            $querexpodetexp = $this->transaction_model
+            ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+            ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+            ->where('transactiondetails.exposureType', 1)
+            ->where('transactiondetails.currency', $curid)
+            ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(CURDATE())', false)
+            ->get();
+
+            if (is_object($querexpodetexp)) {
+                $currentquarterexpodetexp = $querexpodetexp->getResultArray();
+                }
+
+                if(isset($currentquarterexpodetexp)){
+                foreach( $currentquarterexpodetexp  as $row){
+                $data['current-quarter-avghedgeone'] += $row['avghedge'];
+                $data['current-quarter-avgavgtargetone'] += $row['avgtarget'];
+                $data['current-quarter-totalexposureone'] += $row['totalexposure'];
+                $data['current-quarter-percentagehedgedone'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+                }
+                }
+
+            $querylastquarter = $this->transaction_model
+            ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+            ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+            ->where('transactiondetails.exposureType', 1)
+            ->where('transactiondetails.currency')
+            ->where('QUARTER(transactiondetails.dueDate)', 'QUARTER(DATE_SUB(CURDATE(), INTERVAL 1 QUARTER))')
+            ->get();
+
+            if (is_object($querylastquarter)) {
+                $lastquarterexpodexp = $querylastquarter->getResultArray();
+                }
+
+                if(isset($lastquarterexpodexp)){
+                    foreach($lastquarterexpodexp  as $row){
+                        $data['last-quarter-avghedgeone'] += $row['avghedge'];
+                        $data['last-quarter-avgavgtargetone'] += $row['avgtarget'];
+                        $data['last-quarter-totalexposureone'] += $row['totalexposure'];
+                        $data['last-quarter-percentagehedgedone'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+                    }
+                }
+
+            $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
+      
+            $currentportfoliovalueexp = $this->transaction_model->quarterportfoliovalueexp($curren['Currency']);
+
+            foreach ($currentportfoliovalueexp as $row) {
+                $resoval = $this->forrwardCalculator(1, $curid, $row['dueDate']);
+                $data["current-portfolio-valueone"] += $this->quarterdetailscalc($resoval, $row['inr_target_value'], $row['amountinFC'], $row['targetRate'], $row['open_amount'], $row['isSettled'], $row['ToatalforwardAmount'], $row['AvgspotamountRate'], $row['Toatalallpayment'], $row['Avgrate']);
+            }
+
+
+            $lastportfoliovalueexp = $this->transaction_model->lastquarterportfoliovalueexp($curren['Currency']);
+            foreach ($lastportfoliovalueexp as $row) {
+                $resoval = $this->forrwardCalculator(1, $curid, $row['dueDate']);
+                $data["last-portfolio-valueone"] += $this->quarterdetailscalc($resoval, $row['inr_target_value'], $row['amountinFC'], $row['targetRate'], $row['open_amount'], $row['isSettled'], $row['ToatalforwardAmount'], $row['AvgspotamountRate'], $row['Toatalallpayment'], $row['Avgrate']);
+            }
+
+            $currentportfoliovalueimp = $this->transaction_model->quarterportfoliovalueimp($curren['Currency']);
+            foreach ($currentportfoliovalueimp as $row) {
+                $resoval = $this->forrwardCalculator(2, $curid, $row['dueDate']);
+                $data["current-portfolio-valuetwo"] += $this->quarterdetailscalc($resoval, $row['inr_target_value'], $row['amountinFC'], $row['targetRate'], $row['open_amount'], $row['isSettled'], $row['ToatalforwardAmount'], $row['AvgspotamountRate'], $row['Toatalallpayment'], $row['Avgrate']);
+            }
+
+            $lastportfoliovalueimp = $this->transaction_model->lastquarterportfoliovalueimp($curren['Currency']);
+            foreach ($lastportfoliovalueimp as $row) {
+                $resoval = $this->forrwardCalculator(2, $curid, $row['dueDate']);
+                $data["last-portfolio-valuetwo"] += $this->quarterdetailscalc($resoval, $row['inr_target_value'], $row['amountinFC'], $row['targetRate'], $row['open_amount'], $row['isSettled'], $row['ToatalforwardAmount'], $row['AvgspotamountRate'], $row['Toatalallpayment'], $row['Avgrate']);
+            }
+            return $data;
+    }
+
+
+
+    public function quarterdetailscalc($resoval, $inr_target_value, $amountinFC, $targetRate, $open_amount, $isSettled, $ToatalforwardAmount, $AvgspotamountRate , $Toatalallpayment, $Avgrate ){
+        $crntfrrate = json_decode($resoval);
+        $currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
+        $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
+        $inr_target_value = ($inr_target_value > 0.00) ? $inr_target_value : 1;
+        $targetValueInr = ($targetRate*$inr_target_value)*$amountinFC;
+        $openAmountFC = isset($isSettled) ? $open_amount : ($amountinFC - $ToatalforwardAmount);
+        $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
+        $currentportfoliovalue = isset($isSettled) ? ($AvgspotamountRate + $Toatalallpayment) : ($openAmountINR + ($ToatalforwardAmount * $Avgrate));
+        return $currentportfoliovalue;
+    }
+
+    // Current Month Details
+
+    public function currentmonthdetails($curid = ''){
+        $data['avghedgetwo'] = 0;
+        $data['avgtargettwo'] = 0;
+        $data['currentmonthtotalexposuretwo'] = 0;
+        $data['currentmonthpercentagehedgedtwo'] = 0;
+        $data['avghedgeone'] = 0;
+        $data['avgtargeone'] = 0;
+        $data['currentmonthtotalexposureone'] = 0;
+        $data['currentmonthpercentagehedgedone'] = 0;
+
+        $querycurrentimp = $this->transaction_model
+        ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+        ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+        ->where('transactiondetails.exposureType !=', 1)
+        ->where('transactiondetails.currency', $curid)
+        ->where('MONTH(transactiondetails.dueDate)', date('n'))
+        ->get();
+
+        if (is_object($querycurrentimp)) {
+        $currentmonthexpodetimp = $querycurrentimp->getResultArray();
+        }
+
+        if(isset($currentmonthexpodetimp)){
+        foreach( $currentmonthexpodetimp  as $row){
+            $data['avghedgetwo'] += $row['avghedge'];
+            $data['avgtargettwo'] += $row['avgtarget'];
+            $data['currentmonthtotalexposuretwo'] += $row['totalexposure'];
+            $data['currentmonthpercentagehedgedtwo'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+        }
+
+        $querycurrentexp = $this->transaction_model
+        ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+        ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+        ->where('transactiondetails.exposureType', 1)
+        ->where('transactiondetails.currency', $curid)
+        ->where('MONTH(transactiondetails.dueDate)', date('n'))
+        ->findAll();
+
+        if (is_object($querycurrentexp)) {
+        $currentmonthexpodetexp = $querycurrentexp->getResultArray();
+        }
+
+        if(isset($currentmonthexpodetexp)){
+            foreach( $currentmonthexpodetexp  as $row){
+                $data['avghedgeone'] += $row['avghedge'];
+                $data['avgtargeone'] += $row['avgtarget'];
+                $data['currentmonthtotalexposureone'] += $row['totalexposure'];
+                $data['currentmonthpercentagehedgedone'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+            }
+        }
+    }
+    return $data;
 
     }
 
+    // exposuredetails
+
+    public function exposuredetails($curid = ''){
+        $data['percentagehedgedtwo'] = 0;
+        $data['totalexposuretwo'] = 0;
+        $data['percentagehedgedone'] = 0;
+        $data['totalexposureone'] = 0;
+        $data['avghedgetwo'] = 0;
+        $data['avghedgeone'] = 0;
+        $data['avgtargettwo'] = 0;
+        $data['avgtargetone'] = 0;
+        $data["currentportfoliovaluetwo"] = 0; 
+        $data["currentportfoliovalueone"] = 0; 
+        $data["currentganorlosetwo"] = 0;
+        $data["currentganorloseone"] = 0;
+
+        $queryhedgedoutwards = $this->transaction_model
+        ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+        ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+        ->where('transactiondetails.exposureType !=', 1)
+        ->where('transactiondetails.currency', $curid)
+        ->get();
+
+        if (is_object($queryhedgedoutwards)) {
+            $percentagehedgedoutwards = $queryhedgedoutwards->getResultArray();
+            }
+
+            if(isset($percentagehedgedoutwards)){
+            foreach( $percentagehedgedoutwards  as $row){
+            $data['totalexposuretwo'] += $row['totalexposure'];
+            $data['avghedgetwo'] += $row['avghedge'];
+            $data['avgtargettwo'] += $row['avgtarget'];
+            $data['percentagehedgedtwo'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+            }
+            }
+
+
+            $queryhedgedinwards = $this->transaction_model
+            ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
+            ->join('forward_coverdetails', "forward_coverdetails.underlying_exposure_ref = transactiondetails.transaction_id", 'left')
+            ->where('transactiondetails.exposureType', 1)
+            ->where('transactiondetails.currency', $curid)
+            ->get();
+
+            if (is_object($queryhedgedinwards)) {
+                $percentagehedgedinwards = $queryhedgedinwards->getResultArray();
+                }
+
+            if(isset($percentagehedgedinwards)){
+            foreach( $percentagehedgedinwards  as $row){
+                $data['avghedgeone'] += $row['avghedge'];
+                $data['avgtargetone'] += $row['avgtarget'];
+                $data['totalexposureone'] += $row['totalexposure'];
+                $data['percentagehedgedone'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
+            }
+        }
+
+        $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
+
+        $currentportfoliovalueimp = $this->transaction_model->currentportfoliovalueimp($curren['Currency']);
+        if(isset($currentportfoliovalueimp)){
+            foreach ($currentportfoliovalueimp as $row) {
+                $resoval = $this->forrwardCalculator(2, $curid, $row['dueDate']);
+                $curdata = $this->calculateportfoliovalue($resoval, $row['inr_target_value'], $row['targetRate'], $row['open_amount'], $row['amountinFC'], $row['ToatalforwardAmount'], $row['Toatalallpayment'], $row['Avgrate'], $row['isSettled'], $row['AvgspotamountRate']);
+                $data["currentportfoliovaluetwo"] += $curdata['currentportfoliovalue']; // Sum the value in each iteration
+                $data["currentganorlosetwo"] += $curdata['currentganorlose']; // Sum the value in each iteration
+            }
+        }
+
+        $currentportfoliovalueexp = $this->transaction_model->currentportfoliovalueexp($curren['Currency']);
+        if(isset($currentportfoliovalueexp)){
+        foreach ($currentportfoliovalueexp as $row) {
+            $resoval = $this->forrwardCalculator(1, $curid, $row['dueDate']);
+            $curdata = $this->calculateportfoliovalue($resoval, $row['inr_target_value'], $row['targetRate'], $row['open_amount'], $row['amountinFC'], $row['ToatalforwardAmount'], $row['Toatalallpayment'], $row['Avgrate'], $row['isSettled'], $row['AvgspotamountRate']);
+            $data["currentportfoliovalueone"] += $curdata['currentportfoliovalue'];
+            $data["currentganorloseone"] += $curdata['currentganorlose'];
+        }
+    }
+    return $data;
+    }
+
+    public function calculateportfoliovalue($resoval, $inr_target_value, $targetRate, $open_amount, $amountinFC, $ToatalforwardAmount, $Toatalallpayment, $Avgrate, $isSettled, $AvgspotamountRate){
+        $crntfrrate = json_decode($resoval);
+        $currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
+        $currencyinrSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
+        $inr_target_value = ($inr_target_value > 0.00) ? $inr_target_value : 1;
+        $targetValueInr = ($targetRate*$inr_target_value)*$amountinFC;
+        $openAmountFC = isset($isSettled) ? $open_amount : ($amountinFC - $ToatalforwardAmount);
+        $openAmountINR = $openAmountFC * ($currentForwardRate * $currencyinrSpotdRate);
+        $currentportfoliovalueexpval = isset($isSettled) ? ($AvgspotamountRate + $Toatalallpayment) : ($openAmountINR + ($ToatalforwardAmount * $Avgrate));
+        $data["currentportfoliovalue"] = $currentportfoliovalueexpval; // Sum the value in each iteration
+        $data["currentganorlose"] = $currentportfoliovalueexpval - $targetValueInr; 
+        return $data;
+    }
 
         // dashboard total Details
 
@@ -398,10 +535,43 @@ public function savefilesuploaded($ssjl_files){
 
 
 
-    public function calculatehedgeper($sum_amount_FC, $sum_amountinFC){
+
+        public function forrwardCalculator($cover_type , $currency , $forward_date )
+        {
+
+        try{
+        $date = date("Y-m-d", strtotime($forward_date));
+        $curren = $this->currency_model->select("Currency")->where('currency_id', $currency)->first();
+        $covertype = !empty($cover_type) && $cover_type == 1 ? 1 : 2;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://fxmanagers.in/ajax/ajaxbroken',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array("cover_type" => $covertype,"currency" => $curren['Currency'] , "forward_date" => $date), 
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+        } catch (\Exception$e) {
+        return "";
+        }            
+        }
+
+        public function exposoredethedgecalc($sum_amount_FC, $totalexposure){
+            $value =  isset($sum_amount_FC) && isset($totalexposure)  ? ($sum_amount_FC / $totalexposure) * 100 : 0;
+            return $value;
+        }
+
+        public function calculatehedgeper($sum_amount_FC, $sum_amountinFC){
         $value = isset($sum_amount_FC) ? ($sum_amount_FC / $sum_amountinFC) * 100 : 0;
         return $value;
-    }
+        }
 
     public function addrole()
     {

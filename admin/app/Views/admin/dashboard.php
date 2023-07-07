@@ -64,7 +64,7 @@
                      <div class="tab-pane fade show active" id="tabs-icons-text-6" role="tabpanel" aria-labelledby="tabs-icons-text-6-tab">
                         <h2 class="text-center mb-5">Total Details</h2>
                         <div class="row">
-                           <div class="col-md-5">
+                           <div class="col-md-6">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
@@ -118,12 +118,12 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo  $totaldetails['hedgeinwardsone']?></h4>
+                                             <h4><?php echo number_format( $totaldetails['hedgeinwardsone'], 4)?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo  $totaldetails['hedgeoutwardsone']?></h4>
+                                             <h4><?php echo  number_format($totaldetails['hedgeoutwardsone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -151,12 +151,12 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo  $totaldetails['hedgeinwardstwo']?></h4>
+                                             <h4><?php echo  number_format($totaldetails['hedgeinwardstwo'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo  $totaldetails['hedgeoutwardstwo']?></h4>
+                                             <h4><?php echo number_format( $totaldetails['hedgeoutwardstwo'], 4 ); ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -171,7 +171,7 @@
                      <div class="tab-pane fade" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                         <h2 class="text-center mb-5">Exposure Details</h2>
                         <div class="row">
-                           <div class="col-md-5">
+                           <div class="col-md-6">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
@@ -230,37 +230,37 @@
                                     <tbody class="col-lg-3 p-2">
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo $exposuredetails['totalexposureone'] ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo number_format($exposuredetails['percentagehedgedone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4>--</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['avghedgeone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['avgtargetone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['currentportfoliovalueone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['currentganorloseone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -278,37 +278,37 @@
                                     <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo $exposuredetails['totalexposuretwo'] ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo number_format($exposuredetails['percentagehedgedtwo'], 4);?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4>--</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['avghedgetwo'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['avgtargettwo'], 4);  ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['currentportfoliovaluetwo'], 4);  ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($exposuredetails['currentganorlosetwo'], 4);  ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -324,7 +324,7 @@
                      <div aria-labelledby="tabs-icons-text-2-tab" class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel">
                         <h2 class="text-center mb-5">Current Month Details</h2>
                         <div class="row">
-                           <div class="col-md-5">
+                           <div class="col-md-6">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
@@ -366,24 +366,24 @@
                                        </tr>
                                     </thead>
                                     <tbody class="col-lg-3 p-2">
-                                       <tr>
+                                    <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo $currentmonthdetails['currentmonthtotalexposureone'] ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4>--</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format( $currentmonthdetails['avghedgeone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format( $currentmonthdetails['avgtargeone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -399,24 +399,24 @@
                                        </tr>
                                     </thead>
                                     <tbody>
-                                       <tr>
+                                    <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo $currentmonthdetails['currentmonthtotalexposuretwo'] ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4>--</h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($currentmonthdetails['avghedgetwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($currentmonthdetails['avgtargettwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -431,7 +431,7 @@
                      <div aria-labelledby="tabs-icons-text-3-tab" class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel">
                         <h2 class="text-center mb-5">Quarterwise Details</h2>
                         <div class="row">
-                           <div class="col-md-5">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
@@ -440,6 +440,11 @@
                                        </tr>
                                     </thead>
                                     <tbody>
+                                       <tr>
+                                          <td>
+                                             <h4></h4>
+                                          </td>
+                                       </tr>
                                        <tr>
                                           <td>
                                              <h4>Total Exposure :</h4>
@@ -469,78 +474,128 @@
                                  </table>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
                                        <tr>
-                                          <th class="wd-15p">Inwards</th>
+                                          <th class="wd-15p text-center">Inwards</th>
                                        </tr>
                                     </thead>
                                     <tbody class="col-lg-3 p-2">
+                                    <table class="table table-striped table-bordered w-100 text-nowrap">
+                                       <thead>
+                                       <tr>
+                                       <th class="wd-50p">Current Quarter</th>
+                                       <th class="wd-50p">Last Quarter</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-totalexposureone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-totalexposureone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-percentagehedgedone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-percentagehedgedone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avghedgeone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avghedgeone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avgavgtargetone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avgavgtargetone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-portfolio-valueone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-portfolio-valueone'], 4) ?></h4>
                                           </td>
                                        </tr>
+                                       </tbody>
+                                       </table>
                                     </tbody>
                                  </table>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col-md-4">
                               <div class="table-responsive border ">
                                  <table class="table table-striped table-bordered w-100 text-nowrap ">
                                     <thead>
                                        <tr>
-                                          <th class="wd-15p">Outwards</th>
+                                          <th class="wd-15p text-center">Outwards</th>
                                        </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="col-lg-3 p-2">
+                                    <table class="table table-striped table-bordered w-100 text-nowrap">
+                                       <thead>
+                                       <tr>
+                                       <th class="wd-50p">Current Quarter</th>
+                                       <th class="wd-50p">Last Quarter</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
                                        <tr>
                                           <td>
-                                             <h4>Website :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-totalexposuretwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-totalexposuretwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Email :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-percentagehedgedtwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-percentagehedgedtwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avghedgetwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avghedgetwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avgavgtargettwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avgavgtargettwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>Phone :</h4>
+                                             <h4><?php echo number_format($quaterdetails['current-portfolio-valuetwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($quaterdetails['last-portfolio-valuetwo'], 4) ?></h4>
                                           </td>
                                        </tr>
+                                       </tbody>
+                                       </table>
                                     </tbody>
                                  </table>
                               </div>
