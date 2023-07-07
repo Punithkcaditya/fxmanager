@@ -9,7 +9,7 @@
             <div class="form-group">
                <select name="currencyselection"
                   class="form-control" required>
-                  <option value="2" selected>SELECT CURRENCY EURUSD</option>
+                  <option value="2" selected>DEFAULT CURRENCY EURUSD</option>
                   <?php foreach ($transaction as $row): ?>
                   <option value="<?php echo $row['currency'] ?>" <?php echo ((!empty($row['currency']) && isset($_GET['currency'])) && $row['currency'] == $_GET['currency']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option>
                   <?php endforeach;?>
@@ -18,12 +18,10 @@
          </div>
          <div class="col-md-3">
             <div class="form-group mt-2">
-               <label class="form-label card-title">Spot Rate</label>
             </div>
          </div>
          <div class="col-md-3">
             <div class="form-group mt-2">
-               <label class="form-label card-title">Rate</label>
             </div>
          </div>
       </div>
@@ -235,12 +233,12 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($exposuredetails['percentagehedgedone'], 4); ?></h4>
+                                             <h4><?php echo number_format($exposuredetails['totalhedgexpdone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>--</h4>
+                                             <h4><?php echo number_format($exposuredetails['percentagehedgedone'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -283,12 +281,12 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($exposuredetails['percentagehedgedtwo'], 4);?></h4>
+                                             <h4><?php echo number_format($exposuredetails['totalhedgexpdtwo'], 4);?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>--</h4>
+                                             <h4><?php echo number_format($exposuredetails['percentagehedgedtwo'], 4); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -373,7 +371,7 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>--</h4>
+                                             <h4><?php echo $currentmonthdetails['currentmonthpercentagehedgedone'] ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -406,7 +404,7 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4>--</h4>
+                                             <h4><?php echo $currentmonthdetails['currentmonthpercentagehedgedtwo'] ?></h4>
                                           </td>
                                        </tr>
                                        <tr>

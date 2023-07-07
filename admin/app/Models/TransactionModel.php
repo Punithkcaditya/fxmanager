@@ -166,6 +166,7 @@ class TransactionModel extends Model
 		IF(QUARTER(td.dueDate) = 3, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.contracted_Rate END),  ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.spot_rate END) ), NULL) AS `Q3`, 
 		IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END),  ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END) ), NULL) AS `Q4`
 		FROM transactiondetails AS td INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref WHERE `td`.`exposureType` = 2 AND `td`.`currency` = ".$curid." GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";	
+          $query = $this->db->query($sql);
           if (is_object($query)) {
             $result = $query->getResultArray();
             return $result;

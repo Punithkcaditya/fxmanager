@@ -438,7 +438,7 @@ class Index extends BaseController
         ->where('transactiondetails.exposureType', 1)
         ->where('transactiondetails.currency', $curid)
         ->where('MONTH(transactiondetails.dueDate)', date('n'))
-        ->findAll();
+        ->get();
 
         if (is_object($querycurrentexp)) {
         $currentmonthexpodetexp = $querycurrentexp->getResultArray();
@@ -472,6 +472,9 @@ class Index extends BaseController
         $data["currentportfoliovalueone"] = 0; 
         $data["currentganorlosetwo"] = 0;
         $data["currentganorloseone"] = 0;
+    //    newlyadded
+        $data["totalhedgexpdone"] = 0;
+        $data["totalhedgexpdtwo"] = 0;
 
         $queryhedgedoutwards = $this->transaction_model
         ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
@@ -489,6 +492,7 @@ class Index extends BaseController
             $data['totalexposuretwo'] += $row['totalexposure'];
             $data['avghedgetwo'] += $row['avghedge'];
             $data['avgtargettwo'] += $row['avgtarget'];
+            $data['totalhedgexpdtwo'] += $row['sum_amount_FC'];
             $data['percentagehedgedtwo'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
             }
             }
@@ -507,9 +511,10 @@ class Index extends BaseController
 
             if(isset($percentagehedgedinwards)){
             foreach( $percentagehedgedinwards  as $row){
+                $data['totalexposureone'] += $row['totalexposure'];
                 $data['avghedgeone'] += $row['avghedge'];
                 $data['avgtargetone'] += $row['avgtarget'];
-                $data['totalexposureone'] += $row['totalexposure'];
+                $data['totalhedgexpdone'] += $row['sum_amount_FC'];
                 $data['percentagehedgedone'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
             }
         }
@@ -537,6 +542,8 @@ class Index extends BaseController
     }
     return $data;
     }
+
+
 
     public function calculateportfoliovalue($resoval, $inr_target_value, $targetRate, $open_amount, $amountinFC, $ToatalforwardAmount, $Toatalallpayment, $Avgrate, $isSettled, $AvgspotamountRate){
         $crntfrrate = json_decode($resoval);
