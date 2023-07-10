@@ -107,6 +107,8 @@ class Transactiondetails extends BaseController
             if (empty($pot)) {
             return redirect()->to("/");
             }
+            $dateTime = new \DateTime();
+            $dateTimeString = $dateTime->format('Y-m-d H:i:s');
             if ($this->request->getMethod() == 'post') {
             extract($this->request->getPost());
             }
@@ -137,7 +139,8 @@ class Transactiondetails extends BaseController
             'amountinFC' => $sid[8],
             'bank_id' => $sid[9],
             'inr_target_value' => $sid[10],
-            'created_date' => date('Y-m-d'),
+            'exposureidentificationdate' => $dateTimeString,
+            'created_at' => $dateTimeString,
             ];
             $saved = $this->transaction_model->save($data);
             } catch (\Exception$e) {
