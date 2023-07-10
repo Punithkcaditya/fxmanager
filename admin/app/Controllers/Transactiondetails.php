@@ -141,9 +141,6 @@ class Transactiondetails extends BaseController
             ];
             $saved = $this->transaction_model->save($data);
             } catch (\Exception$e) {
-                echo '<pre>';
-                print_r($e);
-                exit;
                 $session->setFlashdata('error', 'No Data for Selected Due Date');
                 return redirect()->to('transactiondetails');
             }

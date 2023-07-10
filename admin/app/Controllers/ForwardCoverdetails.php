@@ -10,6 +10,7 @@ use App\Models\TransactionModel as Transaction_Model;
 use App\Models\ForwardCoverdetails as ForwardCoverdetails_Model;
 use App\Models\CurrencyModel as Currency_Model;
 use App\Models\OpenDetailsModel as OpenDetails_Model;
+use App\Models\BankModel as Bank_Model;
 class ForwardCoverdetails extends BaseController
 {
             protected $request;
@@ -24,6 +25,7 @@ class ForwardCoverdetails extends BaseController
             $this->forwardcoverdetails_model = new ForwardCoverdetails_Model();
             $this->currency_model = new Currency_Model();
             $this->opendetails_model = new OpenDetails_Model();
+            $this->bank_model = new Bank_Model();
             $pot = json_decode(json_encode($session->get("userdata")), true);
             if (empty($pot)) {
             return redirect()->to("/");
@@ -71,6 +73,7 @@ class ForwardCoverdetails extends BaseController
             $data['i'] = 1;
             $data["exposuretype"] = $this->transaction_model ->select('exposurereInfo')->select('transaction_id')->orderBy('transaction_id', 'DESC')->find();
             $data["currency"] = $this->currency_model->orderBy('currency_id', 'DESC')->findAll();
+            $data["bank"] = $this->bank_model->orderBy('bank_id', 'DESC')->findAll();
             $data['pade_title5'] = 'Forward/ Option';
             $data['pade_title6'] = 'Deal No';
             $data['pade_title1'] = 'Bank Name';
@@ -83,6 +86,7 @@ class ForwardCoverdetails extends BaseController
             $data['pade_title10'] = 'Amount (FC)';
             $data['pade_title11'] = 'Contracted rate';
             $data['pade_title12'] = 'Expiry Date';
+            $data['pade_title13'] = 'Choose Bank';
             $data["page_heading"] = "Forward Cover Details";
             $data["menuslinks"] = $this->request->uri->getSegment(1);
             return view('templates/default', $data);
@@ -102,7 +106,7 @@ class ForwardCoverdetails extends BaseController
             }
             $input = $this->validate(['dealno' => 'required', 'dealdate' => 'required', 'refno' => 'required', 'fordwardoption' => 'required', 'currencybought' => 'required', 'currencysold' => 'required', 'amountFC' => 'required', 'contractedrate' => 'required' , 'expirydate' => 'required']);
             if (!empty($input)) {
-            $result = array_map(null,  $dealno, $dealdate, $refno, $fordwardoption, $currencybought, $currencysold, $amountFC, $contractedrate, $expirydate);
+            $result = array_map(null,  $dealno, $dealdate, $refno, $fordwardoption, $currencybought, $currencysold, $amountFC, $contractedrate, $expirydate, $bank);
           
 			foreach ($result as $key => $sid) {
             if (empty($result[$key])) {
@@ -120,6 +124,7 @@ class ForwardCoverdetails extends BaseController
             'amount_FC' => $sid[6],
 			'contracted_Rate' => $sid[7],
 			'expiry_date' => $this->convertDateFormat($sid[8]),
+			'bank_id' => $sid[9],
             'created_date' => date('Y-m-d'),
             ];
             $AmountInFc = $this->transaction_model->select('amountinFC')->where('transaction_id',  $sid[2])->first();

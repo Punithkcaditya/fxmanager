@@ -174,6 +174,7 @@ class Index extends BaseController
             $data['current-quarter-settamtone'] += $currentquartersettamtinwardsval; 
             $data['current-quarter-setrateone'] += $currentquartersettamtinwardsval / $row['amountinFC'];
             $data['current-quarter-actualgainone'] += $currentquartersettamtinwardsval - $targetValueInr;
+            $data['current-quarter-settamtinFC_one'] += $row['amountinFC'];
         }
         foreach( $currentquarterportfoliovaluimp  as $row){
             $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
@@ -182,6 +183,7 @@ class Index extends BaseController
             $data['current-quarter-settamttwo'] += $currentquartersettamtoutwardsval; 
             $data['current-quarter-setratetwo'] += $currentquartersettamtoutwardsval / $row['amountinFC'];
             $data['current-quarter-actualgainlosstwo'] += $currentquartersettamtoutwardsval - $targetValueInr;
+            $data['current-quarter-settamtinFC_two'] += $row['amountinFC'];
         }
         foreach( $lastquarterportfoliovaluimp  as $row){
             $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
@@ -190,6 +192,7 @@ class Index extends BaseController
             $data['last-quarter-settamttwo'] += $lastquartersettamtoutwardsval; 
             $data['last-quarter-setrateouttwo'] += $lastquartersettamtoutwardsval / $row['amountinFC'];
             $data['last-quarter-actualgainlosstwo'] += $lastquartersettamtoutwardsval - $targetValueInr;
+            $data['last-quarter-settamtinFC_two'] += $row['amountinFC'];
         }
         foreach( $lastquarterportfoliovaluexp  as $row){
             $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
@@ -198,6 +201,7 @@ class Index extends BaseController
             $data['last-quarter-settamtone'] += $lastquartersettamtinwardsval; 
             $data['last-quarter-setrateone'] += $lastquartersettamtinwardsval / $row['amountinFC'];
             $data['last-quarter-actualgainlossone'] += $lastquartersettamtinwardsval - $targetValueInr;
+            $data['last-quarter-settamtinFC_one'] += $row['amountinFC'];
         }
         return $data;
         }

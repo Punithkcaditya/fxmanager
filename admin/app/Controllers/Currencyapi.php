@@ -157,6 +157,9 @@ class Currencyapi extends BaseController
             $data["currentportfoliovalueone"] = 0; 
             $data["currentganorlosetwo"] = 0;
             $data["currentganorloseone"] = 0;
+                //    newlyadded
+            $data["totalhedgexpdone"] = 0;
+            $data["totalhedgexpdtwo"] = 0;
 
             $queryhedgedoutwards = $this->transaction_model
             ->select("SUM(transactiondetails.amountinFC) AS totalexposure, AVG(transactiondetails.targetRate) as avgtarget, AVG(forward_coverdetails.contracted_Rate) as avghedge, SUM(forward_coverdetails.amount_FC) AS sum_amount_FC")
@@ -176,6 +179,7 @@ class Currencyapi extends BaseController
                 $data['totalexposuretwo'] += $row['totalexposure'];
                 $data['avghedgetwo'] += $row['avghedge'];
                 $data['avgtargettwo'] += $row['avgtarget'];
+                $data['totalhedgexpdtwo'] += $row['sum_amount_FC'];
                 $data['percentagehedgedtwo'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
             }
         }
@@ -198,6 +202,7 @@ class Currencyapi extends BaseController
                 $data['avghedgeone'] += $row['avghedge'];
                 $data['avgtargetone'] += $row['avgtarget'];
                 $data['totalexposureone'] += $row['totalexposure'];
+                $data['totalhedgexpdone'] += $row['sum_amount_FC'];
                 $data['percentagehedgedone'] += $this->exposoredethedgecalc($row['sum_amount_FC'], $row['totalexposure']);
                 }
                 }
@@ -507,6 +512,7 @@ class Currencyapi extends BaseController
                 $data['current-quarter-settamtone'] += $currentquartersettamtinwardsval; 
                 $data['current-quarter-setrateone'] += $currentquartersettamtinwardsval / $row['amountinFC'];
                 $data['current-quarter-actualgainone'] += $currentquartersettamtinwardsval - $targetValueInr;
+                $data['current-quarter-settamtinFC_one'] += $row['amountinFC'];
             }
             foreach( $currentquarterportfoliovaluimp  as $row){
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
@@ -515,6 +521,7 @@ class Currencyapi extends BaseController
                 $data['current-quarter-settamttwo'] += $currentquartersettamtoutwardsval; 
                 $data['current-quarter-setratetwo'] += $currentquartersettamtoutwardsval / $row['amountinFC'];
                 $data['current-quarter-actualgainlosstwo'] += $currentquartersettamtoutwardsval - $targetValueInr;
+                $data['current-quarter-settamtinFC_two'] += $row['amountinFC'];
             }
             foreach( $lastquarterportfoliovaluimp  as $row){
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
@@ -523,6 +530,7 @@ class Currencyapi extends BaseController
                 $data['last-quarter-settamttwo'] += $lastquartersettamtoutwardsval; 
                 $data['last-quarter-setrateouttwo'] += $lastquartersettamtoutwardsval / $row['amountinFC'];
                 $data['last-quarter-actualgainlosstwo'] += $lastquartersettamtoutwardsval - $targetValueInr;
+                $data['last-quarter-settamtinFC_two'] += $row['amountinFC'];
             }
             foreach( $lastquarterportfoliovaluexp  as $row){
                 $inr_target_value = ($row['inr_target_value'] > 0.00) ? $row['inr_target_value'] : 1;
@@ -531,6 +539,7 @@ class Currencyapi extends BaseController
                 $data['last-quarter-settamtone'] += $lastquartersettamtinwardsval; 
                 $data['last-quarter-setrateone'] += $lastquartersettamtinwardsval / $row['amountinFC'];
                 $data['last-quarter-actualgainlossone'] += $lastquartersettamtinwardsval - $targetValueInr;
+                $data['last-quarter-settamtinFC_one'] += $row['amountinFC'];
             }
             return $this->respond($data, 200);
 

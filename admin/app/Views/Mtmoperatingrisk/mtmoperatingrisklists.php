@@ -125,7 +125,7 @@
 								<td>-</td>
 								<td>-</td>
 								<td><?php echo number_format($ToatalforwardAmount, 2) ?></td>
-								<td><?php echo  $Avgrate ?></td>
+								<td><?php echo number_format( $Avgrate, 2) ?></td>
 								<td><?php echo number_format($ToatalforwardAmount * $Avgrate , 2) ?></td>
 								<td><?php echo number_format($portfoliovalue, 2) ?></td>
 								<td><?php echo number_format($portfoliorate, 4)  ?></td>

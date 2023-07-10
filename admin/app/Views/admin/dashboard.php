@@ -11,7 +11,7 @@
                   class="form-control" required>
                   <option value="2" selected>DEFAULT CURRENCY EURUSD</option>
                   <?php foreach ($transaction as $row): ?>
-                  <option value="<?php echo $row['currency'] ?>" <?php echo ((!empty($row['currency']) && isset($_GET['currency'])) && $row['currency'] == $_GET['currency']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option>
+                        <option value="<?php echo $row['currency'] ?>" <?php echo ((!empty($row['currency']) && isset($_GET['currency'])) && $row['currency'] == $_GET['currency']) ? 'selected' : '' ?>><?php echo $row['Currency'] ?></option>
                   <?php endforeach;?>
                </select>
             </div>
@@ -664,18 +664,18 @@
                                        <tbody>
                                        <tr>
                                           <td>
-                                             <h4>--</h4>
-                                          </td>
-                                          <td>
-                                             <h4>--</h4>
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
                                              <h4><?php echo number_format($settledinvoices['current-quarter-settamtinFC_one'], 4) ?></h4>
                                           </td>
                                           <td>
                                              <h4><?php echo number_format($settledinvoices['last-quarter-settamtinFC_one'], 4) ?></h4>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-settamtone'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-settamtone'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -719,18 +719,18 @@
                                        <tbody>
                                        <tr>
                                           <td>
-                                             <h4>--</h4>
-                                          </td>
-                                          <td>
-                                             <h4>--</h4>
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
                                              <h4><?php echo number_format($settledinvoices['current-quarter-settamtinFC_two'], 4) ?></h4>
                                           </td>
                                           <td>
                                              <h4><?php echo number_format($settledinvoices['last-quarter-settamtinFC_two'], 4) ?></h4>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-settamttwo'], 4) ?></h4>
+                                          </td>
+                                          <td>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-settamttwo'], 4) ?></h4>
                                           </td>
                                        </tr>
                                        <tr>

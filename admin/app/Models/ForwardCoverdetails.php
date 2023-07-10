@@ -14,7 +14,7 @@ class ForwardCoverdetails extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['bankname', 'deal_no', 'deal_date', 'underlying_exposure_ref', 'fordward_option', 'currencybought', 'currencysold', 'amount_FC', 'contracted_Rate', 'expiry_date' , 'created_at'];
+    protected $allowedFields    = ['bankname', 'deal_no', 'deal_date', 'underlying_exposure_ref', 'fordward_option', 'currencybought', 'currencysold', 'amount_FC', 'contracted_Rate', 'bank_id', 'expiry_date' , 'created_at'];
 
     // Dates
     protected $useTimestamps = false;

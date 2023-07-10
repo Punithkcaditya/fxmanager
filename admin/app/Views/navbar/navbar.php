@@ -7,7 +7,7 @@
 
 							<!-- Brand -->
 				
-								<a class="navbar-brand d-lg-none" style="color: rgb(0 195 237);" href="<?= base_url() ?>">FX</a>
+								<a class="navbar-brand d-none" style="color: rgb(0 195 237);" href="<?= base_url() ?>">FX</a>
 							</a>
 							<!-- Form -->
 

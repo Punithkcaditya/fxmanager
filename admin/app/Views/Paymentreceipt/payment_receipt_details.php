@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/calendar/page.css'); ?>">
 
 <div class="container-fluid pt-8">
-<?= $this->include('bottomtopbar/topbar') ?>
+
 <div class="card-body">
 	<div class="nav-wrapper p-0">
 <?= $this->include('message/message') ?>  
