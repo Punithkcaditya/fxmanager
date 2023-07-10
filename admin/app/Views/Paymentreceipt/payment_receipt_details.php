@@ -65,7 +65,7 @@
 					<div class="col-md-3 col-sm-12">
 						<!-- Amount in FC -->
 					<div class="form-group"><label class="form-label"><?php echo $pade_title8 ?></label>
-						<input id="amountfc<?php echo  $i?>" type="number" name="amountfc" placeholder="Amount (FC)" class="form-control" required="">
+						<input id="amountfc<?php echo  $i?>" type="number" name="amountfc" step=".0001" placeholder="Amount (FC)" class="form-control" required="">
 						</div>
 						<!-- Amount in FC -->
 					</div>
@@ -102,7 +102,7 @@
 							</div>
 							<div class="card-body">
 								<div class="form-group"><label class="form-label"><?php echo $pade_title14 ?></label>
-								<select class="form-control dealnosel select2 w-100" multiple="multiple" name="dealnoref[]" id="dealnoref<?php echo $i?>" required>
+								<select class="form-control dealnosel select2 w-100" multiple="multiple" name="dealnoref[]" id="dealnoref<?php echo $i?>">
 								<option value="">Deal No</option>
 								</select>
 								</div>
@@ -120,7 +120,7 @@
 						<div class="card-body">
 						<div class="form-group">
 						<label class="form-label"><?php echo $pade_title17 ?></label>
-						<input id="spotAmount<?php echo  $i?>" type="number" name="spotAmount" placeholder="Spot Amount" class="form-control" required="">
+						<input id="spotAmount<?php echo  $i?>" type="number" name="spotAmount" step=".0001" placeholder="Spot Amount" class="form-control" required="">
 						</div>
 						
 						<div class="form-group">
