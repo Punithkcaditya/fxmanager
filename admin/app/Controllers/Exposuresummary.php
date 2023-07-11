@@ -50,11 +50,15 @@ class Exposuresummary extends BaseController
 	
 	 public function index()
     {
+        $session = session();
         $data['style'] = isset($_GET['currency']) ? 'block' : 'none'; 
         $curid = isset($_GET['currency']) ? $_GET['currency'] : 2; 
+        $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
+        if (!isset($curren['Currency'])) {
+            return redirect()->to("adminlogout");
+        }
         $data["transactiontabs"] = $this->transaction_model->tabsarrangement($curid);
         $data["transactiontabsexport"] = $this->transaction_model->tabsarrangementforexport($curid);
-        $session = session();
         $pot = json_decode(json_encode($session->get("userdata")), true);
         if (empty($pot)) {
             return redirect()->to("/");

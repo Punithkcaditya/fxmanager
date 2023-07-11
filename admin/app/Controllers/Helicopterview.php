@@ -55,6 +55,10 @@ public function __construct()
 	{
 	$mtmOperatingrisk = new MtmOperatingrisk();
 	$curid = isset($_GET['currencyieshelicopterview']) ? $_GET['currencyieshelicopterview'] : 2; 
+	$curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
+	if (!isset($curren['Currency'])) {
+		return redirect()->to("adminlogout");
+	}
 	$data['style'] = isset($_GET['currencyieshelicopterview']) ? 'block' : 'none'; 
 	$session = session();
 	$pot = json_decode(json_encode($session->get("userdata")), true);
