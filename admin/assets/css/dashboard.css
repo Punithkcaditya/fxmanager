@@ -11475,4 +11475,13 @@ canvas{
 	border: 1px solid #dd1115 !important;
   }
   
-  
+  .notification-container{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .close-notification{
+	cursor: pointer;
+	margin-top: 0.1em;
+  }

@@ -325,6 +325,17 @@ $("#deSelectstwo").on("click", function(e) {
         }());
 
 
+// Get all close buttons and attach click event handlers
+var closeButtons = document.querySelectorAll('.close-notification');
+closeButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        // Find the parent notification element and remove it
+        var notification = this.parentNode;
+        notification.parentNode.removeChild(notification);
+    });
+});
+
+
     //     (function() {
     //     $( "select[name='city']" ).change(function () {
     //         var stateID = $(this).val();

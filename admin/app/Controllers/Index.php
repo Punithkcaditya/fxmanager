@@ -109,12 +109,26 @@ class Index extends BaseController
         }
         $curid = isset($_GET['currency']) ? $_GET['currency'] : 2; 
         $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
-        $data['totaldetails'] = $this->totaldetails($curid);
-        $data['exposuredetails'] = $this->exposuredetails($curid , $curren);
-        $data['currentmonthdetails'] = $this->currentmonthdetails($curid);
-        $data['quaterdetails'] = $this->quaterdetails($curid,  $curren);
-        $data['settledinvoices'] = $this->settledinvoices($curid,  $curren);
-        $data['currencyperformance'] = json_decode($this->currencyperformance(), true);
+        if (isset($curren['Currency'])) {
+            $spotrates = $this->adminSpotrates($curren['Currency']);
+            $decodedspotrates = json_decode($spotrates, true);
+            $length = count($decodedspotrates['data']);
+            if($length == 2){
+                $data['spotrateExport'] = $decodedspotrates['data']['2']['B'];
+                $data['spotrateImport'] = $decodedspotrates['data']['3']['B'];
+            }else{
+                $data['spotrateExport'] = '';
+                $data['spotrateImport'] = '';
+            }
+            $data['totaldetails'] = $this->totaldetails($curid);
+            $data['exposuredetails'] = $this->exposuredetails($curid , $curren);
+            $data['currentmonthdetails'] = $this->currentmonthdetails($curid);
+            $data['quaterdetails'] = $this->quaterdetails($curid,  $curren);
+            $data['settledinvoices'] = $this->settledinvoices($curid,  $curren);
+            $data['currencyperformance'] = json_decode($this->currencyperformance(), true);
+        }else{
+            return redirect()->to("adminlogout");
+        }
         $data["transaction"] = $this->transaction_model
 		->distinct()
 		->select("transactiondetails.currency, currency.Currency")
@@ -138,6 +152,35 @@ class Index extends BaseController
         return view('templates/default', $data);
     }
 
+
+    // spotrates Api 
+
+    public function adminSpotrates($curren = ''){
+
+            try {
+                $query_params = http_build_query(array(
+                    "type" => $curren,
+                ));
+                $url = 'https://fxmanagers.in/api/adminSpotrate?' . $query_params;
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_HTTPGET => true,
+                ));
+                $response = curl_exec($curl);
+                curl_close($curl);
+                return $response;
+            } catch (Exception $e) {
+                return '';
+                // Handle the exception
+            }
+    }
 
     // settledinvoices
 

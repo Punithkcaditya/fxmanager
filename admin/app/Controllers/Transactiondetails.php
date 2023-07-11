@@ -65,6 +65,7 @@ class Transactiondetails extends BaseController
         } else {
             $data["link"] = "#";
         }
+
 		$data["exposuretype"] = $this->exposuretype_model->orderBy('exposure_type_id', 'ASC')->findAll();
 		$data["currency"] = $this->currency_model->orderBy('currency_id', 'DESC')->findAll();
         $data["bank"] = $this->bank_model->orderBy('bank_id', 'DESC')->findAll();

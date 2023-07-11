@@ -87,7 +87,7 @@
 								$openAmountFC = $row->isSettled ?  $row->open_amount  : $amountinFC-$ToatalforwardAmount;
 								$currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
 								$currentSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
-								$currencyinrSpotdRate = ($row->inr_target_value > 0.00) ? $currentSpotdRate : 1;
+								$currencyinrSpotdRate = ($row->inr_target_value > 0.00) ? $currentSpotdRate : 1;								
 								$openAmountINR =  $openAmountFC*($currentForwardRate * $currencyinrSpotdRate);
 								$portfoliovalue = $row->isSettled ? $AvgspotamountRate + $Toatalallpayment : $openAmountINR + ($ToatalforwardAmount*$Avgrate);
 								$portfoliorate = $portfoliovalue / $amountinFC;
@@ -103,7 +103,7 @@
 								?>
 
 								<tr>
-									<th><?php echo $exp_ref  ?></th>
+									<th><?php echo $exp_ref ?></th>
 									<td><?php echo $curr ?></td>
 								  <td><?php 
 								  echo $newFormat ?></td>	

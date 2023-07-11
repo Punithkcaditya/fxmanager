@@ -98,82 +98,79 @@ class PaymentReceiptdetails extends BaseController
 	}
 	
 	
-            public function savepaymentreceiptdetails()
-            {
-            $this->loadUser();
-            $session = session();
-            $pot = json_decode(json_encode($session->get("userdata")), true);
-            if (empty($pot)) {
-            return redirect()->to("/");
-            }
-            if ($this->request->getMethod() == 'post') {
-            extract($this->request->getPost());
-            }
-			
-            $input = $this->validate([
-			'banknamehidd' => 'required',
-			'exposurerefno' => 'required',
-			'value_INRhidd' => 'required', 
-			'target_Valuehidd' => 'required',
-			'exposurecurrencyhidd' => 'required',
-			'dateof_Settlement' => 'required',
-			'amountfchidd' => 'required', 
-			'spotAmount' => 'required',
-			'spotAmountrate' => 'required'
-			]);
-		
-            if (!empty($input)) {
-                $totalAmount = $this->opendetails_model->select('open_amount')->where('transactionforeing_id',  $exposurerefno)->first();
-                if (!empty($totalAmount) && isset($forwardAmount)) {
-                    echo '<pre>';
-                    print_r('inn');
-                    exit;
-                $this->removemptyarray($forwardAmount);
-                $this->removemptyarray($forwardamountRate);
-                $mbinedresult = $this->aomineArrays($forwardAmount, $forwardamountRate,$dealnoref);
-                foreach ($mbinedresult as $key => $sid) {
-                $udata["amount_FC"] = $amountfchidd;
-                $udata["value_INR"] = $value_INRhidd;
-                $udata["target_Value"] = $target_Valuehidd;
-                $udata["underlying_Exposure_ref"] = $exposurerefno;
-                $udata["deal_Referenceno"] = $sid['dealnoref'];
-                $udata["forward_Amount"] = $sid['forward_Amount'];
-                $udata["forward_Rate"] = $sid['forward_Rate'];
-                $udata["spot_Amount"] = $spotAmount;
-                $udata["spotamount_Rate"] = $spotAmountrate;
-                $udata["exposure_Currency"] = $exposurecurrencyhidd;
-                $udata["bank_Name"] = $banknamehidd;
-                $udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
-                $saved = $this->paymentreceiptdetails_model->save($udata);
-                }
+    public function savepaymentreceiptdetails()
+    {
+    $this->loadUser();
+    $session = session();
+    $pot = json_decode(json_encode($session->get("userdata")), true);
+    if (empty($pot)) {
+    return redirect()->to("/");
+    }
+    if ($this->request->getMethod() == 'post') {
+    extract($this->request->getPost());
+    }
+    
+    $input = $this->validate([
+    'banknamehidd' => 'required',
+    'exposurerefno' => 'required',
+    'value_INRhidd' => 'required', 
+    'target_Valuehidd' => 'required',
+    'exposurecurrencyhidd' => 'required',
+    'dateof_Settlement' => 'required',
+    'amountfchidd' => 'required', 
+    'spotAmount' => 'required',
+    'spotAmountrate' => 'required'
+    ]);
 
-                $totalAmount['open_amount'] -= $spotAmount;
-                $dataopendetails = ['open_amount' => $totalAmount['open_amount'], 'isSettled' => 1];
-                $update =  $this->opendetails_model->where('transactionforeing_id', $exposurerefno)->set($dataopendetails)->update();
-                (empty($saved) && empty($update)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
-               }else{
-                $AmountInFc = $this->transaction_model->select('amountinFC')->where('transaction_id',  $exposurerefno)->first();
-                $AmountInFc['amountinFC'] -= $spotAmount;
-                $dataopendetails = ['open_amount' => $AmountInFc['amountinFC'], 'transactionforeing_id' => $exposurerefno, 'isSettled' => 1];
-                $udata["amount_FC"] = $amountfchidd;
-                $udata["value_INR"] = $value_INRhidd;
-                $udata["target_Value"] = $target_Valuehidd;
-                $udata["underlying_Exposure_ref"] = $exposurerefno;
-                $udata["spot_Amount"] = $spotAmount;
-                $udata["spotamount_Rate"] = $spotAmountrate;
-                $udata["exposure_Currency"] = $exposurecurrencyhidd;
-                $udata["bank_Name"] = $banknamehidd;
-                $udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
-                $saved = $this->paymentreceiptdetails_model->save($udata);
-                $savedopendetails = $this->opendetails_model->save($dataopendetails);
-                (empty($saved) && empty($savedopendetails)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
-               }
+    if (!empty($input)) {
+        $totalAmount = $this->opendetails_model->select('open_amount')->where('transactionforeing_id',  $exposurerefno)->first();
+        if (!empty($totalAmount) && isset($forwardAmount)) {
+        $this->removemptyarray($forwardAmount);
+        $this->removemptyarray($forwardamountRate);
+        $mbinedresult = $this->aomineArrays($forwardAmount, $forwardamountRate,$dealnoref);
+        foreach ($mbinedresult as $key => $sid) {
+        $udata["amount_FC"] = $amountfchidd;
+        $udata["value_INR"] = $value_INRhidd;
+        $udata["target_Value"] = $target_Valuehidd;
+        $udata["underlying_Exposure_ref"] = $exposurerefno;
+        $udata["deal_Referenceno"] = $sid['dealnoref'];
+        $udata["forward_Amount"] = $sid['forward_Amount'];
+        $udata["forward_Rate"] = $sid['forward_Rate'];
+        $udata["spot_Amount"] = $spotAmount;
+        $udata["spotamount_Rate"] = $spotAmountrate;
+        $udata["exposure_Currency"] = $exposurecurrencyhidd;
+        $udata["bank_Name"] = $banknamehidd;
+        $udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
+        $saved = $this->paymentreceiptdetails_model->save($udata);
+        }
 
-            } else {
-            $session->setFlashdata('error', 'Fill All Fields');
-            }
-            return redirect()->to('paymentreceiptdetails');
-            }
+        $totalAmount['open_amount'] -= $spotAmount;
+        $dataopendetails = ['open_amount' => $totalAmount['open_amount'], 'isSettled' => 1];
+        $update =  $this->opendetails_model->where('transactionforeing_id', $exposurerefno)->set($dataopendetails)->update();
+        (empty($saved) && empty($update)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
+       }else{
+        $AmountInFc = $this->transaction_model->select('amountinFC')->where('transaction_id',  $exposurerefno)->first();
+        $AmountInFc['amountinFC'] -= $spotAmount;
+        $dataopendetails = ['open_amount' => $AmountInFc['amountinFC'], 'transactionforeing_id' => $exposurerefno, 'isSettled' => 1];
+        $udata["amount_FC"] = $amountfchidd;
+        $udata["value_INR"] = $value_INRhidd;
+        $udata["target_Value"] = $target_Valuehidd;
+        $udata["underlying_Exposure_ref"] = $exposurerefno;
+        $udata["spot_Amount"] = $spotAmount;
+        $udata["spotamount_Rate"] = $spotAmountrate;
+        $udata["exposure_Currency"] = $exposurecurrencyhidd;
+        $udata["bank_Name"] = $banknamehidd;
+        $udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
+        $saved = $this->paymentreceiptdetails_model->save($udata);
+        $savedopendetails = $this->opendetails_model->save($dataopendetails);
+        (empty($saved) && empty($savedopendetails)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully'); 
+       }
+
+    } else {
+    $session->setFlashdata('error', 'Fill All Fields');
+    }
+    return redirect()->to('paymentreceiptdetails');
+    }
 			
 			 public function removemptyarray($array)
             {
