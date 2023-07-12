@@ -180,34 +180,33 @@ class TransactionModel extends Model
 
 
 
-        public function helicopterviewcommon($curid='', $type='')
-        {
+    public function helicopterviewcommon($curid = '', $type = '')
+    {
         $curYear = date('Y');
-        $sql = "SELECT
-        YEAR(td.dueDate) AS `Year`,
-        IF(QUARTER(td.dueDate) = 1, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 1 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 1 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 1 AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 1 AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 1 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 1 THEN td.spot_rate END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 1 THEN td.targetRate END)), NULL) AS `Q4`,
-        IF(QUARTER(td.dueDate) = 2, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 2 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 2 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 2 AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 2 AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 2 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 2 THEN td.spot_rate END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 2 THEN td.targetRate END)), NULL) AS `Q1`,
-        IF(QUARTER(td.dueDate) = 3, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 3 AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.spot_rate END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3 THEN td.targetRate END)), NULL) AS `Q2`,
-        IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.contracted_Rate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 4 AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4 THEN frcw.amount_FC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.spot_rate END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4 THEN td.targetRate END)), NULL) AS `Q3`
-        FROM
-        transactiondetails AS td
-        INNER JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
-        WHERE
-        td.exposureType = ".$type."
-        AND YEAR(td.dueDate) = ".$curYear."
-        AND td.currency = ".$curid."
-        GROUP BY YEAR(td.dueDate), QUARTER(td.dueDate);";
+        $sql = "SELECT 
+                    YEAR(td.dueDate) AS `Year`, 
+                    IF(QUARTER(td.dueDate) = 1, CONCAT(SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 1 AND td.exposureType = '$type' THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 1  AND td.exposureType = '$type' THEN frcw.contracted_Rate END), ',', SUM(DISTINCT CASE  WHEN QUARTER(td.dueDate) = 1 AND td.exposureType = '$type' AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 1 AND td.exposureType = '$type' AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 1 AND td.exposureType = '$type' THEN frcw.amount_FC END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 1 AND td.exposureType = '$type' THEN td.spot_rate END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 1 AND td.exposureType = '$type' THEN td.targetRate END)), NULL) AS `Q4`, 
+                    IF(QUARTER(td.dueDate) = 2, CONCAT(SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 2 AND td.exposureType = '$type' THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 2  AND td.exposureType = '$type' THEN frcw.contracted_Rate END), ',', SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 2  AND td.exposureType = '$type' AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 2  AND td.exposureType = '$type' AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 2  AND td.exposureType = '$type' THEN frcw.amount_FC END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 2  AND td.exposureType = '$type' THEN td.spot_rate END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 2 AND td.exposureType = '$type' THEN td.targetRate END)), NULL) AS `Q1`, 
+                    IF(QUARTER(td.dueDate) = 3, CONCAT(SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 3 AND td.exposureType = '$type' THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 3  AND td.exposureType = '$type' THEN frcw.contracted_Rate END), ',', SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 3  AND td.exposureType = '$type' AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 3  AND td.exposureType = '$type' AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 3  AND td.exposureType = '$type' THEN frcw.amount_FC END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 3  AND td.exposureType = '$type' THEN td.spot_rate END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 3 AND td.exposureType = '$type' THEN td.targetRate END)), NULL) AS `Q2`, 
+                    IF(QUARTER(td.dueDate) = 4, CONCAT(SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 4 AND td.exposureType = '$type' THEN td.amountinFC END), ',', AVG(CASE WHEN QUARTER(td.dueDate) = 4  AND td.exposureType = '$type' THEN frcw.contracted_Rate END), ',', SUM(DISTINCT CASE WHEN QUARTER(td.dueDate) = 4  AND td.exposureType = '$type' AND td.inr_target_value > 0 THEN td.targetRate * td.inr_target_value WHEN QUARTER(td.dueDate) = 4  AND td.exposureType = '$type' AND td.inr_target_value <= 0 THEN td.targetRate END), ',', SUM(CASE WHEN QUARTER(td.dueDate) = 4  AND td.exposureType = '$type' THEN frcw.amount_FC END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 4  AND td.exposureType = '$type' THEN td.spot_rate END), ',', AVG( CASE WHEN QUARTER(td.dueDate) = 4 AND td.exposureType = '$type' THEN td.targetRate END)), NULL) AS `Q3` 
+                FROM 
+                    transactiondetails AS td 
+                    LEFT JOIN forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref 
+                WHERE 
+                    YEAR(td.dueDate) = '$curYear' 
+                    AND td.currency = '$curid' 
+                GROUP BY 
+                    td.transaction_id , YEAR(td.dueDate), QUARTER(td.dueDate);";
+        
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
-        return $result;
+        
         if (is_object($query)) {
-        $result = $query->getResultArray();
-        return $result;
-        }else{
-        return [];
+            $result = $query->getResultArray();
+            return $result;
+        } else {
+            return [];
         }
-
-        }
+    }
 
 
 	public function helicopterviewimport($curid='')
