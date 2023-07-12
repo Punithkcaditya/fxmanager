@@ -44,15 +44,19 @@ class="form-control" required>
 <!-- start -->
 
 <div class="col-md-12" style="display:<?php echo $style ?>">
-
+<div class="card shadow">
+<div class="card-header">
+	<h2 class="mb-0">MTM - Operating Risk</h2>
+</div>
+<div class="card-body cardbodynopadding">
 
 
 <!-- export start -->
-<div class="card shadow">
-<div class="card-header">
-	<h2 class="mb-0">EXPORTS</h2>
+<div class="accordion">
+<div class="accordion-header " data-toggle="collapse" data-target="#panel-body-2">
+<h4>EXPORTS</h4>
 </div>
-<div class="card-body">
+<div class="accordion-body collapse show border border-top-0 text-sm" id="panel-body-2" data-parent="#accordion">
 	<?php 				
 	echo "<div class='table-responsive'><table id='example1' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
@@ -105,7 +109,6 @@ class="form-control" required>
 
 	
 	// first value
-	$avg_1 = ($value["Q1"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[3] : 0;
 	$hedgedpositionrate = $value["Q1"] != "" ? explode(",", $value["Q1"])[1] : 0;
 	$openpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : 0;
@@ -123,7 +126,6 @@ class="form-control" required>
 
 	
 	// second value
-	$avg_2 = ($value["Q2"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[3] : 0;
 	$hedgedpositionrate = $value["Q2"] != "" ? explode(",", $value["Q2"])[1] : 0;
 	$openpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : 0;
@@ -140,7 +142,6 @@ class="form-control" required>
 
 	
 	// third value
-	$avg_3 = ($value["Q3"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[3] : 0;
 	$hedgedpositionrate = $value["Q3"] != "" ? explode(",", $value["Q3"])[1] : 0;
 	$openpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : 0;
@@ -158,7 +159,6 @@ class="form-control" required>
 
 	
 	// fourth value
-	$avg_4 = ($value["Q4"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[3] : 0;
 	$hedgedpositionrate = $value["Q4"] != "" ? explode(",", $value["Q4"])[1] : 0;
 	$openpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : 0;
@@ -174,16 +174,15 @@ class="form-control" required>
 	$gainloss_4 = $target_value_4-(($hedged_amount_4*$hedgedpositionrate)+($mtmrate_4*$openamountfc_4));
 
 
-	$total_avg = $avg_1 + $avg_2 + $avg_3 + $avg_4;
-	$exports_sum = $exports_1 + $exports_2 + $exports_3 + $exports_4;
-	$targetvalue_sum = $target_value_1 + $target_value_2 + $target_value_3 + $target_value_4;
-	$targetrate_sum = ($target_rate_1 + $target_rate_2 + $target_rate_3 + $target_rate_4)/$total_avg;
-	$hedged_sum = ($hedged_1 + $hedged_2 + $hedged_3 + $hedged_4)/$total_avg;
-	$hedged_amount_sum = $hedged_amount_1 + $hedged_amount_2 + $hedged_amount_3 + $hedged_amount_4;
-	$openamountfc_sum = $openamountfc_1 + $openamountfc_2 + $openamountfc_3 + $openamountfc_4;
-	$gainloss_sum = $gainloss_1 + $gainloss_2 + $gainloss_3 + $gainloss_4;
-	$hedgedperctage_sum = ($hedgedperctage_1 + $hedgedperctage_2 + $hedgedperctage_3 + $hedgedperctage_4)/$total_avg;
-	$potential_portfolio_sum = $potential_portfolio_1 + $potential_portfolio_2 + $potential_portfolio_3 + $potential_portfolio_4;
+	$exports_sum += $exports_1 + $exports_2 + $exports_3 + $exports_4;
+	$targetvalue_sum += $target_value_1 + $target_value_2 + $target_value_3 + $target_value_4;
+	$targetrate_sum += $target_rate_1 + $target_rate_2 + $target_rate_3 + $target_rate_4;
+	$hedged_sum += $hedged_1 + $hedged_2 + $hedged_3 + $hedged_4;
+	$hedged_amount_sum += $hedged_amount_1 + $hedged_amount_2 + $hedged_amount_3 + $hedged_amount_4;
+	$openamountfc_sum += $openamountfc_1 + $openamountfc_2 + $openamountfc_3 + $openamountfc_4;
+	$gainloss_sum += $gainloss_1 + $gainloss_2 + $gainloss_3 + $gainloss_4;
+	$hedgedperctage_sum += $hedgedperctage_1 + $hedgedperctage_2 + $hedgedperctage_3 + $hedgedperctage_4;
+	$potential_portfolio_sum += $potential_portfolio_1 + $potential_portfolio_2 + $potential_portfolio_3 + $potential_portfolio_4;
 
 
 	
@@ -294,16 +293,18 @@ class="form-control" required>
 	echo "</tbody></table></div>";
 	?>
 
+</div>
 
-	</div>
-	</div>
+</div>
+
 
 <!-- imports -->
-<div class="card shadow">
-<div class="card-header">
-	<h2 class="mb-0">IMPORTS</h2>
+<div id="accordion">
+<div class="accordion">
+<div class="accordion-header" data-toggle="collapse" data-target="#panel-body-1">
+<h4>IMPORTS</h4>
 </div>
-<div class="card-body">
+<div class="accordion-body collapse  border border-top-0 text-sm" id="panel-body-1" data-parent="#accordion">
 	<?php 				
 	echo "<div class='table-responsive'><table id='example' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
@@ -350,7 +351,6 @@ class="form-control" required>
 	$potentialgainloss_sum = 0;
 	$potential_portfolio_sum = 0;
 	// first value
-	$avg_1 = ($value["Q1"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[3] : 0;
 	$hedgedpositionrate = $value["Q1"] != "" ? explode(",", $value["Q1"])[1] : 0;
 	$openpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : 0;
@@ -367,7 +367,6 @@ class="form-control" required>
 
 	
 	// second value
-	$avg_2 = ($value["Q2"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[3] : 0;
 	$hedgedpositionrate = $value["Q2"] != "" ? explode(",", $value["Q2"])[1] : 0;
 	$openpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : 0;
@@ -383,7 +382,6 @@ class="form-control" required>
 	$gainloss_2 = $target_value_2-(($hedged_amount_2*$hedgedpositionrate)+($mtmrate_2*$openamountfc_2));
 
 	// third value
-	$avg_3 = ($value["Q3"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[3] : 0;
 	$hedgedpositionrate = $value["Q3"] != "" ? explode(",", $value["Q3"])[1] : 0;
 	$openpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : 0;
@@ -400,7 +398,6 @@ class="form-control" required>
 
 	
 	// fourth value
-	$avg_4 = ($value["Q4"] != "" ?  1 : 0);
 	$hedgedpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[3] : 0;
 	$hedgedpositionrate = $value["Q4"] != "" ? explode(",", $value["Q4"])[1] : 0;
 	$openpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : 0;
@@ -417,16 +414,15 @@ class="form-control" required>
 
 
 
-	$total_avg = $avg_1 + $avg_2 + $avg_3 + $avg_4;
-	$exports_sum = $exports_1 + $exports_2 + $exports_3 + $exports_4;
-	$targetvalue_sum = $target_value_1 + $target_value_2 + $target_value_3 + $target_value_4;
-	$targetrate_sum = ($target_rate_1 + $target_rate_2 + $target_rate_3 + $target_rate_4)/$total_avg;
-	$hedged_sum = ($hedged_1 + $hedged_2 + $hedged_3 + $hedged_4)/$total_avg;
-	$hedged_amount_sum = $hedged_amount_1 + $hedged_amount_2 + $hedged_amount_3 + $hedged_amount_4;
-	$openamountfc_sum = $openamountfc_1 + $openamountfc_2 + $openamountfc_3 + $openamountfc_4;
-	$gainloss_sum = $gainloss_1 + $gainloss_2 + $gainloss_3 + $gainloss_4;
-	$hedgedperctage_sum = ($hedgedperctage_1 + $hedgedperctage_2 + $hedgedperctage_3 + $hedgedperctage_4)/$total_avg;
-	$potential_portfolio_sum = $potential_portfolio_1 + $potential_portfolio_2 + $potential_portfolio_3 + $potential_portfolio_4;
+	$exports_sum += $exports_1 + $exports_2 + $exports_3 + $exports_4;
+	$targetvalue_sum += $target_value_1 + $target_value_2 + $target_value_3 + $target_value_4;
+	$targetrate_sum += $target_rate_1 + $target_rate_2 + $target_rate_3 + $target_rate_4;
+	$hedged_sum += $hedged_1 + $hedged_2 + $hedged_3 + $hedged_4;
+	$hedged_amount_sum += $hedged_amount_1 + $hedged_amount_2 + $hedged_amount_3 + $hedged_amount_4;
+	$openamountfc_sum += $openamountfc_1 + $openamountfc_2 + $openamountfc_3 + $openamountfc_4;
+	$gainloss_sum += $gainloss_1 + $gainloss_2 + $gainloss_3 + $gainloss_4;
+	$hedgedperctage_sum += $hedgedperctage_1 + $hedgedperctage_2 + $hedgedperctage_3 + $hedgedperctage_4;
+	$potential_portfolio_sum += $potential_portfolio_1 + $potential_portfolio_2 + $potential_portfolio_3 + $potential_portfolio_4;
 
 
 	
@@ -545,11 +541,11 @@ class="form-control" required>
 <!-- Buyer Credit -->
 
 
-<div class="card shadow">
-<div class="card-header">
-	<h2 class="mb-0">BUYERS CREDIT</h2>
+<div class="accordion">
+<div class="accordion-header " data-toggle="collapse" data-target="#panel-body-3">
+<h4>BUYERS CREDIT</h4>
 </div>
-<div class="card-body">
+<div class="accordion-body collapse border border-top-0 text-sm" id="panel-body-3" data-parent="#accordion">
 	<?php 				
 	echo "<div class='table-responsive'><table id='example3' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
@@ -1272,7 +1268,9 @@ class="form-control" required>
 </div>
 </div>
 <!-- end  --> 
-
+</div>
+</div>
+</div>
 </div>
 <!-- Dynamic fields for plan desc -->
 <!-- Dynamic fields for plan desc -->

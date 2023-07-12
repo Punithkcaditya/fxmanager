@@ -79,11 +79,24 @@ public function __construct()
 	->select("transactiondetails.currency, currency.Currency")
 	->join('currency', "transactiondetails.currency = currency.currency_id", 'left')
 	->findAll();
-	$data["helicoptertabs"] = $this->transaction_model->helicopterviewimport($curid);
-	$data["helicoptertabsexport"] = $this->transaction_model->helicopterviewexport($curid);
-	$data["helicoptertabsbuyersCredit"] = $this->transaction_model->helicopterviewbuyersCredit($curid);
-	$data["helicoptertabsbuyersmisc"] = $this->transaction_model->helicopterviewbuyersmisc($curid);
-	$data["helicoptertabscapitalpaymnts"] = $this->transaction_model->helicoptertabscapitalpaymnts($curid);
+	$helicoptertabsimport = $this->transaction_model->helicopterviewcommon($curid, 2);
+	$helicopterArrayimport = $this->chopArray($helicoptertabsimport);
+	$data["helicoptertabs"] = $this->newarray($helicopterArrayimport);
+	$helicoptertabsexport = $this->transaction_model->helicopterviewcommon($curid, 1);
+	$helicopterArrayexport  = $this->chopArray($helicoptertabsexport);
+	$data["helicoptertabsexport"] = $this->newarray($helicopterArrayexport);
+	$helicoptertabsbuyersCredit = $this->transaction_model->helicopterviewcommon($curid, 3);
+	$helicopterArraybuyersCredit  = $this->chopArray($helicoptertabsbuyersCredit);
+	$data["helicoptertabsbuyersCredit"] = $this->newarray($helicopterArraybuyersCredit);
+	$helicoptertabsbuyersmisc = $this->transaction_model->helicopterviewcommon($curid, 5);
+	$helicopterArraybuyersmisc  = $this->chopArray($helicoptertabsbuyersmisc);
+	$data["helicoptertabsbuyersmisc"] = $this->newarray($helicopterArraybuyersmisc);
+	$helicoptertabscapitalpaymnts = $this->transaction_model->helicopterviewcommon($curid, 4);
+	$helicopterArrayCpaymnts  = $this->chopArray($helicoptertabscapitalpaymnts);
+	$data["helicoptertabscapitalpaymnts"] = $this->newarray($helicopterArrayCpaymnts);
+
+
+
 	$data['title'] = isset($_GET['currencyieshelicopterview']) ? 'Helicopter View as on '.date('d-M-y') : 'Select Currency To View Helicopter View';
 	$data['pade_title1'] = 'Currency';
 	$data['i'] = 1;
@@ -103,4 +116,37 @@ public function __construct()
 	}
 
 
+
+	public function chopArray($helicopterview = ''){
+		$resultArray = array();
+		foreach ($helicopterview as $subArray) {
+			foreach ($subArray as $key => $value) {
+			if (!empty($value)) {
+			$values = explode(",", $value);
+			$resultArray[$key] = isset($resultArray[$key]) ? array_merge($resultArray[$key], $values) : $values;
+			} elseif (!isset($resultArray[$key])) {
+			$resultArray[$key] = array();
+			}
+			}
+			}
+			return $resultArray;
+	}
+
+	public function newarray($resultArray = ''){
+		if(!empty($resultArray)){
+			$newArray = array(
+				1 => array(
+					"Year" => $resultArray["Year"][0],
+					"Q4" => implode(",", $resultArray["Q4"]),
+					"Q1" => implode(",", $resultArray["Q1"]),
+					"Q2" => implode(",", $resultArray["Q2"]),
+					"Q3" => implode(",", $resultArray["Q3"])
+				)
+			);
+			return $newArray;
+		}
+	return [];
+	}
 }
+
+
