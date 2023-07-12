@@ -175,6 +175,7 @@ class="form-control" required>
 
 
 	$total_avg = $avg_1 + $avg_2 + $avg_3 + $avg_4;
+	$total_avg = $total_avg ? $total_avg : 1;
 	$exports_sum = $exports_1 + $exports_2 + $exports_3 + $exports_4;
 	$targetvalue_sum = $target_value_1 + $target_value_2 + $target_value_3 + $target_value_4;
 	$targetrate_sum = ($target_rate_1 + $target_rate_2 + $target_rate_3 + $target_rate_4)/$total_avg;

@@ -80,19 +80,23 @@ public function __construct()
 	->join('currency', "transactiondetails.currency = currency.currency_id", 'left')
 	->findAll();
 	$helicoptertabsimport = $this->transaction_model->helicopterviewcommon($curid, 2);
-
+	$helicopterArrayimport = $this->chopArray($helicoptertabsimport);
+	$data["helicoptertabs"] = $this->newarray($helicopterArrayimport);
 	$helicoptertabsexport = $this->transaction_model->helicopterviewcommon($curid, 1);
-	$helicopterArrayexport  = $this->groupByQuarter($helicoptertabsexport);
-	$helicopterArray  = $this->convertArrayByQuarter($helicopterArrayexport);
 	echo '<pre>';
-	print_r($helicopterArray);
-	exit;
-	
-
-	
+    print_r($helicoptertabsexport);
+    exit;
+	$helicopterArrayexport  = $this->chopArray($helicoptertabsexport);
+	$data["helicoptertabsexport"] = $this->newarray($helicopterArrayexport);
 	$helicoptertabsbuyersCredit = $this->transaction_model->helicopterviewcommon($curid, 3);
+	$helicopterArraybuyersCredit  = $this->chopArray($helicoptertabsbuyersCredit);
+	$data["helicoptertabsbuyersCredit"] = $this->newarray($helicopterArraybuyersCredit);
 	$helicoptertabsbuyersmisc = $this->transaction_model->helicopterviewcommon($curid, 5);
+	$helicopterArraybuyersmisc  = $this->chopArray($helicoptertabsbuyersmisc);
+	$data["helicoptertabsbuyersmisc"] = $this->newarray($helicopterArraybuyersmisc);
 	$helicoptertabscapitalpaymnts = $this->transaction_model->helicopterviewcommon($curid, 4);
+	$helicopterArrayCpaymnts  = $this->chopArray($helicoptertabscapitalpaymnts);
+	$data["helicoptertabscapitalpaymnts"] = $this->newarray($helicopterArrayCpaymnts);
 
 
 
@@ -116,69 +120,36 @@ public function __construct()
 
 
 
-
-	public function convertArrayByQuarter($array)
-	{
-		$output = [];
-		foreach ($array as $row) {
-			$quarter = 'Q' . $row['Quarter'];
-			
-			// Initialize the quarter values if not set
-			if (!isset($output[$quarter])) {
-				$output[$quarter] = [
-					'Q1' => '',
-					'Q2' => '',
-					'Q3' => '',
-					'Q4' => '',
-				];
+	public function chopArray($helicopterview = ''){
+		$resultArray = array();
+		foreach ($helicopterview as $subArray) {
+			foreach ($subArray as $key => $value) {
+			if (!empty($value)) {
+			$values = explode(",", $value);
+			$resultArray[$key] = isset($resultArray[$key]) ? array_merge($resultArray[$key], $values) : $values;
+			} elseif (!isset($resultArray[$key])) {
+			$resultArray[$key] = array();
 			}
-			// Append the values for the corresponding quarter
-			$output[$quarter][$quarter] .= implode(',', [
-				$row['TotalAmountinFC'],
-				$row['TotalContractedRate'],
-				$row['TotalCalculatedTargetRate'],
-				$row['TotalAmountFC'],
-				$row['TotalSpotRate'],
-			]) . ',';
-		}
-		// Remove the trailing comma from each quarter value
-		foreach ($output as &$row) {
-			foreach ($row as $key => &$value) {
-				$value = rtrim($value, ',');
 			}
-		}
-		return $output;
+			}
+			return $resultArray;
 	}
-	
 
-public function groupByQuarter($inputArray) {
-    $resultArray = array();
-    
-    foreach ($inputArray as $subArray) {
-        $quarter = $subArray['Quarter'];
-        
-        if (!isset($resultArray[$quarter])) {
-            $resultArray[$quarter] = array(
-                'Quarter' => $quarter,
-                'TotalAmountinFC' => 0,
-                'TotalContractedRate' => 0,
-                'TotalAmountFC' => 0,
-                'TotalSpotRate' => 0,
-                'TotalCalculatedTargetRate' => 0
-            );
-        }
-        
-        $resultArray[$quarter]['TotalAmountinFC'] += (float) $subArray['amountinFC'];
-        $resultArray[$quarter]['TotalContractedRate'] += (float) $subArray['contracted_Rate'];
-        $resultArray[$quarter]['TotalAmountFC'] += (float) $subArray['amount_FC'];
-        $resultArray[$quarter]['TotalSpotRate'] += (float) $subArray['spot_rate'];
-        $resultArray[$quarter]['TotalCalculatedTargetRate'] += (float) $subArray['calculated_targetRate'];
-    }
-    
-    return array_values($resultArray);
-}
-
-
+	public function newarray($resultArray = ''){
+		if(!empty($resultArray)){
+			$newArray = array(
+				1 => array(
+					"Year" => $resultArray["Year"][0],
+					"Q4" => implode(",", $resultArray["Q4"]),
+					"Q1" => implode(",", $resultArray["Q1"]),
+					"Q2" => implode(",", $resultArray["Q2"]),
+					"Q3" => implode(",", $resultArray["Q3"])
+				)
+			);
+			return $newArray;
+		}
+	return [];
+	}
 }
 
 
