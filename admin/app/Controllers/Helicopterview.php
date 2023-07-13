@@ -81,7 +81,14 @@ public function __construct()
 	->findAll();
 	$helicoptertabsimport = $this->transaction_model->helicopterviewcommon($curid, 2);
 
+	// $helicoptertabsexport = $this->transaction_model->helicopterviewcommonold($curid, 1);
+	// echo '<pre>';
+	// print_r($helicoptertabsexport);
+	// exit;
 	$helicoptertabsexport = $this->transaction_model->helicopterviewcommon($curid, 1);
+	echo '<pre>';
+	print_r($helicoptertabsexport);
+	exit;
 	$helicopterArrayexport  = $this->groupByQuarter($helicoptertabsexport);
 	$helicopterArray  = $this->convertArrayByQuarter($helicopterArrayexport);
 	echo '<pre>';
@@ -121,7 +128,7 @@ public function __construct()
 	{
 		$output = [];
 		foreach ($array as $row) {
-			$quarter = 'Q' . $row['Quarter'];
+			$quarter =  $row['Quarter'];
 			
 			// Initialize the quarter values if not set
 			if (!isset($output[$quarter])) {
@@ -155,7 +162,7 @@ public function groupByQuarter($inputArray) {
     $resultArray = array();
     
     foreach ($inputArray as $subArray) {
-        $quarter = $subArray['Quarter'];
+        $quarter = $subArray['quarter_name'];
         
         if (!isset($resultArray[$quarter])) {
             $resultArray[$quarter] = array(

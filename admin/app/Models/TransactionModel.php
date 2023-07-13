@@ -178,50 +178,105 @@ class TransactionModel extends Model
     }
 
 
+
+
+
     public function helicopterviewcommon($curid = '', $type = '')
-    {
-        $curYear = date('Y');
-        $sql = "SELECT
-            td.transaction_id,
-            t.Year,
-            t.Quarter,
-            t.amountinFC,
-            AVG(frcw.contracted_Rate) AS contracted_Rate,
-            SUM(frcw.amount_FC) AS amount_FC,
-            AVG(td.spot_rate) AS spot_rate,
-            CASE
-                WHEN td.inr_target_value > 0 THEN SUM(td.targetRate * td.inr_target_value)
-                WHEN td.inr_target_value <= 0 THEN SUM(td.targetRate)
-            END AS calculated_targetRate
+{
+    $curYear = date('Y');
+    $sql = "SELECT
+        td.transaction_id,
+        t.Year,
+        t.Quarter,
+        t.amountinFC,
+        AVG(frcw.contracted_Rate) AS contracted_Rate,
+        SUM(frcw.amount_FC) AS amount_FC,
+        AVG(td.spot_rate) AS spot_rate,
+        AVG(td.targetRate) AS targetRate,
+        CASE
+            WHEN td.inr_target_value > 0 THEN SUM(td.targetRate * td.inr_target_value)
+            WHEN td.inr_target_value <= 0 THEN SUM(td.targetRate)
+        END AS calculated_targetRate,
+        CASE t.Quarter
+            WHEN 1 THEN 'Q4'
+            WHEN 2 THEN 'Q1'
+            WHEN 3 THEN 'Q2'
+            WHEN 4 THEN 'Q3'
+        END AS quarter_name
+    FROM
+        transactiondetails AS td
+    INNER JOIN
+        forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
+    INNER JOIN (
+        SELECT
+            transaction_id,
+            YEAR(dueDate) AS Year,
+            QUARTER(dueDate) AS Quarter,
+            SUM(amountinFC) AS amountinFC
         FROM
-            transactiondetails AS td
-        INNER JOIN
-            forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
-        INNER JOIN (
-            SELECT
-                transaction_id,
-                YEAR(dueDate) AS Year,
-                QUARTER(dueDate) AS Quarter,
-                SUM(amountinFC) AS amountinFC
-            FROM
-                transactiondetails
-            WHERE
-                YEAR(dueDate) = '$curYear'
-                AND currency = '$curid'
-                AND exposureType = '$type'
-            GROUP BY
-                transaction_id, Year, Quarter
-        ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter
+            transactiondetails
+        WHERE
+            YEAR(dueDate) = '$curYear'
+            AND currency = '$curid'
+            AND exposureType = '$type'
         GROUP BY
-            td.transaction_id, t.Year, t.Quarter, t.amountinFC;";        
-        $query = $this->db->query($sql);
-        if ($query && $query->getNumRows() > 0) {
-            $result = $query->getResultArray();
-            return $result;
-        } else {
-            return [];
-        }
+            transaction_id, Year, Quarter
+    ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter
+    GROUP BY
+        td.transaction_id, t.Year, t.Quarter;";        
+    $query = $this->db->query($sql);
+    if ($query && $query->getNumRows() > 0) {
+        $result = $query->getResultArray();
+        return $result;
+    } else {
+        return [];
     }
+}
+
+    // public function helicopterviewcommon($curid = '', $type = '')
+    // {
+    //     $curYear = date('Y');
+    //     $sql = "SELECT
+    //         td.transaction_id,
+    //         t.Year,
+    //         t.Quarter,
+    //         t.amountinFC,
+    //         AVG(frcw.contracted_Rate) AS contracted_Rate,
+    //         SUM(frcw.amount_FC) AS amount_FC,
+    //         AVG(td.spot_rate) AS spot_rate,
+    //         CASE
+    //             WHEN td.inr_target_value > 0 THEN SUM(td.targetRate * td.inr_target_value)
+    //             WHEN td.inr_target_value <= 0 THEN SUM(td.targetRate)
+    //         END AS calculated_targetRate
+    //     FROM
+    //         transactiondetails AS td
+    //     INNER JOIN
+    //         forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
+    //     INNER JOIN (
+    //         SELECT
+    //             transaction_id,
+    //             YEAR(dueDate) AS Year,
+    //             QUARTER(dueDate) AS Quarter,
+    //             SUM(amountinFC) AS amountinFC
+    //         FROM
+    //             transactiondetails
+    //         WHERE
+    //             YEAR(dueDate) = '$curYear'
+    //             AND currency = '$curid'
+    //             AND exposureType = '$type'
+    //         GROUP BY
+    //             transaction_id, Year, Quarter
+    //     ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter
+    //     GROUP BY
+    //         td.transaction_id, t.Year, t.Quarter, t.amountinFC;";        
+    //     $query = $this->db->query($sql);
+    //     if ($query && $query->getNumRows() > 0) {
+    //         $result = $query->getResultArray();
+    //         return $result;
+    //     } else {
+    //         return [];
+    //     }
+    // }
     
     
     
