@@ -553,8 +553,12 @@ class Currencyapi extends BaseController
         public function currencyperformance(){
             $check = $this->testauthUser();
             if ($check) {
+                try {
                 $this->db = Database::connect();
                 $this->db->setDatabase($check);
+                }catch (\mysqli_sql_exception $e) {
+                    return $this->fail('No Database setup !!');
+                }
             $jsonResponse = json_encode([
                 "status" => 1,
                 "Today" => [
@@ -658,27 +662,33 @@ class Currencyapi extends BaseController
     public function testauthUser()
     {
         
-        $secondDB = \Config\Database::connect('second_db');
-        $data = array();
-        $response = array();
-    //   return $this->respond($header_values['Auth-Token']);
-            $token = $_GET['token'];
-            if (!empty($token)) {
-                $data['user_data'] = $secondDB->table('users')->select('fx_db')->where('login_token', $token)->get()
-                ->getRow();
-                if(!empty($data['user_data'])){
-                    return $data['user_data']->fx_db;
-                    $secondDB->close();
-                }else {
-                    return false;
+        try{
+   
+            $secondDB = \Config\Database::connect('second_db');
+            $data = array();
+            $response = array();
+        //   return $this->respond($header_values['Auth-Token']);
+                $token = $_GET['token'];
+                if (!empty($token)) {
+                    $data['user_data'] = $secondDB->table('users')->select('fx_db')->where('login_token', $token)->get()
+                    ->getRow();
+                    if(!empty($data['user_data'])){
+                        return $data['user_data']->fx_db;
+                        $secondDB->close();
+                    }else {
+                        return false;
+                    }
+                    if (!empty($data['user_data'])) {
+                        $this->session->set($data);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
-                if (!empty($data['user_data'])) {
-                    $this->session->set($data);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+        }catch (\mysqli_sql_exception  $e){
+            return false;
+        }
+   
         
     }
     

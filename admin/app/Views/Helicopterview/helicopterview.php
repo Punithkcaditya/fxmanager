@@ -54,7 +54,7 @@ class="form-control" required>
 </div>
 <div class="card-body">
 	<?php 				
-	echo "<div class='table-responsive'><table id='example1' class='table table-striped table-bordered w-100 text-nowrap'>";
+	echo "<div class='table-responsive'><table id='' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
 	$subheadings = array(
 		"-",
@@ -306,7 +306,7 @@ class="form-control" required>
 </div>
 <div class="card-body">
 	<?php 				
-	echo "<div class='table-responsive'><table id='example' class='table table-striped table-bordered w-100 text-nowrap'>";
+	echo "<div class='table-responsive'><table id='' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
 	$subheadings = array(
 		"-",
@@ -553,7 +553,7 @@ class="form-control" required>
 </div>
 <div class="card-body">
 	<?php 				
-	echo "<div class='table-responsive'><table id='example3' class='table table-striped table-bordered w-100 text-nowrap'>";
+	echo "<div class='table-responsive'><table id='' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
 
 	$subheadings = array(
@@ -800,7 +800,7 @@ class="form-control" required>
 </div>
 <div class="card-body">
 	<?php 				
-	echo "<div class='table-responsive'><table id='example4' class='table table-striped table-bordered w-100 text-nowrap'>";
+	echo "<div class='table-responsive'><table id='' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
 
 	$subheadings = array(
@@ -1049,7 +1049,7 @@ class="form-control" required>
 </div>
 <div class="card-body">
 	<?php 				
-	echo "<div class='table-responsive'><table id='example5' class='table table-striped table-bordered w-100 text-nowrap'>";
+	echo "<div class='table-responsive'><table id='' class='table table-striped table-bordered w-100 text-nowrap'>";
 	echo "<thead><tr>";
 	$subheadings = array(
 		"-",

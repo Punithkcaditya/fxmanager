@@ -47,7 +47,7 @@
 <div class="card shadow">
 <div class="card-body cardbodynopadding">
 
-<div class='table-responsive'>
+<div class='table-responsive' style='overflow-y: hidden;'>
 <table id='' class='table table-striped table-bordered w-100 text-nowrap'>
 <thead>
 	<tr>

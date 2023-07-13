@@ -95,10 +95,6 @@ class Index extends BaseController
 
 
 
-
-
-
-
     public function dashboard()
     {
         $this->loadUser();
