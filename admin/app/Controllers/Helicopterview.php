@@ -80,26 +80,31 @@ public function __construct()
 	->join('currency', "transactiondetails.currency = currency.currency_id", 'left')
 	->findAll();
 	$helicoptertabsimport = $this->transaction_model->helicopterviewcommon($curid, 2);
+	$helicopterArrayimport = $this->groupByQuarter($helicoptertabsimport);
+	$data["helicoptertabs"] = $this->convertArrayByQuarter($helicopterArrayimport);
 
 	// $helicoptertabsexport = $this->transaction_model->helicopterviewcommonold($curid, 1);
 	// echo '<pre>';
 	// print_r($helicoptertabsexport);
 	// exit;
 	$helicoptertabsexport = $this->transaction_model->helicopterviewcommon($curid, 1);
-	echo '<pre>';
-	print_r($helicoptertabsexport);
-	exit;
 	$helicopterArrayexport  = $this->groupByQuarter($helicoptertabsexport);
-	$helicopterArray  = $this->convertArrayByQuarter($helicopterArrayexport);
-	echo '<pre>';
-	print_r($helicopterArray);
-	exit;
-	
+	$data["helicoptertabsexport"]   = $this->convertArrayByQuarter($helicopterArrayexport);
 
-	
+
+		
 	$helicoptertabsbuyersCredit = $this->transaction_model->helicopterviewcommon($curid, 3);
+	$helicopterArraybuyersCredit  = $this->groupByQuarter($helicoptertabsbuyersCredit);
+	$data["helicoptertabsbuyersCredit"] = $this->convertArrayByQuarter($helicopterArraybuyersCredit);
+
 	$helicoptertabsbuyersmisc = $this->transaction_model->helicopterviewcommon($curid, 5);
+	$helicopterArraybuyersmisc  = $this->groupByQuarter($helicoptertabsbuyersmisc);
+	$data["helicoptertabsbuyersmisc"] = $this->convertArrayByQuarter($helicopterArraybuyersmisc);
+
 	$helicoptertabscapitalpaymnts = $this->transaction_model->helicopterviewcommon($curid, 4);
+	$helicopterArrayCpaymnts  = $this->groupByQuarter($helicoptertabscapitalpaymnts);
+	$data["helicoptertabscapitalpaymnts"] = $this->convertArrayByQuarter($helicopterArrayCpaymnts);
+
 
 
 
@@ -124,7 +129,38 @@ public function __construct()
 
 
 
-	public function convertArrayByQuarter($array)
+
+
+	function convertArrayByQuarter($inputArray) {
+		$outputArray = array();
+		
+		// Initialize the output array with Year key and empty quarter values
+		$outputArray[1] = array(
+			'Year' => date('Y'),
+			'Q1' => null,
+			'Q2' => null,
+			'Q3' => null,
+			'Q4' => null
+		);
+		
+		foreach ($inputArray as $item) {
+			$quarter = $item['Quarter'];
+			$totalAmountinFC = number_format($item['TotalAmountinFC'], 2, '.', '');
+			$totalContractedRate = number_format($item['TotalContractedRate'], 8, '.', '');
+			$totalAmountFC = number_format($item['TotalAmountFC'], 4, '.', '');
+			$totalSpotRate = number_format($item['TotalSpotRate'], 8, '.', '');
+			$totalCalculatedTargetRate = number_format($item['TotalCalculatedTargetRate'], 4, '.', '');
+			$targetRate = number_format($item['TargetRate'], 8, '.', '');
+			
+			$outputArray[1][$quarter] = "{$totalAmountinFC},{$totalContractedRate},{$totalCalculatedTargetRate},{$totalAmountFC},{$totalSpotRate},{$targetRate}";
+		}
+		
+		return $outputArray;
+	}
+	
+	
+
+	public function convertArrayByQuarteru($array)
 	{
 		$output = [];
 		foreach ($array as $row) {
@@ -146,6 +182,7 @@ public function __construct()
 				$row['TotalCalculatedTargetRate'],
 				$row['TotalAmountFC'],
 				$row['TotalSpotRate'],
+				$row['TargetRate'],
 			]) . ',';
 		}
 		// Remove the trailing comma from each quarter value
@@ -171,7 +208,8 @@ public function groupByQuarter($inputArray) {
                 'TotalContractedRate' => 0,
                 'TotalAmountFC' => 0,
                 'TotalSpotRate' => 0,
-                'TotalCalculatedTargetRate' => 0
+                'TotalCalculatedTargetRate' => 0,
+				'TargetRate' => 0,
             );
         }
         
@@ -180,6 +218,8 @@ public function groupByQuarter($inputArray) {
         $resultArray[$quarter]['TotalAmountFC'] += (float) $subArray['amount_FC'];
         $resultArray[$quarter]['TotalSpotRate'] += (float) $subArray['spot_rate'];
         $resultArray[$quarter]['TotalCalculatedTargetRate'] += (float) $subArray['calculated_targetRate'];
+		$resultArray[$quarter]['TargetRate'] += (float) $subArray['targetRate'];
+
     }
     
     return array_values($resultArray);

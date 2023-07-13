@@ -83,11 +83,11 @@ public function __construct()
 	$helicopterArrayimport = $this->chopArray($helicoptertabsimport);
 	$data["helicoptertabs"] = $this->newarray($helicopterArrayimport);
 	$helicoptertabsexport = $this->transaction_model->helicopterviewcommon($curid, 1);
-	echo '<pre>';
-    print_r($helicoptertabsexport);
-    exit;
 	$helicopterArrayexport  = $this->chopArray($helicoptertabsexport);
 	$data["helicoptertabsexport"] = $this->newarray($helicopterArrayexport);
+	echo '<pre>';
+    print_r($data["helicoptertabsexport"]);
+    exit;
 	$helicoptertabsbuyersCredit = $this->transaction_model->helicopterviewcommon($curid, 3);
 	$helicopterArraybuyersCredit  = $this->chopArray($helicoptertabsbuyersCredit);
 	$data["helicoptertabsbuyersCredit"] = $this->newarray($helicopterArraybuyersCredit);
