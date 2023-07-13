@@ -107,14 +107,16 @@ class Index extends BaseController
         $curren = $this->currency_model->select("Currency")->where('currency_id', $curid)->first();
         if (isset($curren['Currency'])) {
             $spotrates = $this->adminSpotrates($curren['Currency']);
-            $decodedspotrates = json_decode($spotrates, true);
-            $length = count($decodedspotrates['data']);
-            if($length == 2){
-                $data['spotrateExport'] = $decodedspotrates['data']['2']['B'];
-                $data['spotrateImport'] = $decodedspotrates['data']['3']['B'];
-            }else{
-                $data['spotrateExport'] = '';
-                $data['spotrateImport'] = '';
+            $jsondataspotrates = $this->json_validator($spotrates);
+            if($jsondataspotrates){
+                $decodedspotrates = json_decode($spotrates, true);
+            if(!empty($decodedspotrates)){
+                $length = count($decodedspotrates['data']);
+                if($length == 2){
+                    $data['spotrateExport'] = $decodedspotrates['data']['2']['B'];
+                    $data['spotrateImport'] = $decodedspotrates['data']['3']['B'];
+                }
+            }
             }
             $data['totaldetails'] = $this->totaldetails($curid);
             $data['exposuredetails'] = $this->exposuredetails($curid , $curren);
@@ -148,6 +150,13 @@ class Index extends BaseController
         return view('templates/default', $data);
     }
 
+    function json_validator($data) {
+        if (!empty($data)) {
+            return is_string($data) && 
+              is_array(json_decode($data, true)) ? true : false;
+        }
+        return false;
+    }
 
     // spotrates Api 
 
@@ -157,7 +166,7 @@ class Index extends BaseController
                 $query_params = http_build_query(array(
                     "type" => $curren,
                 ));
-                $url = 'https://fxmanagers.in/api/adminSpotrate?' . $query_params;
+                $url = 'https://fxmanagers.in/ajax/adminSpotrate?' . $query_params;
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $url,

@@ -59,6 +59,19 @@ public function __construct()
 	if (!isset($curren['Currency'])) {
 		return redirect()->to("adminlogout");
 	}
+	$spotrates = $this->adminSpotrates($curren['Currency']);
+	$jsondataspotrates = $this->json_validator($spotrates);
+	if($jsondataspotrates){
+		$decodedspotrates = json_decode($spotrates, true);
+	if(!empty($decodedspotrates)){
+		$length = count($decodedspotrates['data']);
+		if($length == 2){
+			$data['spotrateExport'] = $decodedspotrates['data']['2']['B'];
+			$data['spotrateImport'] = $decodedspotrates['data']['3']['B'];
+		}
+	}
+	}
+	
 	$data['style'] = isset($_GET['currencyieshelicopterview']) ? 'block' : 'none'; 
 	$session = session();
 	$pot = json_decode(json_encode($session->get("userdata")), true);
@@ -115,9 +128,20 @@ public function __construct()
 	$futureDate = $currentDate->modify('+30 days');  // Add 30 days to the current date
 	$futureDate = $currentDate->format('Y-m-d');
 	$spotrateimportsval = $mtmOperatingrisk->forrwardCalculator(2, $curid, $futureDate);
+	$jsondataimports = $this->json_validator($spotrateimportsval);
+	if($jsondataimports){
 	$data['spotrateimports']  = floatval(json_decode($spotrateimportsval)->result->spot_rate);
+	}else {
+	$data['spotrateimports'] = 1.0; 
+	}
+
 	$spotratexportsval = $mtmOperatingrisk->forrwardCalculator( 1, $curid,  $futureDate);
+	$jsondataexports = $this->json_validator($spotratexportsval);
+	if($jsondataexports){
 	$data['spotrateexports']  = floatval(json_decode($spotratexportsval)->result->spot_rate);
+	}else {
+	$data['spotrateexports'] = 1.0;
+	}
 	$data['pade_title5'] = 'Forward/ Option';
 	$data["page_heading"] = "Helicopterview";
 	$data["table_heading"] = "Amount outstanding in USD";
@@ -127,8 +151,40 @@ public function __construct()
 	}
 
 
+	function json_validator($data) {
+        if (!empty($data)) {
+            return is_string($data) && 
+              is_array(json_decode($data, true)) ? true : false;
+        }
+        return false;
+    }
 
+	public function adminSpotrates($curren = ''){
 
+		try {
+			$query_params = http_build_query(array(
+				"type" => $curren,
+			));
+			$url = 'https://fxmanagers.in/ajax/adminSpotrate?' . $query_params;
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => $url,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_HTTPGET => true,
+			));
+			$response = curl_exec($curl);
+			curl_close($curl);
+			return $response;
+		} catch (Exception $e) {
+			return '';
+			// Handle the exception
+		}
+}
 
 
 	function convertArrayByQuarter($inputArray) {

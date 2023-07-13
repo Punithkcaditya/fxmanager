@@ -18,14 +18,13 @@
          </div>
          <div class="col-md-3">
             <div class="form-group mt-2">
-               <label>Spot Rate Export :</label>
-               <span><?php echo $spotrateExport ?></span>
+               <label><strong>Spot Rate :</strong></label>
+               <span><?php echo isset($spotrateExport) ? $spotrateExport : 1 ; ?><span>/</span><?php echo isset($spotrateImport) ? $spotrateImport : 1 ;?></span>
             </div>
          </div>
          <div class="col-md-3">
             <div class="form-group mt-2">
-            <label>Spot Rate Import :</label>
-            <span><?php echo $spotrateImport ?></span>
+            <!-- <label>Spot Rate Import :</label> -->
             </div>
          </div>
       </div>

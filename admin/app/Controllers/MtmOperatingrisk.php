@@ -93,6 +93,8 @@ class MtmOperatingrisk extends BaseController
 
 
  
+  
+
     public function forrwardCalculator($cover_type , $currency , $forward_date )
     {
         
@@ -102,7 +104,7 @@ class MtmOperatingrisk extends BaseController
             $covertype = !empty($cover_type) && $cover_type == 1 ? 1 : 2;
             $curl = curl_init();
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.phillipforex.in/ajax/ajaxbroken',
+              CURLOPT_URL => 'https://www.fxmanagers.in/ajax/ajaxbroken',
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -112,11 +114,12 @@ class MtmOperatingrisk extends BaseController
               CURLOPT_CUSTOMREQUEST => 'POST',
               CURLOPT_POSTFIELDS => array("cover_type" => $covertype,"currency" => $curren['Currency'] , "forward_date" => $date), 
             ));
+          
             $response = curl_exec($curl);
             curl_close($curl);
             return $response;
         } catch (\Exception$e) {
-            return "";
+            return '';
         }            
     }
 
