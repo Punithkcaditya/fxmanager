@@ -61,13 +61,12 @@ class Database extends Config
 
   
 
-
     public $second_db = [
         'dsn'      => '',
-        'hostname' => 'localhost:3308',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'phillip_db',
+        'hostname' => 'godigistores.cmnfaak6okbi.ap-south-1.rds.amazonaws.com:3306',
+        'username' => 'retail',
+        'password' => 'q1w2e3r4t5Y^U&I*O(P)',
+        'database' => 'devisen',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -83,6 +82,28 @@ class Database extends Config
         'failover' => [],
         'port'     => 3306,
     ];
+
+    // public $second_db = [
+    //     'dsn'	=> '',
+    //     'hostname' => 'localhost:3308',
+    //     'username' => 'root',
+    //     'password' => '',
+    //     'database' => 'devisen',
+    //     'dbdriver' => 'MySQLi',
+    //     'dbprefix' => '',
+    //     'pconnect' => FALSE,
+    //     'db_debug' => (ENVIRONMENT !== 'production'),
+    //     'cache_on' => FALSE,
+    //     'cachedir' => '',
+    //     'char_set' => 'utf8',
+    //     'dbcollat' => 'utf8_general_ci',
+    //     'swap_pre' => '',
+    //     'encrypt' => FALSE,
+    //     'compress' => FALSE,
+    //     'stricton' => FALSE,
+    //     'failover' => array(),
+    //     'save_queries' => TRUE
+    // ];
 
 
 

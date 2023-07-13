@@ -46,23 +46,22 @@
 <div class="col-md-12 oklahoma" style="display:<?php echo $style ?>">
 <div class="card shadow">
 <div class="card-body cardbodynopadding">
-
+<div id="accordion">
+<div class="accordion">
+<div class="accordion-header " data-toggle="collapse" data-target="#panel-body-2">
+<h4>EXPORT</h4>
+</div>
+<div class="accordion-body show collapse border border-top-0 text-sm" id="panel-body-2" data-parent="#accordion">
 <div class='table-responsive'>
-<table id='' class='table table-striped table-bordered w-100 text-nowrap'>
+<table id='example1' class='table table-striped table-bordered w-100 text-nowrap'>
 <thead>
 	<tr>
-		<th></th>
+		<th>(Amount outstanding in USD)</th>
 		<th>All Months</th>
 		<?php if(!empty($databymonthexport)){ foreach ($databymonthexport as $key => $value) { ?>
 			<th><?php echo date("M-y", strtotime($key)); ?></th>
 		<?php }}else{ ?>
 			<th>No Record Found</th>
-		<?php } ?>
-	</tr>
-	<tr>
-		<th>Exports</th>
-		<?php for ($iu = 0; $iu < 13; $iu++) { ?>
-		<th></th>
 		<?php } ?>
 	</tr>
 </thead>
@@ -93,7 +92,7 @@ if(!empty($totalsexpt)){
 for ($i = 0; $i < count($totalsexpt); $i++) {
 $perctcoveredexpt[$i] = array();
 for ($j = 0; $j < count($totalsexpt[$i]); $j++) {
-if (!empty($totalsexpt[$i][$j]) && $exposuresexpt[$i][$j] != 0) {
+if (isset($totalsexpt[$i][$j])) {
 $perctcoveredexpt[$i][$j] =($totalsexpt[$i][$j]/$exposuresexpt[$i][$j])*100;
 } else {
 $perctcoveredexpt[$i][$j] = 0;
@@ -142,17 +141,25 @@ $perctcoveredexpt[$i][$j] = 0;
 			<td>No Record Found</td>
 		<?php } ?>
 	</tr>
+</tbody>
+</table>
+</div>
 </div>
 
-
-
+</div>
+<div class="accordion">
+<div class="accordion-header" data-toggle="collapse" data-target="#panel-body-1">
+<h4>IMPORT</h4>
+</div>
+<div class="accordion-body collapse  border border-top-0 text-sm" id="panel-body-1" data-parent="#accordion">
 <?php 				
-echo "<div class='table-responsive'>";
+echo "<div class='table-responsive'><table id='example' class='table table-striped table-bordered w-100 text-nowrap'>";
 		echo "<thead><tr>";
-		echo "<th>IMPORTS</th>";
+		echo "<th>(Amount outstanding in USD)</th>";
+		echo "<th>All Months</th>";
 		if(!empty($databymonth)){
 		foreach ($databymonth as $key => $value) {
-		 "<th></th>";
+		echo "<th>".date("M-y", strtotime($key))."</th>";
 		}}else{
 		echo "<td>No Record Found</td>";	
 		}
@@ -178,7 +185,7 @@ echo "<div class='table-responsive'>";
 		$otherpayments[] = array_column($value, 'OtherPaymentsType');
 		$capitalpayments[] = array_column($value, 'CapitalPaymentsType');
 		}
-	
+
 		foreach ($databymonth as $key => $value) {
 		foreach ($value as $innerValue) {
 		$allmonthtotals["totalUnderlyingExposures"] +=  isset($innerValue["UnderlyingExposures"]) ? $innerValue["UnderlyingExposures"] : 0;
@@ -212,7 +219,7 @@ echo "<div class='table-responsive'>";
 		for ($i = 0; $i < count($totals); $i++) {
 		$perctcovered[$i] = array();
 		for ($j = 0; $j < count($totals[$i]); $j++) {
-		if ( isset($totals[$i][$j]) && $exposures[$i][$j] != 0 ) {
+		if (isset($totals[$i][$j])) {
 		$perctcovered[$i][$j] =($totals[$i][$j]/$exposures[$i][$j])*100;
 		} else {
 		$perctcovered[$i][$j] = 0;

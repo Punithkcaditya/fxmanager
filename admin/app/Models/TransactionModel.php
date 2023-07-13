@@ -99,64 +99,149 @@ class TransactionModel extends Model
           }
     }
 	
-	public function tabsarrangement($curid='')
+
+    public function tabsarrangement($curid='')
     {
-        $sql = 'SELECT DATE_FORMAT(dueDate, "%Y-%m") AS month,
-        SUM(CASE WHEN a.exposureType = 1 THEN 0 ELSE amountinFC END) AS UnderlyingExposures,
-        SUM(CASE WHEN a.exposureType = 2 THEN amountinFC ELSE 0 END) AS SumImportsType,
-        SUM(CASE WHEN a.exposureType = 3 THEN amountinFC ELSE 0 END) AS SumBuyersCreditType,
-        SUM(CASE WHEN a.exposureType = 4 THEN amountinFC ELSE 0 END) AS CapitalPaymentsType,
-        SUM(CASE WHEN a.exposureType = 5 THEN amountinFC ELSE 0 END) AS OtherPaymentsType,
-        SUM(frcw.ToatalforwardAmount) AS ToatalforwardAmount,
-        amount_FC
-        FROM transactiondetails AS a
-        LEFT JOIN (
-            SELECT currency_id
-            FROM currency
-        ) c ON c.currency_id = a.currency
-        LEFT JOIN (
-            SELECT underlying_exposure_ref,
-                amount_FC,
-                SUM(amount_FC) AS ToatalforwardAmount,
-                AVG(contracted_Rate) AS Avgrate
-            FROM forward_coverdetails
-            GROUP BY 1
-        ) frcw ON a.transaction_id = frcw.underlying_exposure_ref
-        WHERE a.currency = '.$curid.'
-        AND a.exposureType != 1
-        GROUP BY 1';
+        $sql = 'SELECT
+                    months.month AS month,
+                    COALESCE(SUM(CASE WHEN a.exposureType = 1 THEN 0 ELSE amountinFC END), 0) AS UnderlyingExposures,
+                    COALESCE(SUM(CASE WHEN a.exposureType = 2 THEN amountinFC ELSE 0 END), 0) AS SumImportsType,
+                    COALESCE(SUM(CASE WHEN a.exposureType = 3 THEN amountinFC ELSE 0 END), 0) AS SumBuyersCreditType,
+                    COALESCE(SUM(CASE WHEN a.exposureType = 4 THEN amountinFC ELSE 0 END), 0) AS CapitalPaymentsType,
+                    COALESCE(SUM(CASE WHEN a.exposureType = 5 THEN amountinFC ELSE 0 END), 0) AS OtherPaymentsType,
+                    COALESCE(SUM(frcw.ToatalforwardAmount), 0) AS ToatalforwardAmount,
+                    COALESCE(amount_FC, 0) AS amount_FC
+                FROM
+                    (
+                        SELECT DATE_FORMAT(DATE_ADD("2023-04-01", INTERVAL n MONTH), "%Y-%m") AS month
+                        FROM (
+                            SELECT 0 AS n
+                            UNION SELECT 1 UNION SELECT 2 UNION SELECT 3
+                            UNION SELECT 4 UNION SELECT 5 UNION SELECT 6
+                            UNION SELECT 7 UNION SELECT 8 UNION SELECT 9
+                            UNION SELECT 10 UNION SELECT 11 
+                        ) AS numbers
+                    ) AS months
+                LEFT JOIN transactiondetails AS a ON DATE_FORMAT(a.dueDate, "%Y-%m") = months.month
+                    AND a.currency = '.$curid.'
+                    AND a.exposureType != 1
+                LEFT JOIN currency AS c ON c.currency_id = a.currency
+                LEFT JOIN (
+                    SELECT underlying_exposure_ref,
+                        amount_FC,
+                        SUM(amount_FC) AS ToatalforwardAmount,
+                        AVG(contracted_Rate) AS Avgrate
+                    FROM forward_coverdetails
+                    GROUP BY 1
+                ) AS frcw ON a.transaction_id = frcw.underlying_exposure_ref
+                WHERE months.month >= DATE_FORMAT("2023-04-01", "%Y-%m")
+                GROUP BY months.month
+                ORDER BY months.month';
         $query = $this->db->query($sql);
+    
         if (is_object($query)) {
-           $result = $query->getResultArray();
-           return $result;
-       }else{
-           return [];
-       }
-	}
+            $result = $query->getResultArray();
+            return $result;
+        } else {
+            return [];
+        }
+    }
+    
+
+
+	// public function tabsarrangement($curid='')
+    // {
+    //     $sql = 'SELECT DATE_FORMAT(dueDate, "%Y-%m") AS month,
+    //     SUM(CASE WHEN a.exposureType = 1 THEN 0 ELSE amountinFC END) AS UnderlyingExposures,
+    //     SUM(CASE WHEN a.exposureType = 2 THEN amountinFC ELSE 0 END) AS SumImportsType,
+    //     SUM(CASE WHEN a.exposureType = 3 THEN amountinFC ELSE 0 END) AS SumBuyersCreditType,
+    //     SUM(CASE WHEN a.exposureType = 4 THEN amountinFC ELSE 0 END) AS CapitalPaymentsType,
+    //     SUM(CASE WHEN a.exposureType = 5 THEN amountinFC ELSE 0 END) AS OtherPaymentsType,
+    //     SUM(frcw.ToatalforwardAmount) AS ToatalforwardAmount,
+    //     amount_FC
+    //     FROM transactiondetails AS a
+    //     LEFT JOIN (
+    //         SELECT currency_id
+    //         FROM currency
+    //     ) c ON c.currency_id = a.currency
+    //     LEFT JOIN (
+    //         SELECT underlying_exposure_ref,
+    //             amount_FC,
+    //             SUM(amount_FC) AS ToatalforwardAmount,
+    //             AVG(contracted_Rate) AS Avgrate
+    //         FROM forward_coverdetails
+    //         GROUP BY 1
+    //     ) frcw ON a.transaction_id = frcw.underlying_exposure_ref
+    //     WHERE a.currency = '.$curid.'
+    //     AND a.exposureType != 1
+    //     GROUP BY 1';
+    //     $query = $this->db->query($sql);
+    //     if (is_object($query)) {
+    //        $result = $query->getResultArray();
+    //        return $result;
+    //    }else{
+    //        return [];
+    //    }
+	// }
 	
-	
-	public function tabsarrangementforexport($curid='')
+
+    public function tabsarrangementforexport($curid='')
     {
-		$sql = ' SELECT DATE_FORMAT(dueDate, "%Y-%m") AS month, SUM(amountinFC) as UnderlyingExposures, currency, amountinFC,
-		SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount		
-		 FROM   transactiondetails as a
-		 LEFT  JOIN (
-		 SELECT currency_id
-		 FROM   currency
-		 ) c ON c.currency_id = a.currency
-		 LEFT  JOIN (
-        SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount
-        FROM   forward_coverdetails
-        GROUP  BY 1
-        ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref  WHERE `a`.`currency` = '.$curid.' AND `a`.`exposureType` = 1 GROUP BY 1';
-         $query = $this->db->query($sql);
-         if (is_object($query)) {
-           $result = $query->getResultArray();
-           return $result;
-       }else{
-           return [];
-       }
-	}
+        $sql = 'SELECT 
+                    DATE_FORMAT(months.month, "%Y-%m") AS month,
+                    COALESCE(SUM(a.amountinFC), 0) AS UnderlyingExposures,
+                    c.currency_id,
+                    COALESCE(a.amountinFC, 0) AS amountinFC,
+                    COALESCE(SUM(frcw.ToatalforwardAmount), 0) AS ToatalforwardAmount		
+                FROM
+                    (SELECT DATE_ADD("2023-04-01", INTERVAL (n-1) MONTH) AS month
+                    FROM (SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 
+                          UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 
+                          UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) AS numbers) AS months
+                LEFT JOIN transactiondetails AS a ON DATE_FORMAT(months.month, "%Y-%m") = DATE_FORMAT(a.dueDate, "%Y-%m")
+                                                AND a.currency = '.$curid.'
+                                                AND a.exposureType = 1
+                LEFT JOIN currency AS c ON c.currency_id = a.currency
+                LEFT JOIN (SELECT underlying_exposure_ref, SUM(amount_FC) AS ToatalforwardAmount
+                            FROM forward_coverdetails
+                            GROUP BY 1) AS frcw ON a.transaction_id = frcw.underlying_exposure_ref
+                GROUP BY months.month
+                ORDER BY months.month';
+        
+        $query = $this->db->query($sql);
+        
+        if (is_object($query)) {
+            $result = $query->getResultArray();
+            return $result;
+        } else {
+            return [];
+        }
+    }
+    
+
+	
+	// public function tabsarrangementforexport($curid='')
+    // {
+	// 	$sql = ' SELECT DATE_FORMAT(dueDate, "%Y-%m") AS month, SUM(amountinFC) as UnderlyingExposures, currency, amountinFC,
+	// 	SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount		
+	// 	 FROM   transactiondetails as a
+	// 	 LEFT  JOIN (
+	// 	 SELECT currency_id
+	// 	 FROM   currency
+	// 	 ) c ON c.currency_id = a.currency
+	// 	 LEFT  JOIN (
+    //     SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount
+    //     FROM   forward_coverdetails
+    //     GROUP  BY 1
+    //     ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref  WHERE `a`.`currency` = '.$curid.' AND `a`.`exposureType` = 1 GROUP BY 1';
+    //      $query = $this->db->query($sql);
+    //      if (is_object($query)) {
+    //        $result = $query->getResultArray();
+    //        return $result;
+    //    }else{
+    //        return [];
+    //    }
+	// }
 	
 
     public function helicopterviewimportold($curid = '')
@@ -180,57 +265,110 @@ class TransactionModel extends Model
 
 
 
-    public function helicopterviewcommon($curid = '', $type = '')
-    {
-        $curYear = date('Y');
+        public function helicopterviewcommon($curid = '', $type = '')
+        {
         $sql = "SELECT
-            td.transaction_id,
-            t.Year,
-            t.Quarter,
-            t.amountinFC,
-            AVG(frcw.contracted_Rate) AS contracted_Rate,
-            SUM(frcw.amount_FC) AS amount_FC,
-            AVG(td.spot_rate) AS spot_rate,
-            AVG(td.targetRate) AS targetRate,
-            CASE t.Quarter
-                WHEN 1 THEN 'Q4'
-                WHEN 2 THEN 'Q1'
-                WHEN 3 THEN 'Q2'
-                WHEN 4 THEN 'Q3'
-            END AS quarter_name,
-            CASE
-                WHEN td.inr_target_value > 0 THEN AVG(td.targetRate * td.inr_target_value)
-                WHEN td.inr_target_value <= 0 THEN AVG(td.targetRate)
-            END AS calculated_targetRate
+        td.transaction_id,
+        t.Year,
+        t.Quarter,
+        t.amountinFC,
+        AVG(frcw.contracted_Rate) AS contracted_Rate,
+        SUM(frcw.amount_FC) AS amount_FC,
+        AVG(td.spot_rate) AS spot_rate,
+        AVG(td.targetRate) AS targetRate,
+        CASE t.Quarter
+            WHEN 1 THEN 'Q4'
+            WHEN 2 THEN 'Q1'
+            WHEN 3 THEN 'Q2'
+            WHEN 4 THEN 'Q3'
+        END AS quarter_name,
+        CASE
+            WHEN td.inr_target_value > 0 THEN AVG(td.targetRate * td.inr_target_value)
+            WHEN td.inr_target_value <= 0 THEN AVG(td.targetRate)
+        END AS calculated_targetRate
         FROM
-            transactiondetails AS td
+        transactiondetails AS td
         INNER JOIN
-            forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
+        forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
         INNER JOIN (
-            SELECT
-                transaction_id,
-                YEAR(dueDate) AS Year,
-                QUARTER(dueDate) AS Quarter,
-                SUM(amountinFC) AS amountinFC
-            FROM
-                transactiondetails
-            WHERE
-                YEAR(dueDate) = '$curYear'
-                AND currency = '$curid'
-                AND exposureType = '$type'
-            GROUP BY
-                transaction_id, Year, Quarter
+        SELECT
+            transaction_id,
+            YEAR(dueDate) AS Year,
+            QUARTER(dueDate) AS Quarter,
+            SUM(amountinFC) AS amountinFC
+        FROM
+            transactiondetails
+        WHERE
+            currency = '$curid'
+            AND exposureType = '$type'
+        GROUP BY
+            transaction_id, Year, Quarter
         ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter
         GROUP BY
-            td.transaction_id, t.Year, t.Quarter, t.amountinFC;";        
+        td.transaction_id, t.Year, t.Quarter, t.amountinFC;";
+
         $query = $this->db->query($sql);
         if ($query && $query->getNumRows() > 0) {
-            $result = $query->getResultArray();
-            return $result;
+        $result = $query->getResultArray();
+        return $result;
         } else {
-            return [];
+        return [];
         }
-    }
+        }
+
+
+
+    // public function helicopterviewcommon($curid = '', $type = '')
+    // {
+    //     $curYear = date('Y');
+    //     $sql = "SELECT
+    //         td.transaction_id,
+    //         t.Year,
+    //         t.Quarter,
+    //         t.amountinFC,
+    //         AVG(frcw.contracted_Rate) AS contracted_Rate,
+    //         SUM(frcw.amount_FC) AS amount_FC,
+    //         AVG(td.spot_rate) AS spot_rate,
+    //         AVG(td.targetRate) AS targetRate,
+    //         CASE t.Quarter
+    //             WHEN 1 THEN 'Q4'
+    //             WHEN 2 THEN 'Q1'
+    //             WHEN 3 THEN 'Q2'
+    //             WHEN 4 THEN 'Q3'
+    //         END AS quarter_name,
+    //         CASE
+    //             WHEN td.inr_target_value > 0 THEN AVG(td.targetRate * td.inr_target_value)
+    //             WHEN td.inr_target_value <= 0 THEN AVG(td.targetRate)
+    //         END AS calculated_targetRate
+    //     FROM
+    //         transactiondetails AS td
+    //     INNER JOIN
+    //         forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
+    //     INNER JOIN (
+    //         SELECT
+    //             transaction_id,
+    //             YEAR(dueDate) AS Year,
+    //             QUARTER(dueDate) AS Quarter,
+    //             SUM(amountinFC) AS amountinFC
+    //         FROM
+    //             transactiondetails
+    //         WHERE
+    //             YEAR(dueDate) = '$curYear'
+    //             AND currency = '$curid'
+    //             AND exposureType = '$type'
+    //         GROUP BY
+    //             transaction_id, Year, Quarter
+    //     ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter
+    //     GROUP BY
+    //         td.transaction_id, t.Year, t.Quarter, t.amountinFC;";        
+    //     $query = $this->db->query($sql);
+    //     if ($query && $query->getNumRows() > 0) {
+    //         $result = $query->getResultArray();
+    //         return $result;
+    //     } else {
+    //         return [];
+    //     }
+    // }
     
 
     // public function helicopterviewcommon($curid = '', $type = '')

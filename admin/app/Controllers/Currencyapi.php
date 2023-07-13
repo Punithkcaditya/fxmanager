@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
+use Config\Database;
 use CodeIgniter\RESTful\ResourceController;
 use App\Controllers\BaseController;
 use App\Models\TransactionModel as Transaction_Model;
@@ -551,10 +552,9 @@ class Currencyapi extends BaseController
 
         public function currencyperformance(){
             $check = $this->testauthUser();
-        echo '<pre>';
-        print_r($check);
-        exit;
             if ($check) {
+                $this->db = Database::connect();
+                $this->db->setDatabase($check);
             $jsonResponse = json_encode([
                 "status" => 1,
                 "Today" => [
@@ -588,7 +588,7 @@ class Currencyapi extends BaseController
             $this->response
                 ->setHeader('Content-Type', 'application/json')
                 ->setStatusCode(200);
-    
+                $this->db->close();
             // Send the JSON response
             return $this->respond($jsonResponse);
         }else {
@@ -657,17 +657,21 @@ class Currencyapi extends BaseController
 
     public function testauthUser()
     {
-       
+        
         $secondDB = \Config\Database::connect('second_db');
         $data = array();
         $response = array();
     //   return $this->respond($header_values['Auth-Token']);
             $token = $_GET['token'];
             if (!empty($token)) {
-                $data['user_data'] = $secondDB->table('users')->where('login_token', $token)->get()
+                $data['user_data'] = $secondDB->table('users')->select('fx_db')->where('login_token', $token)->get()
                 ->getRow();
-                return $data['user_data'];
-                $secondDB->close();
+                if(!empty($data['user_data'])){
+                    return $data['user_data']->fx_db;
+                    $secondDB->close();
+                }else {
+                    return false;
+                }
                 if (!empty($data['user_data'])) {
                     $this->session->set($data);
                     return true;

@@ -58,6 +58,7 @@ class Exposuresummary extends BaseController
             return redirect()->to("adminlogout");
         }
         $data["transactiontabs"] = $this->transaction_model->tabsarrangement($curid);
+      
         $data["transactiontabsexport"] = $this->transaction_model->tabsarrangementforexport($curid);
         $pot = json_decode(json_encode($session->get("userdata")), true);
         if (empty($pot)) {
@@ -95,6 +96,7 @@ class Exposuresummary extends BaseController
 		}
 		$data_by_month_export[$month][] = $transactionexport;
 		}
+     
 		$data['databymonthexport'] = $data_by_month_export;
 		$data['databymonth'] = $data_by_month;
          $data['title'] = isset($_GET['currency']) ? 'FX Exposure Summary as on '.date('d-M-y') : 'Select Currency To View FX Exposure Summary';

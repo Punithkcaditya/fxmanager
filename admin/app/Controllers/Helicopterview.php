@@ -83,15 +83,15 @@ public function __construct()
 	$helicopterArrayimport = $this->groupByQuarter($helicoptertabsimport);
 	$data["helicoptertabs"] = $this->convertArrayByQuarter($helicopterArrayimport);
 
-	// $helicoptertabsexport = $this->transaction_model->helicopterviewcommonold($curid, 1);
+	// $helicoptertabsexport = $this->transaction_model->helicopterviewcommon1($curid, 1);
 	// echo '<pre>';
 	// print_r($helicoptertabsexport);
 	// exit;
 	$helicoptertabsexport = $this->transaction_model->helicopterviewcommon($curid, 1);
 	$helicopterArrayexport  = $this->groupByQuarter($helicoptertabsexport);
 	$data["helicoptertabsexport"]   = $this->convertArrayByQuarter($helicopterArrayexport);
-
-
+	
+	
 		
 	$helicoptertabsbuyersCredit = $this->transaction_model->helicopterviewcommon($curid, 3);
 	$helicopterArraybuyersCredit  = $this->groupByQuarter($helicoptertabsbuyersCredit);
@@ -147,9 +147,9 @@ public function __construct()
 			$quarter = $item['Quarter'];
 			$totalAmountinFC = number_format($item['TotalAmountinFC'], 2, '.', '');
 			$totalContractedRate = number_format($item['TotalContractedRate'], 8, '.', '');
+			$totalCalculatedTargetRate = number_format($item['TotalCalculatedTargetRate'], 4, '.', '');
 			$totalAmountFC = number_format($item['TotalAmountFC'], 4, '.', '');
 			$totalSpotRate = number_format($item['TotalSpotRate'], 8, '.', '');
-			$totalCalculatedTargetRate = number_format($item['TotalCalculatedTargetRate'], 4, '.', '');
 			$targetRate = number_format($item['TargetRate'], 8, '.', '');
 			
 			$outputArray[1][$quarter] = "{$totalAmountinFC},{$totalContractedRate},{$totalCalculatedTargetRate},{$totalAmountFC},{$totalSpotRate},{$targetRate}";
@@ -215,9 +215,9 @@ public function groupByQuarter($inputArray) {
         
         $resultArray[$quarter]['TotalAmountinFC'] += (float) $subArray['amountinFC'];
         $resultArray[$quarter]['TotalContractedRate'] += (float) $subArray['contracted_Rate'];
+        $resultArray[$quarter]['TotalCalculatedTargetRate'] += (float) $subArray['calculated_targetRate'];
         $resultArray[$quarter]['TotalAmountFC'] += (float) $subArray['amount_FC'];
         $resultArray[$quarter]['TotalSpotRate'] += (float) $subArray['spot_rate'];
-        $resultArray[$quarter]['TotalCalculatedTargetRate'] += (float) $subArray['calculated_targetRate'];
 		$resultArray[$quarter]['TargetRate'] += (float) $subArray['targetRate'];
 
     }
