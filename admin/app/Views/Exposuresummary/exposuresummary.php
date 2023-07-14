@@ -107,9 +107,9 @@ $perctcoveredexpt[$i][$j] = 0;
 <tbody>
 	<tr>
 		<td>Forward sales</td>
-		<td><?php echo $allmonthtotalsexpt["totalToatalforwardAmountexpt"] ?></td>
+		<td><?php echo number_format($allmonthtotalsexpt["totalToatalforwardAmountexpt"], 2, '.', ',') ?></td>
 		<?php if(!empty($totalsexpt)){ foreach ($totalsexpt as $k => $v) { ?>
-			<td><?php echo $v[0]; ?></td>
+			<td><?php echo number_format($v[0], 2, '.', ','); ?></td>
 		<?php }}else{ ?>
 			<td>No Record Found</td>
 		<?php } ?>
@@ -125,9 +125,9 @@ $perctcoveredexpt[$i][$j] = 0;
 	</tr>
 	<tr>
 		<td>Underlying Exposures</td>
-		<td><?php echo $allmonthtotalsexpt['totalUnderlyingExposuresexpt']; ?></td>
+		<td><?php echo number_format($allmonthtotalsexpt['totalUnderlyingExposuresexpt'], 2, '.', ','); ?></td>
 		<?php if(!empty($exposuresexpt)){ foreach ($exposuresexpt as $k => $v) { ?>
-			<td><?php echo $v[0]; ?></td>
+			<td><?php echo number_format($v[0], 2, '.', ','); ?></td>
 		<?php }}else{ ?>
 			<td>No Record Found</td>
 		<?php } ?>
@@ -135,9 +135,9 @@ $perctcoveredexpt[$i][$j] = 0;
 
 	<tr>
 		<td>% covered</td>
-		<td><?php echo (!empty($allmonthtotalsexpt['totalToatalforwardAmountexpt']) && $allmonthtotalsexpt['totalToatalforwardAmountexpt'] != 0 ? number_format(($allmonthtotalsexpt['totalToatalforwardAmountexpt'] / $allmonthtotalsexpt['totalUnderlyingExposuresexpt']) * 100, 4) : 0); ?></td>
+		<td><?php echo (!empty($allmonthtotalsexpt['totalToatalforwardAmountexpt']) && $allmonthtotalsexpt['totalToatalforwardAmountexpt'] != 0 ? number_format(($allmonthtotalsexpt['totalToatalforwardAmountexpt'] / $allmonthtotalsexpt['totalUnderlyingExposuresexpt']) * 100, 4, '.', ',') : 0); ?></td>
 		<?php if(!empty($perctcoveredexpt)){ foreach ($perctcoveredexpt as $k => $v) { ?>
-			<td><?php echo number_format($v[0], 4); ?></td>
+			<td><?php echo number_format($v[0], 4, '.', ','); ?></td>
 		<?php }}else{ ?>
 			<td>No Record Found</td>
 		<?php } ?>
@@ -224,10 +224,10 @@ echo "<div class='table-responsive'>";
 		
 
 		echo "<tbody><tr><td>Forward purchases</td>";
-		echo "<td>".$allmonthtotals['totalToatalforwardAmount']."</td>";
+		echo "<td>". number_format($allmonthtotals['totalToatalforwardAmount'], 2, '.', ',')."</td>";
 		if(!empty($totals)){
 		foreach ($totals as $k => $v) {
-		echo "<td>".$v[0]."</td>";
+		echo "<td>". number_format($v[0], 2, '.', ',')."</td>";
 		}}else{
 		echo "<td>No Record Found</td>";	
 		}
@@ -242,60 +242,60 @@ echo "<div class='table-responsive'>";
 		}
 		echo "</tr>";
 		echo "<tr><td>Underlying Exposures</td>";
-		echo "<td>".$allmonthtotals['totalUnderlyingExposures']."</td>";
+		echo "<td>". number_format($allmonthtotals['totalUnderlyingExposures'], 2, '.', ',')."</td>";
 		if(!empty($exposures)){
 		foreach ($exposures as $k => $v) {
-		echo "<td>".$v[0]."</td>";
+		echo "<td>". number_format($v[0], 2, '.', ',') ."</td>";
 		}}else{
 		echo "<td>No Record Found</td>";	
 		}
 		echo "</tr>";
 
 		echo "<tr><td> --- Imports</td>";
-		echo "<td>".$allmonthtotals['totalImports']."</td>";
+		echo "<td>". number_format($allmonthtotals['totalImports'], 2, '.', ',') ."</td>";
 		if(!empty($imports)){
 		foreach ($imports as $k => $v) {
-		echo "<td>".$v[0]."</td>";
+		echo "<td>". number_format($v[0], 2, '.', ',') ."</td>";
 		}}else{
 			echo "<td>No Record Found</td>";
 		}
 		echo "</tr>";
 		
 		echo "<tr><td>   --- Buyers' Credit</td>";
-		echo "<td>".$allmonthtotals['totalBuyersCredit']."</td>";
+		echo "<td>". number_format($allmonthtotals['totalBuyersCredit'], 2, '.', ',') ."</td>";
 		if(!empty($buyerscredit)){
 		foreach ($buyerscredit as $k => $v) {
-		echo "<td>".$v[0]."</td>";
+		echo "<td>". number_format($v[0], 2, '.', ',') ."</td>";
 		}}else{
 			echo "<td>No Record Found</td>";
 		}
 		echo "</tr>";
 		
 		echo "<tr><td>-- Other Payments</td>";
-		echo "<td>".$allmonthtotals['totalOtherPayments']."</td>";
+		echo "<td>". number_format($allmonthtotals['totalOtherPayments'], 2, '.', ',') ."</td>";
 		if(!empty($otherpayments)){
 		foreach ($otherpayments as $k => $v) {
-		echo "<td>".$v[0]."</td>";
+		echo "<td>". number_format($v[0], 2, '.', ',') ."</td>";
 		}}else{
 		echo "<td>No Record Found</td>";	
 		}
 		echo "</tr>";
 		
 		echo "<tr><td>   --- Capital Payments</td>";
-		echo "<td>".$allmonthtotals['totalCapitalPayments']."</td>";
+		echo "<td>". number_format($allmonthtotals['totalCapitalPayments'] , 2, '.', ',')."</td>";
 		if(!empty($capitalpayments)){
 		foreach ($capitalpayments as $k => $v) {
-		echo "<td>".$v[0]."</td>";
+		echo "<td>". number_format($v[0], 2, '.', ',') ."</td>";
 		}}else{
 		echo "<td>No Record Found</td>";	
 		}
 		echo "</tr>";
 		
 		echo "<tr><td>% covered</td>";
-		echo "<td>".(!empty($allmonthtotals['totalToatalforwardAmount']) && $allmonthtotals['totalToatalforwardAmount'] != 0 ? number_format(($allmonthtotals['totalToatalforwardAmount'] / $allmonthtotals['totalUnderlyingExposures']) * 100, 4) : 0) ."</td>";
+		echo "<td>".(!empty($allmonthtotals['totalToatalforwardAmount']) && $allmonthtotals['totalToatalforwardAmount'] != 0 ? number_format(($allmonthtotals['totalToatalforwardAmount'] / $allmonthtotals['totalUnderlyingExposures']) * 100, 4, '.', ',') : 0.00) ."</td>";
 		if(!empty($perctcovered)){
 		foreach ($perctcovered as $k => $v) {
-		echo "<td>".number_format($v[0], 4)."</td>";
+		echo "<td>".number_format($v[0], 4, '.', ',')."</td>";
 		}}else{
 		echo "<td>No Record Found</td>";	
 		}

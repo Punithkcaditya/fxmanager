@@ -146,6 +146,7 @@ class Index extends BaseController
         $data["session"] = $session;
         $data["breadcrumb"] = "Admindashboard";
         $data["menuslinks"] = $this->request->uri->getSegment(1);
+        $data["active"] = '1';
         $data['view'] = 'admin/dashboard';
         return view('templates/default', $data);
     }
