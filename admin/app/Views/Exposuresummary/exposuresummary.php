@@ -27,16 +27,16 @@
 	</select>
 	</div>
 	</div>
-	<div class="col-md-3  d-sm-none">
+	<div class="col-md-3">
 	<label class="form-label"></label>
 	<div class="form-group mt-3">
-		<!-- <label class="form-label card-title">spot ref.</label> -->
+	<label><strong>Spot Rate :</strong></label>
+	<span><?php echo isset($spotrateExport) ? $spotrateExport : 1 ; ?><span>/</span><?php echo isset($spotrateImport) ? $spotrateImport : 1 ;?></span>
 	</div>
 	</div>
 	<div class="col-md-3 d-sm-none">
 	<label class="form-label"></label>
 	<div class="form-group mt-3">
-		<!-- <label class="form-label card-title">76.7000</label> -->
 	</div>
 	</div>
 

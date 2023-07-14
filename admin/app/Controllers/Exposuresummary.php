@@ -57,6 +57,19 @@ class Exposuresummary extends BaseController
         if (!isset($curren['Currency'])) {
             return redirect()->to("adminlogout");
         }
+        $spotrates = $this->adminSpotrates($curren['Currency']);
+        $jsondataspotrates = $this->json_validator($spotrates);
+        if($jsondataspotrates){
+            $decodedspotrates = json_decode($spotrates, true);
+        if(!empty($decodedspotrates)){
+            $length = count($decodedspotrates['data']);
+            if($length == 2){
+                $data['spotrateExport'] = $decodedspotrates['data']['2']['B'];
+                $data['spotrateImport'] = $decodedspotrates['data']['3']['B'];
+            }
+        }
+        }
+
         $data["transactiontabs"] = $this->transaction_model->tabsarrangement($curid);
       
         $data["transactiontabsexport"] = $this->transaction_model->tabsarrangementforexport($curid);
@@ -110,4 +123,43 @@ class Exposuresummary extends BaseController
         return view('templates/default', $data);
 	}
 
+    
+    function json_validator($data) {
+        if (!empty($data)) {
+            return is_string($data) && 
+              is_array(json_decode($data, true)) ? true : false;
+        }
+        return false;
+    }
+
+
+
+public function adminSpotrates($curren = ''){
+
+    try {
+        $query_params = http_build_query(array(
+            "type" => $curren,
+        ));
+        $url = 'https://fxmanagers.in/ajax/adminSpotrate?' . $query_params;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HTTPGET => true,
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+    } catch (Exception $e) {
+        return '';
+        // Handle the exception
+    }
 }
+
+}
+

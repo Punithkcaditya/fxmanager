@@ -202,11 +202,11 @@ public function __construct()
 		foreach ($inputArray as $item) {
 			$quarter = $item['Quarter'];
 			$totalAmountinFC = number_format($item['TotalAmountinFC'], 2, '.', '');
-			$totalContractedRate = number_format($item['TotalContractedRate'], 8, '.', '');
-			$totalCalculatedTargetRate = number_format($item['TotalCalculatedTargetRate'], 4, '.', '');
-			$totalAmountFC = number_format($item['TotalAmountFC'], 4, '.', '');
-			$totalSpotRate = number_format($item['TotalSpotRate'], 8, '.', '');
-			$targetRate = number_format($item['TargetRate'], 8, '.', '');
+			$totalContractedRate = number_format($item['TotalContractedRate'], 2, '.', '');
+			$totalCalculatedTargetRate = number_format($item['TotalCalculatedTargetRate'], 2, '.', '');
+			$totalAmountFC = number_format($item['TotalAmountFC'], 2, '.', '');
+			$totalSpotRate = number_format($item['TotalSpotRate'], 2, '.', '');
+			$targetRate = number_format($item['TargetRate'], 2, '.', '');
 			
 			$outputArray[1][$quarter] = "{$totalAmountinFC},{$totalContractedRate},{$totalCalculatedTargetRate},{$totalAmountFC},{$totalSpotRate},{$targetRate}";
 		}

@@ -454,16 +454,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_1);
 
 	echo "<tr>";	
-	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format($gainloss_1, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
+	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $gainloss_1  : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[3] : 0;
@@ -473,16 +473,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_2);
 
 	echo "<tr>";
-	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[0], 2, '.', ',') : "-") . "</td>
-	<td>" . ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2]), 2, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format($gainloss_2, 2, '.', ',') : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
+	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $gainloss_2 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[3] : 0;
@@ -492,16 +492,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_3);
 
 	echo "<tr>";	
-	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format($gainloss_3, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
+	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ?  number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4): "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4): "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $gainloss_3  : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[3] : 0;
@@ -511,16 +511,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_4);
 
 	echo "<tr>";	
-	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format($gainloss_4, 2, '.', ',')  : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
+	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4): "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $gainloss_4 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 	}if (count($helicoptertabs) <= 0) :
 			echo "<tr>";
@@ -683,16 +683,16 @@ class="form-control" required>
 	
 	
 	echo "<tr>";	
-	echo "<td>Buyers Credit</td><td>" . number_format($exports_sum, 2, '.', ',')  . "</td>
-	<td>" . number_format($targetvalue_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($targetrate_sum, 4, '.', ',') . "</td><td>"
-	. number_format($hedgedperctage_sum, 4, '.', ',')  . "</td><td>"
-	. number_format($hedged_amount_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($hedged_sum, 4, '.', ',')  . "</td><td>"
-	. number_format($openamountfc_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($importspotrate, 2, '.', ',')  . "</td><td>"
-	. number_format($gainloss_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($potential_portfolio_sum, 2, '.', ',')  . "</td>";
+	echo "<td>Buyers Credit</td><td>" . $exports_sum  . "</td>
+	<td>" . $targetvalue_sum  . "</td><td>"
+	. number_format($targetrate_sum, 4)  . "</td><td>"
+	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
+	. number_format($hedged_sum, 4)  . "</td><td>"
+	. $openamountfc_sum  . "</td><td>"
+	. $importspotrate . "</td><td>"
+	. $gainloss_sum  . "</td><td>"
+	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[3] : 0;
@@ -702,16 +702,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_1);
 
 	echo "<tr>";	
-	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format($gainloss_1, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
+	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4): "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $gainloss_1 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[3] : 0;
@@ -721,16 +721,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_2);
 
 	echo "<tr>";
-	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[0], 2, '.', ',') : "-") . "</td>
-	<td>" . ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2]), 2, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format($gainloss_2, 2, '.', ',') : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
+	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $gainloss_2  : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[3] : 0;
@@ -740,16 +740,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_3);
 
 	echo "<tr>";	
-	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format($gainloss_3, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
+	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $gainloss_3 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[3] : 0;
@@ -759,16 +759,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_4);
 
 	echo "<tr>";	
-	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format($gainloss_4, 2, '.', ',')  : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
+	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4): "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $gainloss_4 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 	}if (count($helicoptertabsbuyersCredit) <= 0) :
 				echo "<tr>";
@@ -931,16 +931,16 @@ class="form-control" required>
 	
 	
 	echo "<tr>";	
-	echo "<td>Capital Payments</td><td>" . number_format($exports_sum, 2, '.', ',')  . "</td>
-	<td>" . number_format($targetvalue_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($targetrate_sum, 4, '.', ',') . "</td><td>"
-	. number_format($hedgedperctage_sum, 4, '.', ',')  . "</td><td>"
-	. number_format($hedged_amount_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($hedged_sum, 4, '.', ',')  . "</td><td>"
-	. number_format($openamountfc_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($importspotrate, 2, '.', ',')  . "</td><td>"
-	. number_format($gainloss_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($potential_portfolio_sum, 2, '.', ',')  . "</td>";
+	echo "<td>Capital Payments</td><td>" . $exports_sum  . "</td>
+	<td>" . $targetvalue_sum  . "</td><td>"
+	. number_format($targetrate_sum, 4) . "</td><td>"
+	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
+	. number_format($hedged_sum, 4) . "</td><td>"
+	. $openamountfc_sum  . "</td><td>"
+	. $importspotrate . "</td><td>"
+	. $gainloss_sum  . "</td><td>"
+	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[3] : 0;
@@ -950,16 +950,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_1);
 
 	echo "<tr>";	
-	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format($gainloss_1, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
+	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $gainloss_1 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[3] : 0;
@@ -969,16 +969,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_2);
 
 	echo "<tr>";
-	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[0], 2, '.', ',') : "-") . "</td>
-	<td>" . ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2]), 2, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format($gainloss_2, 2, '.', ',') : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
+	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $gainloss_2 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[3] : 0;
@@ -988,16 +988,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_3);
 
 	echo "<tr>";	
-	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format($gainloss_3, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
+	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4): "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $gainloss_3 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[3] : 0;
@@ -1007,16 +1007,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_4);
 
 	echo "<tr>";	
-	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format($gainloss_4, 2, '.', ',')  : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
+	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4): "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $gainloss_4  : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 	}if (count($helicoptertabscapitalpaymnts) <= 0) :
 			echo "<tr>";
@@ -1177,16 +1177,16 @@ class="form-control" required>
 	
 	
 	echo "<tr>";	
-	echo "<td>Misc</td><td>" . number_format($exports_sum, 2, '.', ',')   . "</td>
-	<td>" . number_format($targetvalue_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($targetrate_sum, 4, '.', ',') . "</td><td>"
-	. number_format($hedgedperctage_sum, 4, '.', ',')  . "</td><td>"
-	. number_format($hedged_amount_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($hedged_sum, 4, '.', ',')  . "</td><td>"
-	. number_format($openamountfc_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($importspotrate, 2, '.', ',')  . "</td><td>"
-	. number_format($gainloss_sum, 2, '.', ',')  . "</td><td>"
-	. number_format($potential_portfolio_sum, 2, '.', ',')  . "</td>";
+	echo "<td>Misc</td><td>" . $exports_sum  . "</td>
+	<td>" . $targetvalue_sum  . "</td><td>"
+	. number_format($targetrate_sum, 4)  . "</td><td>"
+	. $hedged_amount_sum  . "</td><td>"
+	. number_format($hedged_sum, 4) . "</td><td>"
+	. number_format($hedgedperctage_sum, 4)  . "</td><td>"
+	. $openamountfc_sum  . "</td><td>"
+	. $importspotrate  . "</td><td>"
+	. $gainloss_sum  . "</td><td>"
+	. $potential_portfolio_sum  . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q1"] != "" ? explode(",", $value["Q1"])[3] : 0;
@@ -1196,16 +1196,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_1);
 
 	echo "<tr>";	
-	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q1"] != "" ? number_format($gainloss_1, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q1</td><td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] : "-")  . "</td>
+	<td>" . ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] * explode(",", $value["Q1"])[2] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format((explode(",", $value["Q1"])[3] / explode(",", $value["Q1"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? number_format(explode(",", $value["Q1"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? explode(",", $value["Q1"])[0] - explode(",", $value["Q1"])[3] : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q1"] != "" ? $gainloss_1 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q2"] != "" ? explode(",", $value["Q2"])[3] : 0;
@@ -1215,16 +1215,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_2);
 
 	echo "<tr>";
-	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[0], 2, '.', ',') : "-") . "</td>
-	<td>" . ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2]), 2, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q2"] != "" ? number_format($gainloss_2, 2, '.', ',') : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q2</td><td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] : "-")  . "</td>
+	<td>" . ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] * explode(",", $value["Q2"])[2] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format((explode(",", $value["Q2"])[3] / explode(",", $value["Q2"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? number_format(explode(",", $value["Q2"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? explode(",", $value["Q2"])[0] - explode(",", $value["Q2"])[3] : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q2"] != "" ? $gainloss_2 : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q3"] != "" ? explode(",", $value["Q3"])[3] : 0;
@@ -1234,16 +1234,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_3);
 
 	echo "<tr>";	
-	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4, '.', ',')  : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q3"] != "" ? number_format($gainloss_3, 2, '.', ',')   : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q3</td><td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] : "-")  . "</td>
+	<td>" . ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] * explode(",", $value["Q3"])[2] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format((explode(",", $value["Q3"])[3] / explode(",", $value["Q3"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? number_format(explode(",", $value["Q3"])[1], 4): "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? explode(",", $value["Q3"])[0] - explode(",", $value["Q3"])[3] : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q3"] != "" ? $gainloss_3  : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 
 	$hedgedpositionamount = $value["Q4"] != "" ? explode(",", $value["Q4"])[3] : 0;
@@ -1253,16 +1253,16 @@ class="form-control" required>
 	$potential_portfolio = ($hedgedpositionamount * $hedgedpositionrate) + ($openpositionamount * $mtmrate_4);
 
 	echo "<tr>";	
-	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[0], 2, '.', ',') : "-")  . "</td>
-	<td>" . ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[3], 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3]), 2, '.', ',') : "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? $importspotrate: "-")  . "</td><td>"
-	. ($value["Q4"] != "" ? number_format($gainloss_4, 2, '.', ',')  : "-")  . "</td><td>"
-	.  number_format($potential_portfolio, 2, '.', ',') . "</td>";
+	echo "<td>Q4</td><td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] : "-")  . "</td>
+	<td>" . ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] * explode(",", $value["Q4"])[2] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[5], 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format((explode(",", $value["Q4"])[3] / explode(",", $value["Q4"])[0])*100, 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? number_format(explode(",", $value["Q4"])[1], 4) : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? explode(",", $value["Q4"])[0] - explode(",", $value["Q4"])[3] : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $importspotrate : "-")  . "</td><td>"
+	. ($value["Q4"] != "" ? $gainloss_4  : "-")  . "</td><td>"
+	.  $potential_portfolio . "</td>";
 	echo "</tr>";
 	}if (count($helicoptertabsbuyersmisc) <= 0) :
 				echo "<tr>";
