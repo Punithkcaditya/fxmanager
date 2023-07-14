@@ -125,7 +125,7 @@
 						
 						<div class="form-group">
 						<label class="form-label"><?php echo $pade_title18 ?></label>
-						<input id="spotAmountrate<?php echo  $i?>" type="number" name="spotAmountrate" step=".0001" placeholder="Rate" class="form-control" required="">
+						<input id="spotAmountrate<?php echo  $i?>" type="number" name="spotAmountrate" oninput="validatedigit(this)" step=".0001" placeholder="Rate" class="form-control" required="">
 						</div>
 							</div>
 						</div>
@@ -271,6 +271,7 @@ $(function(e) {
 			$("#amountfc1").prop("disabled", true);
 			$("#value_INR1").prop("disabled", true);
 			$("#target_Value1").prop("disabled", true);
+			$("#spotAmount1").prop("disabled", true);
 		 },
 			error: function(xhr, status, error) {
 				// Handle the error

@@ -200,7 +200,7 @@ class Transactiondetails extends BaseController
                     $covertype = !empty($cover_type) && $cover_type == 1 ? 1 : 2;
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
-                      CURLOPT_URL => 'https://www.phillipforex.in/ajax/ajaxbroken',
+                      CURLOPT_URL => 'https://www.fxmanagers.in/ajax/ajaxbroken',
                       CURLOPT_RETURNTRANSFER => true,
                       CURLOPT_ENCODING => '',
                       CURLOPT_MAXREDIRS => 10,

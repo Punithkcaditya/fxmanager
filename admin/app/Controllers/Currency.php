@@ -49,6 +49,7 @@ class Currency extends BaseController
         $data["session"] = $session;
         $data["title"] = "Currency Details";
 		$data["page_title"] = "Currency Details";
+        $currencies = array();
         $data["currency"] = $this->currency_model->orderBy('currency_id', 'DESC')->findAll();
         $data["page_heading"] = "Add New Currency";
         $data["request"] = $this->request;
@@ -78,9 +79,14 @@ class Currency extends BaseController
         if (empty($pot)) {
             return redirect()->to("/");
         }
+        $data["currency"] = $this->currency_model->orderBy('currency_id', 'DESC')->findAll();
+        foreach ($data["currency"] as $currency) {
+            $currencies[] = $currency['Currency'];
+        }
+        $data["arraycurrency"] = $currencies;
         $data['session'] = $session;
         $data['title'] = 'Add Currency Details';
-        $data['pade_title1'] = 'Enter Currency';
+        $data['pade_title1'] = 'Select Currency';
         $data['pade_title2'] = 'Currency Symbol';
         $data['pade_title3'] = 'Choose Currency Status';
         $data['pade_title4'] = 'Enter Sort Order';
@@ -112,6 +118,14 @@ class Currency extends BaseController
      
         if (!empty($currency_hid_id))
         {
+            $checkCurrency = $this->currency_model
+            ->where("Currency", $currencyName)
+            ->where("currency_id !=", $currency_hid_id)
+            ->countAllResults();
+            if ($checkCurrency > 0) {
+            $this->session->setFlashdata("error","Currency Already Present.");
+            return redirect()->to("currencylist");
+            }
             $update =  $this->currency_model->where('currency_id', $currency_hid_id)->set($data)->update();
             if ($update) {
                 $session->setFlashdata("success","Updated Successfully");
@@ -120,6 +134,13 @@ class Currency extends BaseController
             }
             return redirect()->to("currencylist");
         }else{
+            $checkCurrency = $this->currency_model
+            ->where("Currency", $currencyName)
+            ->countAllResults();
+            if ($checkCurrency > 0) {
+            $this->session->setFlashdata("error","Currency Already Present.");
+            return redirect()->to("currencylist");
+            }
             $save =  $this->currency_model->save($data);
             if ($save) {
                 $session->setFlashdata("success","Saved Successfully");

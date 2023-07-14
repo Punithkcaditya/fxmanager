@@ -93,7 +93,13 @@ class MtmOperatingrisk extends BaseController
 
 
  
-  
+    public function json_validator($data) {
+        if (!empty($data)) {
+            return is_string($data) && 
+              is_array(json_decode($data, true)) ? true : false;
+        }
+        return false;
+    }
 
     public function forrwardCalculator($cover_type , $currency , $forward_date )
     {

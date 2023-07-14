@@ -336,6 +336,21 @@ closeButtons.forEach(function(button) {
 });
 
 
+var validatedigit = function(e) {
+    var value = e.value;
+    var decimalIndex = value.indexOf(".");
+    
+    if (decimalIndex !== -1) {
+        var decimalDigits = value.substr(decimalIndex + 1);
+        
+        if (decimalDigits.length > 4) {
+            e.value = value.substr(0, decimalIndex + 5);
+        }
+    }
+}
+
+
+
     //     (function() {
     //     $( "select[name='city']" ).change(function () {
     //         var stateID = $(this).val();

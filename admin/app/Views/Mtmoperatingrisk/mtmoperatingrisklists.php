@@ -65,8 +65,12 @@
 						<tbody>
 							<?php foreach ($transaction as $row) : 
 								$dueDate = $row->dueDate;
-								$resoval = $controller->forrwardCalculator($row->exposureType, $row->currency, $dueDate);
-								$crntfrrate = json_decode($resoval);
+								$resovaloriginal = $controller->forrwardCalculator($row->exposureType, $row->currency, $dueDate);
+								$crntfrrate = json_decode($resovaloriginal);
+								// $resoval = $controller->json_validator($resovaloriginal);
+								// if($resoval){
+								// 	$crntfrrate = json_decode($resoval);
+								// }
 								$exp_ref = $row->exposurereInfo;
 								$curr = $row->Currency;
 								$exp_idt = $row->exposureidentificationdate;

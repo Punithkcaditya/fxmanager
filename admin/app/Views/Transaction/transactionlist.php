@@ -9,7 +9,7 @@
 	<div class="col-md-12">
 		<div class="card shadow">
 			<div class="card-header">
-				<h2 class="mb-0">Add New User</h2>
+				<h2 class="mb-0">Add New Transaction</h2>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">

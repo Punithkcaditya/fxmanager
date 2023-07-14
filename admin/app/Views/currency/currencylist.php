@@ -33,9 +33,6 @@
 															<th><?php echo  $i++ ?></th>
 															<td><?php echo  $sid['Currency']  ?></td>
 															<td>
-
-																<a href="<?php echo  base_url($edit_currency.'/' . $sid['currency_id'] ) ?>" class="mx-2 text-decoration-none text-primary"><i class="fa fa-edit"></i></a>
-
 																<a href="<?php echo  base_url($delete_currency.'/' .  $sid['currency_id'] ) ?>" class="mx-2 text-decoration-none text-danger" onclick="if(confirm('Are you sure to delete  - <?php echo  $sid['Currency']  ?> from list?') !== true) event.preventDefault()"><i class="fa fa-trash"></i></a>
 															</td>
 														</tr>

@@ -40,7 +40,7 @@
 
 <!-- Contracted rate Start -->
 <div class="form-group"><label class="form-label"><?php echo $pade_title11 ?></label>
-<input id="contractedrate" type="number" name="contractedrate[]" min='0' value='0' step='.0001' placeholder="Contracted Rate" class="form-control"  required/>
+<input id="contractedrate" type="number" name="contractedrate[]" min='0' value='0' step='.0001' oninput="validatedigit(this)" placeholder="Contracted Rate" class="form-control"  required/>
 </div>
 <!-- Contracted rate End -->
 
@@ -63,7 +63,7 @@
 
 <!-- Currency Bought Start -->
 <div class="form-group"><label class="form-label"><?php echo $pade_title2 ?></label>
-<input class="form-control" type="text" placeholder="Currency Bought" name="currencybought[]" id="currencybought<?php echo $i?>" readonly required/>
+<input class="form-control" type="text" placeholder="Currency Bought" name="currencybought[]"  id="currencybought<?php echo $i?>" readonly required/>
 </div>
 
 <!-- Currency Bought End -->
@@ -175,7 +175,7 @@ $('#count_items').val(++counter);
 document.getElementById("count_items").value = counter;
 count=$('#plansec tr').length;
 var data="<tr class='mobcheck'><td><input type='checkbox' class='case'/></td>";
-data += "<td><label class='form-label'>Underlying Exposure Ref.</label><div class='form-group'><select class='form-control select2 refno"+i+" w-100' name='refno[]' id='refno"+i+"' data-currencytype='"+i+"'> <option>Select Underlying Exposure Ref No.</option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['transaction_id']) ? 'selected' : '' ?>><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Forward/ Option</label><div class='form-group'><select name='fordwardoption[]' id='fordwardoption"+i+"' class='form-control' required><option value=''>Choose type</option><option value='Forward'>Forward</option><option value='Option'>Option</option></select></div><label class='form-label'>Contracted rate</label><input id='contractedrate"+i+"' type='number' name='contractedrate[]' min='0' value='0' step='.0001' placeholder='Contracted Rate' class='form-control' required=''></div></td>";
+data += "<td><label class='form-label'>Underlying Exposure Ref.</label><div class='form-group'><select class='form-control select2 refno"+i+" w-100' name='refno[]' id='refno"+i+"' data-currencytype='"+i+"'> <option>Select Underlying Exposure Ref No.</option> <?php foreach ($exposuretype as $row) : ?> <option value='<?php echo $row['transaction_id'] ?>' <?php echo (!empty($query[0]->role_id) && $query[0]->role_id == $row['transaction_id']) ? 'selected' : '' ?>><?php echo $row['exposurereInfo'] ?></option> <?php endforeach; ?> </select></div><label class='form-label'>Forward/ Option</label><div class='form-group'><select name='fordwardoption[]' id='fordwardoption"+i+"' class='form-control' required><option value=''>Choose type</option><option value='Forward'>Forward</option><option value='Option'>Option</option></select></div><label class='form-label'>Contracted rate</label><input id='contractedrate"+i+"' type='number' name='contractedrate[]' oninput='validatedigit(this)' min='0' value='0' step='.0001' placeholder='Contracted Rate' class='form-control' required=''></div></td>";
 data += "<td><label class='form-label mt-2'>Choose Bank</label><div class='form-group'><select name='bank[]' id='bank"+i+"' class='form-control' required> <option value=''>-- Choose Bank -- </option> <?php foreach ($bank as $row): ?> <option value='<?php echo $row['bank_id'] ?>'><?php echo $row['bank_name'] ?></option> <?php endforeach;?> </select> </div><label class='form-label'>Currency Bought</label><div class='form-group'><input class='form-control' type='text' placeholder='Currency Bought' name='currencybought[]' id='currencybought"+i+"' readonly required/></div><label class='form-label'>Expiry Date</label><div class='form-group'><div class='form-group'><input id='expirydate"+i+"' name='expirydate[]' class='form-control datepicker'  type='text' placeholder='MM/DD/YYYY' required/></div></td>";
 data += "<td><div class='form-group'><label class='form-label'>Deal No</label><input id='dealno"+i+"' type='text' name='dealno[]' placeholder='Deal No' class='form-control' required=''></div><div class='form-group'><label class='form-label'>Currency Sold</label><input class='form-control' type='text' placeholder='Currency Sold' name='currencysold[]' id='currencysold"+i+"' readonly required/> </div><div class='heighsvnrem'></div></td>";
 data += "<td><div class='form-group'><label class='form-label'>Deal Date</label><input id='dealdate"+i+"' name='dealdate[]' placeholder='MM/DD/YYYY' class='form-control datepicker' type='text'  required/></div><div class='form-group'><label class='form-label'>Amount (FC)</label><input id='targetrat' type='number' name='amountFC[]' step='.0001' placeholder='Amount FC' class='form-control' required=''></div><div class='heighsvnrem'></div></td></tr>";
