@@ -71,13 +71,14 @@ class TransactionModel extends Model
         cr.Currency, cp.counterPartyName,
         ex.exposure_type,
         op.open_amount, op.isSettled,
+        frcw.expiry_date,
         SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
         SUM(frcw.Avgrate) as Avgrate,
         SUM(p.Toatalallpayment) as Toatalallpayment,
         SUM(p.AvgspotamountRate) as AvgspotamountRate
         FROM transactiondetails as a
         LEFT  JOIN (
-        SELECT underlying_exposure_ref , SUM(amount_FC) as ToatalforwardAmount, AVG(contracted_Rate) as Avgrate
+        SELECT underlying_exposure_ref, expiry_date , SUM(amount_FC) as ToatalforwardAmount, AVG(contracted_Rate) as Avgrate
         FROM   forward_coverdetails
         GROUP  BY 1
         ) frcw ON a.transaction_id  = frcw.underlying_exposure_ref

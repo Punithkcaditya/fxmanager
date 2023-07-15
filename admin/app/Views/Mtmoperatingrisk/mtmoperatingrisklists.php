@@ -95,15 +95,22 @@
 								if($row->inr_target_value > 0.00){
 								 $openAmountInrstring = $controller->openAmountInrforrwardCalculator($row->exposureType, $row->currency, $dueDate);
 								 $openAmountInrcrntfrrate = json_decode($openAmountInrstring);
-								}								
+								}	
+								if($row->inr_target_value > 0.00 && isset($row->expiry_date)){
+									$hedgedAmountInrstring = $controller->openAmountInrforrwardCalculator($row->exposureType, $row->currency, $row->expiry_date);
+									$hedgedAmountInrcrntfrrate = json_decode($hedgedAmountInrstring);
+								   }							
 								$OpenINRForwardRate = isset($openAmountInrcrntfrrate->result->forward_rate) ?  $openAmountInrcrntfrrate->result->forward_rate : 1;
+								$hedgedINRForwardRate = isset($hedgedAmountInrcrntfrrate->result->forward_rate) ?  $hedgedAmountInrcrntfrrate->result->forward_rate : 1;
 								if($curr == 'USDJPY'){
 									$openAmountINR =  ($openAmountFC*($currentForwardRate * $OpenINRForwardRate))/100;
+									$hedgedAmountINR =  (($ToatalforwardAmount * $Avgrate)*$hedgedINRForwardRate)/100;
 								}else{
 									$openAmountINR =  $openAmountFC*($currentForwardRate * $OpenINRForwardRate);
+									$hedgedAmountINR =  ($ToatalforwardAmount * $Avgrate)*$hedgedINRForwardRate;
 								}
 								$portfoliovalue = $row->isSettled ? $AvgspotamountRate + $Toatalallpayment : $openAmountINR + ($ToatalforwardAmount*$Avgrate);
-								$portfoliorate = $portfoliovalue / $amountinFC;
+								$portfoliorate = $portfoliovalue / ($amountinFC * $OpenINRForwardRate);
 								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
 								$ganorlose = $portfoliovalue - $targetValueInr;
 								$settlementAmount = $Toatalallpayment + $AvgspotamountRate;
@@ -139,7 +146,7 @@
 								<td>-</td>
 								<td><?php echo number_format($ToatalforwardAmount, 2) ?></td>
 								<td><?php echo number_format( $Avgrate, 4) ?></td>
-								<td><?php echo number_format($ToatalforwardAmount * $Avgrate , 2) ?></td>
+								<td><?php echo number_format($hedgedAmountINR, 2) ?></td>
 								<td><?php echo number_format($portfoliovalue, 2) ?></td>
 								<td><?php echo number_format($portfoliorate, 4)  ?></td>
 								<td><?php echo  number_format($ganorlose, 2) ?></td>
@@ -152,6 +159,9 @@
 							<?php 
 							if (isset($openAmountInrcrntfrrate->result->forward_rate)) {
 								unset($openAmountInrcrntfrrate->result->forward_rate);
+							}
+							if(isset($hedgedAmountInrcrntfrrate->result->forward_rate)){
+								unset($hedgedAmountInrcrntfrrate->result->forward_rate);
 							}
 							if(isset($crntfrrate->result->forward_rate)){
 								unset($crntfrrate->result->forward_rate);

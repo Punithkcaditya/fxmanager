@@ -379,7 +379,7 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format( $currentmonthdetails['avghedgeone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format( $currentmonthdetails['avghedgeone'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -412,7 +412,7 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($currentmonthdetails['avghedgetwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($currentmonthdetails['avghedgetwo'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
