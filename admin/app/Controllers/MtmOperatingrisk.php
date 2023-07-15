@@ -129,5 +129,37 @@ class MtmOperatingrisk extends BaseController
         }            
     }
 
+    public function openAmountInrforrwardCalculator($cover_type , $currency , $forward_date )
+    {
+        
+        try{
+            $date = date("Y-m-d", strtotime($forward_date));
+            $curren = $this->currency_model->select("Currency")->where('currency_id', $currency)->first();
+            if($curren['Currency'] == 'EURUSD' || $curren['Currency'] == 'GBPUSD'){
+                $curren['Currency'] = 'USDINR';
+            }elseif($curren['Currency'] == 'USDJPY'){
+                $curren['Currency'] = 'JPYINR';
+            }
+            $covertype = !empty($cover_type) && $cover_type == 1 ? 1 : 2;
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://www.fxmanagers.in/ajax/ajaxbroken',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS => array("cover_type" => $covertype,"currency" => $curren['Currency'] , "forward_date" => $date), 
+            ));
+          
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return $response;
+        } catch (\Exception$e) {
+            return '';
+        }            
+    }
 
 }

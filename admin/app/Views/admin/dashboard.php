@@ -246,12 +246,12 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($exposuredetails['avghedgeone'], 2, '.', ','); ?></h4>
+                                             <h4><?php echo number_format($exposuredetails['avghedgeone'], 4, '.', ','); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($exposuredetails['avgtargetone'], 2, '.', ','); ?></h4>
+                                             <h4><?php echo number_format($exposuredetails['avgtargetone'], 4, '.', ','); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -294,12 +294,12 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($exposuredetails['avghedgetwo'], 2, '.', ','); ?></h4>
+                                             <h4><?php echo number_format($exposuredetails['avghedgetwo'], 4, '.', ','); ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($exposuredetails['avgtargettwo'], 2, '.', ',');  ?></h4>
+                                             <h4><?php echo number_format($exposuredetails['avgtargettwo'], 4, '.', ',');  ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -384,7 +384,7 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format( $currentmonthdetails['avgtargeone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format( $currentmonthdetails['avgtargeone'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -417,7 +417,7 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($currentmonthdetails['avgtargettwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($currentmonthdetails['avgtargettwo'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                     </tbody>
@@ -510,18 +510,18 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['current-quarter-avghedgeone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avghedgeone'], 4, '.', ',') ?></h4>
                                           </td>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['last-quarter-avghedgeone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avghedgeone'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['current-quarter-avgavgtargetone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avgavgtargetone'], 4, '.', ',') ?></h4>
                                           </td>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['last-quarter-avgavgtargetone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avgavgtargetone'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -573,18 +573,18 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['current-quarter-avghedgetwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avghedgetwo'], 4, '.', ',') ?></h4>
                                           </td>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['last-quarter-avghedgetwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avghedgetwo'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['current-quarter-avgavgtargettwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['current-quarter-avgavgtargettwo'], 4, '.', ',') ?></h4>
                                           </td>
                                           <td>
-                                             <h4><?php echo number_format($quaterdetails['last-quarter-avgavgtargettwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($quaterdetails['last-quarter-avgavgtargettwo'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -683,10 +683,10 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($settledinvoices['current-quarter-setrateone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-setrateone'], 4, '.', ',') ?></h4>
                                           </td>
                                           <td>
-                                             <h4><?php echo number_format($settledinvoices['last-quarter-setrateone'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-setrateone'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>
@@ -738,10 +738,10 @@
                                        </tr>
                                        <tr>
                                           <td>
-                                             <h4><?php echo number_format($settledinvoices['current-quarter-setratetwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($settledinvoices['current-quarter-setratetwo'], 4, '.', ',') ?></h4>
                                           </td>
                                           <td>
-                                             <h4><?php echo number_format($settledinvoices['last-quarter-settamttwo'], 2, '.', ',') ?></h4>
+                                             <h4><?php echo number_format($settledinvoices['last-quarter-setrateouttwo'], 4, '.', ',') ?></h4>
                                           </td>
                                        </tr>
                                        <tr>

@@ -37,7 +37,7 @@
                                                                         <option value="">-- Select Currency --
                                                                         </option>
 
-                                                                        <?php $currencies = array("USDINR", "EURINR", "GBPINR", "JPYINR", "CHFINR", "CADINR", "AUDINR", "SGDINR", "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "USDCAD", "AUDUSD", "USDSGD");
+                                                                        <?php $currencies = array("USDINR", "EURINR", "GBPINR", "JPYINR", "EURUSD", "GBPUSD", "USDJPY");
                                                                         foreach ($currencies as $currency) {
                                                                         if (in_array($currency, $arraycurrency)) {
                                                                         continue; // Skip the currency if it's in the hidden currencies array

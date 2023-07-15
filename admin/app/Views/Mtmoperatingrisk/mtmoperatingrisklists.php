@@ -91,8 +91,17 @@
 								$openAmountFC = $row->isSettled ?  $row->open_amount  : $amountinFC-$ToatalforwardAmount;
 								$currentForwardRate = isset($crntfrrate->result->forward_rate) ?  $crntfrrate->result->forward_rate : 1;
 								$currentSpotdRate = isset($crntfrrate->result->spot_rate) ?  $crntfrrate->result->spot_rate : 1;
-								$currencyinrSpotdRate = ($row->inr_target_value > 0.00) ? $currentSpotdRate : 1;								
-								$openAmountINR =  $openAmountFC*($currentForwardRate * $currencyinrSpotdRate);
+								$currencyinrSpotdRate = ($row->inr_target_value > 0.00) ? $currentSpotdRate : 1;
+								if($row->inr_target_value > 0.00){
+								 $openAmountInrstring = $controller->openAmountInrforrwardCalculator($row->exposureType, $row->currency, $dueDate);
+								 $openAmountInrcrntfrrate = json_decode($openAmountInrstring);
+								}								
+								$OpenINRForwardRate = isset($openAmountInrcrntfrrate->result->forward_rate) ?  $openAmountInrcrntfrrate->result->forward_rate : 1;
+								if($curr == 'USDJPY'){
+									$openAmountINR =  ($openAmountFC*($currentForwardRate * $OpenINRForwardRate))/100;
+								}else{
+									$openAmountINR =  $openAmountFC*($currentForwardRate * $OpenINRForwardRate);
+								}
 								$portfoliovalue = $row->isSettled ? $AvgspotamountRate + $Toatalallpayment : $openAmountINR + ($ToatalforwardAmount*$Avgrate);
 								$portfoliorate = $portfoliovalue / $amountinFC;
 								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
@@ -124,12 +133,12 @@
 								<td>-</td>
 								<td><?php echo number_format($openAmountFC, 2) ?></td>
 								<td><?php echo $currentForwardRate ?></td>
-								<td><?php echo number_format($openAmountINR, 2)  ?> </td>
+								<td><?php echo number_format($openAmountINR, 2); ?></td>
 								<td><?php echo number_format($ganorloseopendetails, 2)     ?></td>
 								<td>-</td>
 								<td>-</td>
 								<td><?php echo number_format($ToatalforwardAmount, 2) ?></td>
-								<td><?php echo number_format( $Avgrate, 2) ?></td>
+								<td><?php echo number_format( $Avgrate, 4) ?></td>
 								<td><?php echo number_format($ToatalforwardAmount * $Avgrate , 2) ?></td>
 								<td><?php echo number_format($portfoliovalue, 2) ?></td>
 								<td><?php echo number_format($portfoliorate, 4)  ?></td>
@@ -140,7 +149,17 @@
 								<td><?php echo  number_format($settlementAmount / $amountinFC, 4)   ?></td>
 								<td><?php echo number_format($settlementAmount-$targetValueInr, 2)  ?></td>
 								</tr>
-							<?php endforeach; ?>
+							<?php 
+							if (isset($openAmountInrcrntfrrate->result->forward_rate)) {
+								unset($openAmountInrcrntfrrate->result->forward_rate);
+							}
+							if(isset($crntfrrate->result->forward_rate)){
+								unset($crntfrrate->result->forward_rate);
+							}
+							if(isset($crntfrrate->result->spot_rate)){
+								unset($crntfrrate->result->spot_rate);
+							}
+						endforeach; ?>
 							<?php if (count($transaction) <= 0) : ?>
 								<tr>
 									<td class="p-1 text-center" colspan="120">No result found</td>
