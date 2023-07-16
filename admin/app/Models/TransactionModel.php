@@ -72,6 +72,7 @@ class TransactionModel extends Model
         ex.exposure_type,
         op.open_amount, op.isSettled,
         frcw.expiry_date,
+        p.wash_Rate,
         SUM(frcw.ToatalforwardAmount) as ToatalforwardAmount,
         SUM(frcw.Avgrate) as Avgrate,
         SUM(p.Toatalallpayment) as Toatalallpayment,
@@ -87,7 +88,7 @@ class TransactionModel extends Model
         LEFT JOIN exposure_type as ex ON a.exposureType = ex.exposure_type_id
         LEFT JOIN open_details as op ON a.transaction_id  = op.transactionforeing_id
         LEFT  JOIN (
-        SELECT  underlying_exposure_ref, SUM(forward_Amount*forward_Rate)  as Toatalallpayment, (spot_Amount*spotamount_Rate) as AvgspotamountRate
+        SELECT  underlying_exposure_ref, wash_Rate, SUM(forward_Amount*forward_Rate)  as Toatalallpayment, (spot_Amount*spotamount_Rate) as AvgspotamountRate
         FROM   paymentreceiptdetails
         GROUP  BY 1
         ) p ON a.transaction_id  = p.underlying_exposure_ref GROUP  BY a.transaction_id';

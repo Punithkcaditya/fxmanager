@@ -119,7 +119,8 @@ class PaymentReceiptdetails extends BaseController
     'dateof_Settlement' => 'required',
     'amountfchidd' => 'required', 
     'spotAmount' => 'required',
-    'spotAmountrate' => 'required'
+    'spotAmountrate' => 'required',
+    'washrate' => 'required',
     ]);
 
     if (!empty($input)) {
@@ -134,12 +135,13 @@ class PaymentReceiptdetails extends BaseController
         $udata["target_Value"] = $target_Valuehidd;
         $udata["underlying_Exposure_ref"] = $exposurerefno;
         $udata["deal_Referenceno"] = $sid['dealnoref'];
-        $udata["forward_Amount"] = $sid['forward_Amount'];
+        $udata["forward_Amount"] = $sid['forward_Amount'] * $washrate;
         $udata["forward_Rate"] = $sid['forward_Rate'];
-        $udata["spot_Amount"] = $spotAmount;
+        $udata["spot_Amount"] = $spotAmount * $washrate;
         $udata["spotamount_Rate"] = $spotAmountrate;
         $udata["exposure_Currency"] = $exposurecurrencyhidd;
         $udata["bank_Name"] = $banknamehidd;
+        $udata["wash_Rate"] = $washrate;
         $udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
         $saved = $this->paymentreceiptdetails_model->save($udata);
         }
@@ -156,10 +158,11 @@ class PaymentReceiptdetails extends BaseController
         $udata["value_INR"] = $value_INRhidd;
         $udata["target_Value"] = $target_Valuehidd;
         $udata["underlying_Exposure_ref"] = $exposurerefno;
-        $udata["spot_Amount"] = $spotAmount;
+        $udata["spot_Amount"] = $spotAmount * $washrate;
         $udata["spotamount_Rate"] = $spotAmountrate;
         $udata["exposure_Currency"] = $exposurecurrencyhidd;
         $udata["bank_Name"] = $banknamehidd;
+        $udata["wash_Rate"] = $washrate;
         $udata["dateof_Settlement"] = $this->convertDateFormat($dateof_Settlement);
         $saved = $this->paymentreceiptdetails_model->save($udata);
         $savedopendetails = $this->opendetails_model->save($dataopendetails);

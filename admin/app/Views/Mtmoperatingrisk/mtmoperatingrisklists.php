@@ -82,6 +82,7 @@
 								$amountinFC = $row->amountinFC;
 								$forward_rate = $row->forward_rate;
 								$targetRate = $row->targetRate;
+								$wash_Rate = ($row->wash_Rate) ? $row->wash_Rate : 1;
 								$inr_target_value = ($row->inr_target_value > 0.00) ? $row->inr_target_value : 1;
 								$targetValueInr = ($targetRate*$inr_target_value)*$amountinFC;
 								$Avgrate =  (float)number_format($row->Avgrate, 4);
@@ -153,7 +154,7 @@
 								<td>-</td>
 								<td>-</td>
 								<td><?php echo number_format($settlementAmount, 2)  ?></td>
-								<td><?php echo  number_format($settlementAmount / $amountinFC, 4)   ?></td>
+								<td><?php echo  number_format($settlementAmount / ($amountinFC * $wash_Rate) , 4)   ?></td>
 								<td><?php echo number_format($settlementAmount-$targetValueInr, 2)  ?></td>
 								</tr>
 							<?php 

@@ -127,6 +127,9 @@
 						<label class="form-label"><?php echo $pade_title18 ?></label>
 						<input id="spotAmountrate<?php echo  $i?>" type="number" name="spotAmountrate" oninput="validatedigit(this)" step=".0001" placeholder="Rate" class="form-control" required="">
 						</div>
+						<div class="form-group" id="zinc">
+
+						</div>
 							</div>
 						</div>
 					</div>
@@ -271,7 +274,28 @@ $(function(e) {
 			$("#amountfc1").prop("disabled", true);
 			$("#value_INR1").prop("disabled", true);
 			$("#target_Value1").prop("disabled", true);
-			$("#spotAmount1").prop("disabled", true);
+			$("#spotAmount1").prop("readonly", true);
+			$("#zinc").empty();
+			var dropdown = document.querySelector('select[name="exposurecurrency"]');
+			var selectedOption = dropdown.options[dropdown.selectedIndex];
+			var usdcadText = selectedOption.text;
+			switch (true) {
+			case (usdcadText == "EURUSD" || usdcadText == "GBPUSD"):
+				var field = $('<label class="form-label">USDINR Wash Rate</label>' +
+				'<input id="washrate" type="number" name="washrate" oninput="validatedigit(this)" step=".0001" placeholder="USDINR Wash Rate" class="form-control" required="">');
+				$("#zinc").append(field);
+			break;
+			case usdcadText.includes("USDJPY"):
+				var field = $('<label class="form-label">JPYINR Wash Rate</label>' +
+				'<input id="washrate" type="number" name="washrate" oninput="validatedigit(this)" step=".0001" placeholder="JPYINR Wash Rate"  class="form-control" required="">');
+				$("#zinc").append(field);
+			break;
+			default:
+			var field = $('<input id="washrate" type="hidden" value="1" name="washrate"  class="form-control" required="">');
+			$("#zinc").append(field);
+			break;
+			}
+
 		 },
 			error: function(xhr, status, error) {
 				// Handle the error

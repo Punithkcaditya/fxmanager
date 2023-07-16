@@ -14,7 +14,7 @@ class PaymentreceiptdetailsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['amount_FC', 'value_INR', 'target_Value', 'underlying_Exposure_ref', 'dateof_Settlement', 'spot_Amount', 'spotamount_Rate', 'deal_Referenceno', 'forward_Amount', 'forward_Rate', 'exposure_Currency', 'bank_Name', 'created_at'];
+    protected $allowedFields    = ['amount_FC', 'value_INR', 'target_Value', 'underlying_Exposure_ref', 'dateof_Settlement', 'spot_Amount', 'spotamount_Rate', 'deal_Referenceno', 'forward_Amount', 'forward_Rate', 'wash_Rate', 'exposure_Currency', 'bank_Name', 'created_at'];
 
     // Dates
     protected $useTimestamps = false;
