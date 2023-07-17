@@ -184,7 +184,6 @@ $('.refno'+i).select2({  width: '100%'});
 $(document).on("select2:select", ".select2", function(e) {
 var selectedValue = e.params.data.id;
 var datacurrencyid = $(this).data("currencytype");
-console.log(datacurrencyid);
             if(selectedValue) {
                 $.ajax({
                     url: '<?php echo base_url("/dependantcurrency"); ?>',
@@ -192,9 +191,13 @@ console.log(datacurrencyid);
                     dataType: 'Json',
                     data: {'selectedValue':selectedValue},
                     success: function(data) {
-                            var response = JSON.stringify(data);
+                        $('#bank' + datacurrencyid + ' option:selected').removeAttr('selected');
+                        $('#currencysold' + datacurrencyid).val('');
+                        $('#currencybought' + datacurrencyid).val('');
+                        var response = JSON.stringify(data);
                         var parsedResponse = JSON.parse(response);
                         var currencyValue = parsedResponse.Currency;
+                        var bankId = Number(parsedResponse.bank_id);
                         var currencyBought, currencySold;
                         if (parsedResponse.exposureType === "1") {
                             currencyBought = currencyValue.substring(currencyValue.length / 2);
@@ -205,6 +208,7 @@ console.log(datacurrencyid);
                             }
                             $('#currencybought'+datacurrencyid).val(currencyBought);
                             $('#currencysold'+datacurrencyid).val(currencySold);
+                            $('#bank' + datacurrencyid + ' option[value='+bankId+']').attr('selected', 'selected');
                     },
                 error: function(xhr, status, error) {
                     // Handle the error

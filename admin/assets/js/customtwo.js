@@ -100,37 +100,43 @@ $(document).ready(function() {
 $(function(e) {
     $('#example').DataTable({
       responsive: true,
-      ordering: false
+      ordering: false,
+      "pageLength": 50
     });
 
     var table = $('#example1').DataTable(
 	{
       responsive: true,
-      ordering: false
+      ordering: false,
+      "pageLength": 50
     });
     
 	$('#example2').DataTable(
 	{
       responsive: true,
-      ordering: false
+      ordering: false,
+      "pageLength": 50
     });
 	
 	$('#example3').DataTable(
 	{
       responsive: true,
-      ordering: false
+      ordering: false,
+      "pageLength": 50
     });
 	
 	$('#example4').DataTable(
 	{
 	responsive: true,
-    ordering: false
+    ordering: false,
+    "pageLength": 50
 	});
 
     $('#example5').DataTable(
         {
         responsive: true,
-        ordering: false
+        ordering: false,
+        "pageLength": 50
         });
 	
 } );

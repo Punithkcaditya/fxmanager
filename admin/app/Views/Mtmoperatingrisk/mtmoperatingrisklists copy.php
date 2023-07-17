@@ -88,7 +88,7 @@
 								$openAmountINR =  ($openAmountFC*$currentForwardRate);
 								$portfoliovalue = $openAmountINR + ($ToatalforwardAmount*$Avgrate);
 								$portfoliorate = $portfoliovalue / $amountinFC;
-								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
+								$ganorloseopendetails = $openAmountINR - ($openAmountFC*$targetRate);
 								$ganorlose = $portfoliovalue - $targetValueInr;
 								$settlementAmount = $Toatalallpayment + $AvgspotamountRate;
 								$timestamp = strtotime($exp_idt);

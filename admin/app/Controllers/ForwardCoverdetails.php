@@ -167,8 +167,9 @@ class ForwardCoverdetails extends BaseController
                     extract($this->request->getPost());
                     if(!empty($selectedValue)){
                        $transactiondata = $this->transaction_model
-                       ->select("transactiondetails.exposureType, transactiondetails.currency, currency.Currency, ")
+                       ->select("transactiondetails.exposureType, transactiondetails.currency, currency.Currency, transactiondetails.bank_id")
                        ->join('currency',"transactiondetails.currency = currency.currency_id",'left')
+                       ->join('bank_master',"bank_master.bank_id = transactiondetails.bank_id",'left')
                        ->where("transactiondetails.transaction_id = $selectedValue")->first();
                        echo json_encode($transactiondata);
                     }        

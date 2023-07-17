@@ -123,6 +123,7 @@ class PaymentReceiptdetails extends BaseController
     'washrate' => 'required',
     ]);
 
+
     if (!empty($input)) {
         $totalAmount = $this->opendetails_model->select('open_amount')->where('transactionforeing_id',  $exposurerefno)->first();
         if (!empty($totalAmount) && isset($forwardAmount)) {

@@ -306,7 +306,6 @@ $(function(e) {
 	});
 	$('.dealnosel').on('change', function (e)
 	{
-		
 		var dealnoref = $(e.currentTarget).val();
 		console.log(dealnoref);
 		$("#addnewrow").empty();
