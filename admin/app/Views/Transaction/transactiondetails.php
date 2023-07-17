@@ -221,6 +221,7 @@ $("[name='currency[]']").change(function() {
       document.getElementById("inrinput"+datacurrencyid).style.display = "block";
       document.getElementById("marycold"+datacurrencyid).style.display = "none";
       $('#inr_field_valueid'+datacurrencyid).attr("required", "required");
+      $('#inr_field_valueid' + datacurrencyid).attr("min", 0.01);
 
     }
   // Handle the change event for the input field with name 'inr_field_value'

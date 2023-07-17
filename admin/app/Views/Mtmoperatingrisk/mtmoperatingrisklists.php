@@ -110,7 +110,8 @@
 									$openAmountINR =  $openAmountFC*($currentForwardRate * $OpenINRForwardRate);
 									$hedgedAmountINR =  ($ToatalforwardAmount * $Avgrate)*$hedgedINRForwardRate;
 								}
-								$portfoliovalue = $row->isSettled ? $AvgspotamountRate + $Toatalallpayment : $openAmountINR + ($ToatalforwardAmount*$Avgrate);
+
+								$portfoliovalue = $row->isSettled ? $AvgspotamountRate + $Toatalallpayment : $openAmountINR + $hedgedAmountINR;
 								$portfoliorate = $portfoliovalue / ($amountinFC * $OpenINRForwardRate);
 								$ganorloseopendetails = $openAmountINR -($openAmountFC*$targetRate);
 								$ganorlose = $portfoliovalue - $targetValueInr;

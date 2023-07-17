@@ -339,9 +339,9 @@ class TransactionModel extends Model
         END AS calculated_targetRate
         FROM
         transactiondetails AS td
-        INNER JOIN
+        LEFT JOIN
         forward_coverdetails AS frcw ON td.transaction_id = frcw.underlying_exposure_ref
-        INNER JOIN (
+        LEFT JOIN (
         SELECT
             transaction_id,
             YEAR(dueDate) AS Year,
@@ -350,13 +350,15 @@ class TransactionModel extends Model
         FROM
             transactiondetails
         WHERE
-            currency = '$curid'
+           
             AND exposureType = '$type'
         GROUP BY
-            transaction_id, Year, Quarter
-        ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter
+             Year, Quarter
+        ) AS t ON td.transaction_id = t.transaction_id AND YEAR(td.dueDate) = t.Year AND QUARTER(td.dueDate) = t.Quarter 
+        where td.currency = '$curid'
         GROUP BY
-        td.transaction_id, t.Year, t.Quarter, t.amountinFC;";
+         t.Year, t.Quarter, t.amountinFC;";
+       
         $query = $this->db->query($sql);
         if ($query && $query->getNumRows() > 0) {
         $result = $query->getResultArray();
