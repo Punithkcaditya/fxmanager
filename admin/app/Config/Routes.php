@@ -91,6 +91,13 @@ $routes->group('admin', static function ($routes) {
 	// Currency Sold And Brought
 	$routes->match(['post'], 'dependantcurrency', 'ForwardCoverdetails::dependantcurrency'); 
 	 
+
+
+	//Forward Cover
+	$routes->get('forwardcover', 'ForwardCover');
+	$routes->match(['post'], 'forwardcoverdependant', 'ForwardCover::forwardcoverdependant');
+	$routes->match(['post'], 'forwardcovermtm', 'ForwardCover::forwardcovermtm');
+
 	 //Forward Cancellation Details
 	 $routes->get('forwardcancellationutilizationdetails', 'ForwardCancellation');
 	 $routes->match(['post'], 'saveforwardcancellationdetails', 'ForwardCancellation::saveforwardcancellationdetails');

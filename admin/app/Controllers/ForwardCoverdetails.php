@@ -175,4 +175,47 @@ class ForwardCoverdetails extends BaseController
                     }        
             }
             }
+
+            public function forwardCover(){
+                $session = session();
+                $pot = json_decode(json_encode($session->get("userdata")), true);
+                if (empty($pot)) {
+                return redirect()->to("/");
+                }
+                $this->loadUser();
+                $data["view"] = "Forwardcoverdetails/forwardcover";
+                $data["page_title"] = "Forward Cover";
+                $data["session"] = $session;
+                if ($this->permission[0] > 0) {
+                $data["link"] = "addnewroles";
+                } else {
+                $data["link"] = "#";
+                }
+                $data['title'] = 'Forward Cover';
+                $data['pade_title1'] = 'Bank Name';
+                $data['i'] = 1;
+                $data["exposuretype"] = $this->transaction_model ->select('exposurereInfo')->select('transaction_id')->orderBy('transaction_id', 'DESC')->find();
+                $data["currency"] = $this->currency_model->orderBy('currency_id', 'DESC')->findAll();
+                $data["bank"] = $this->bank_model->orderBy('bank_id', 'DESC')->findAll();
+                $data['pade_title5'] = 'Buy/Sell';
+                $data['pade_title2'] = 'Deal No';
+                $data['pade_title1'] = 'Bank Name';
+                $data['pade_title4'] = 'Currency';
+                $data['pade_title3'] = 'Select Time';
+                $data['pade_title4'] = 'Currency Sold';
+                $data['pade_title6'] = 'Due Date (From)';
+                $data['pade_title7'] = 'Due Date (To)';
+                $data['pade_title8'] = 'Spot Rate';
+                $data['pade_title9'] = 'Premium';
+                $data['pade_title10'] = 'Margin';
+                $data['pade_title11'] = 'Contracted Date';
+                $data['pade_title12'] = 'Forward Amount O/S';
+                $data['pade_title13'] = 'Current Fwd Premium';
+                $data['pade_title14'] = 'Current Fwd Rate';
+                $data['pade_title15'] = 'Wash Rate';
+                $data['pade_title16'] = 'MTM';
+                $data["page_heading"] = "Forward Cover";
+                $data["menuslinks"] = $this->request->uri->getSegment(1);
+                return view('templates/default', $data);
+            }
 }
