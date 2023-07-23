@@ -93,10 +93,17 @@ $routes->group('admin', static function ($routes) {
 	 
 
 
+
+	// Forward Allocation
+	$routes->get('forwardallocation', 'ForwardAllocation');
+	$routes->match(['post'], 'forwardallocationdependantdata', 'ForwardAllocation::forwardallocationdependantdata');
+	$routes->match(['post'], 'dependantdealno', 'ForwardAllocation::dependantdealno');
+
 	//Forward Cover
 	$routes->get('forwardcover', 'ForwardCover');
 	$routes->match(['post'], 'forwardcoverdependant', 'ForwardCover::forwardcoverdependant');
 	$routes->match(['post'], 'forwardcovermtm', 'ForwardCover::forwardcovermtm');
+	$routes->match(['post'], 'saveforwardcover', 'ForwardCover::saveforwardcover');
 
 	 //Forward Cancellation Details
 	 $routes->get('forwardcancellationutilizationdetails', 'ForwardCancellation');

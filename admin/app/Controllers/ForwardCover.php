@@ -12,6 +12,7 @@ use App\Models\ForwardCoverdetails as ForwardCoverdetails_Model;
 use App\Models\CurrencyModel as Currency_Model;
 use App\Models\OpenDetailsModel as OpenDetails_Model;
 use App\Models\BankModel as Bank_Model;
+use App\Models\ForwardCover as ForwardCover_Model;
 
 class ForwardCover extends BaseController
 {
@@ -29,6 +30,7 @@ class ForwardCover extends BaseController
     $this->currency_model = new Currency_Model();
     $this->opendetails_model = new OpenDetails_Model();
     $this->bank_model = new Bank_Model();
+    $this->forwardCover_model = new ForwardCover_Model();
     $pot = json_decode(json_encode($session->get("userdata")), true);
     if (empty($pot)) {
     return redirect()->to("/");
@@ -90,7 +92,7 @@ class ForwardCover extends BaseController
         $data['pade_title8'] = 'Spot Rate';
         $data['pade_title9'] = 'Premium';
         $data['pade_title10'] = 'Margin';
-        $data['pade_title11'] = 'Contracted Date';
+        $data['pade_title11'] = 'Contracted Rate';
         $data['pade_title12'] = 'Forward Amount O/S';
         $data['pade_title13'] = 'Current Fwd Premium';
         $data['pade_title14'] = 'Current Fwd Rate';
@@ -205,6 +207,62 @@ public function forrwardCalculatorCurrencywise($cover_type , $currency , $forwar
     } catch (\Exception$e) {
         return "";
     }            
+}
+
+public function saveforwardcover(){
+    $this->loadUser();
+    $session = session();
+    $pot = json_decode(json_encode($session->get("userdata")), true);
+    if (empty($pot)) {
+    return redirect()->to("/");
+    }
+    if ($this->request->getMethod() == 'post') {
+        extract($this->request->getPost());
+
+        $udata["bank"] = $bank;
+        $udata["dealno"] = $dealno;
+        $udata["dealdate"] = $dealdate;
+        $udata["currency"] = $currency;
+        $udata["buysell"] = $buysell;
+        $udata["dealdatefrom"] = $dealdatefrom;
+        $udata["dealdateto"] = $dealdateto;
+        $udata["spotrate"] = $spotrate;
+        $udata["premium"] = $premium;
+        $udata["margin"] = $margin;
+        $udata["contrctedrate"] = $contrctedrate;
+        $udata["forwardamountos"] = $forwardamountos;
+        $udata["currentforwardpremium"] = $currentforwardpremium;
+        $udata["currentforwardrate"] = $currentforwardrate;
+        $udata["washrate"] = $washrate;
+        $udata["mtm"] = $mtm;
+        $saved = $this->forwardCover_model->save($udata);
+        (empty($saved)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully');
+    
+    }
+    $input = $this->validate(['bank' => 'required', 'dealno' => 'required', 'dealdate' => 'required', 'currency' => 'required', 'buysell' => 'required', 'dealdatefrom' => 'required', 'dealdateto' => 'required', 'spotrate' => 'required' , 'premium' => 'required', 'margin' => 'required', 'contrctedrate' => 'required', 'forwardamountos' => 'required', 'currentforwardpremium' => 'required', 'currentforwardrate' => 'required', 'washrate' => 'required', 'mtm' => 'required']);
+    if (!empty($input)) {
+        $udata["bank"] = $bank;
+        $udata["dealno"] = $dealno;
+        $udata["dealdate"] = $dealdate;
+        $udata["currency"] = $currency;
+        $udata["buysell"] = $buysell;
+        $udata["dealdatefrom"] = $dealdatefrom;
+        $udata["dealdateto"] = $dealdateto;
+        $udata["spotrate"] = $spotrate;
+        $udata["premium"] = $premium;
+        $udata["margin"] = $margin;
+        $udata["contrctedrate"] = $contrctedrate;
+        $udata["forwardamountos"] = $forwardamountos;
+        $udata["currentforwardpremium"] = $currentforwardpremium;
+        $udata["currentforwardrate"] = $currentforwardrate;
+        $udata["washrate"] = $washrate;
+        $udata["mtm"] = $mtm;
+        $saved = $this->forwardCover_model->save($udata);
+        (empty($saved)) ? $session->setFlashdata('error', 'Failed To Save') : $session->setFlashdata('success', 'Saved Successfully');
+    }else {
+    $session->setFlashdata('error', 'Fill All Fields');
+    }
+    return redirect()->to('forwardcover');
 }
 
 }

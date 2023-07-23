@@ -71,7 +71,7 @@
 
 
 <div class="form-group"><label class="form-label"><?php echo $pade_title14 ?></label> 
-<input id="currentforwardrate" type="text" name="pade_title14"  value=''  placeholder="Current Forward Rate" class="form-control"  required readonly/>
+<input id="currentforwardrate" name="currentforwardrate" step=".0001" type="text" name="pade_title14"  value=''  placeholder="Current Forward Rate" class="form-control"  required readonly/>
 </div>
 
 </div>
@@ -92,11 +92,11 @@
 <!-- Contrcted Rate-->
 
 <div class="form-group"><label class="form-label"><?php echo $pade_title11 ?></label>
-<input id="contrctedrate" name="contrctedrate" class="form-control" type="text" placeholder="Contrcted Rate" required readonly/>
+<input id="contrctedrate" name="contrctedrate" step=".0001" class="form-control" type="text" placeholder="Contrcted Rate" required readonly/>
 </div>
 
 <div class="form-group"><label class="form-label"><?php echo $pade_title15 ?></label>
-<input id="washrate" name="washrate" class="form-control" type="text" placeholder="Wash Rate" required readonly/>
+<input id="washrate" name="washrate" step=".0001" class="form-control" type="text" placeholder="Wash Rate" required readonly/>
 </div>
 
 </div>
@@ -105,7 +105,7 @@
 <div class="col-md-3 col-sm-12">
 <!-- Deal Date Start -->
 <div class="form-group"><label class="form-label"><?php echo $pade_title4 ?></label>
-<select name="currency[]"
+<select name="currency"
 id="currency"
 class="form-control" data-currencyid="<?=$i?>" required>
 <option value="">-- Choose Currency --
@@ -125,11 +125,11 @@ class="form-control" data-currencyid="<?=$i?>" required>
 <!-- Amount (FC) End -->
 
 <div class="form-group"><label class="form-label"><?php echo $pade_title12 ?></label>
-<input id="forwardamountos" type="number" name="forwardamountos" step=".001" placeholder="Forward Amount OS" class="form-control"  required/>
+<input id="forwardamountos" type="number" name="forwardamountos" step=".0001" placeholder="Forward Amount OS" class="form-control"  required/>
 </div>
 
 <div class="form-group"><label class="form-label"><?php echo $pade_title16 ?></label>
-<input id="mtm" name="mtm" class="form-control" type="text" placeholder="MTM Rate" required readonly/>
+<input id="mtm" name="mtm" step=".0001" class="form-control" type="text" placeholder="MTM Rate" required readonly/>
 </div>
 </div>
 

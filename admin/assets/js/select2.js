@@ -8,7 +8,7 @@ $(function(e) {
 	$(document).on("select2:select", ".select2", function(e) {
 		var selectedValue = e.params.data.id;
 		var datacurrencyid = $(this).data("currencytype");
-			        if(selectedValue) {
+			        if(selectedValue && datacurrencyid) {
 			            $.ajax({
 							url: '/FXmanager/admin/dependantcurrency',
 							type: "POST",
